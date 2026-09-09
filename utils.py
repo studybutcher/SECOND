@@ -7,7 +7,7 @@ import numpy as np
 from torch.utils.data import DataLoader
 from sklearn.preprocessing import MinMaxScaler
 
-prefix = "processed"
+prefix = "/data/sdc/yrlbkp/anomaly"
 
 def get_data_dim(dataset):
     if dataset == 'SMAP':
@@ -19,7 +19,7 @@ def get_data_dim(dataset):
     elif dataset == 'SWaT':
         return 51
     elif dataset == 'WADI':
-        return 123
+        return 127
     else:
         raise ValueError('unknown dataset '+str(dataset))
 
@@ -34,6 +34,7 @@ def get_data(dataset, max_train_size=None, max_test_size=None, print_log=True, d
     if max_train_size is None:
         train_end = None
     else:
+        max_train_size = int(max_train_size*58317)
         train_end = train_start + max_train_size
     if max_test_size is None:
         test_end = None
@@ -43,18 +44,19 @@ def get_data(dataset, max_train_size=None, max_test_size=None, print_log=True, d
     print("train: ", train_start, train_end)
     print("test: ", test_start, test_end)
     x_dim = get_data_dim(dataset)
-    f = open(os.path.join(prefix, dataset + '_train.pkl'), "rb")
-    train_data = pickle.load(f).reshape((-1, x_dim))[train_start:train_end, :]
+    # print(os.path.join(prefix,f'{dataset}/{dataset}_train.npy'))
+    f = open(os.path.join(prefix,str(dataset)+'/'+str(dataset)+'_train.npy'), "rb")
+    train_data = np.load(f).reshape((-1, x_dim))[train_start:train_end, :]
     f.close()
     try:
-        f = open(os.path.join(prefix, dataset + '_test.pkl'), "rb")
-        test_data = pickle.load(f).reshape((-1, x_dim))[test_start:test_end, :]
+        f = open(os.path.join(prefix, f'{dataset}/{dataset}_test.npy'), "rb")
+        test_data = np.load(f).reshape((-1, x_dim))[test_start:test_end, :]
         f.close()
     except (KeyError, FileNotFoundError):
         test_data = None
     try:
-        f = open(os.path.join(prefix, dataset + "_test_label.pkl"), "rb")
-        test_label = pickle.load(f).reshape((-1))[test_start:test_end]
+        f = open(os.path.join(prefix, f'{dataset}/{dataset}_test_label.npy'), "rb")
+        test_label = np.load(f).reshape((-1))[test_start:test_end]
         f.close()
     except (KeyError, FileNotFoundError):
         test_label = None

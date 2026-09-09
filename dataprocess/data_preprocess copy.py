@@ -6,10 +6,11 @@ from pickle import dump
 import pandas as pd
 
 import numpy as np
-from tfsnippet.utils import makedirs
+# from tfsnippet.utils import makedirs
 
 output_folder = 'processed'
-makedirs(output_folder, exist_ok=True)
+
+# makedirs(output_folder, exist_ok=True)
 
 
 def load_and_save(category, filename, dataset, dataset_folder):
@@ -22,9 +23,9 @@ def load_and_save(category, filename, dataset, dataset_folder):
         dump(temp, file)
 
 
-def load_data(dataset):
+def load_data(dataset,root=None):
     if dataset == 'SMAP' or dataset == 'MSL':
-        dataset_folder = 'data'
+        dataset_folder = root+'SMAP_MSL'
         with open(os.path.join(dataset_folder, 'labeled_anomalies.csv'), 'r') as file:
             csv_reader = csv.reader(file, delimiter=',')
             res = [row for row in csv_reader][1:]    #一行行的列表
@@ -60,12 +61,17 @@ def load_data(dataset):
             concatenate_and_save(c)
 
     elif dataset == 'SWaT':
-        dataset_folder = 'SWaT'
-        normal = pd.read_csv("SWaT/SWaT_Dataset_Normal_v1.csv") #, nrows=1000)
-        normal = normal.drop(["Timestamp", "Normal/Attack"], axis=1)
+        dataset_folder = os.path.join(root+'SWaT')
+        # normal = pd.read_csv(os.path.join(dataset_folder,"SWaT/SWaT_Dataset_Normal_v1.csv")) #, nrows=1000)
+        # normal = normal.drop(["Timestamp", "Normal/Attack"], axis=1)
+        train_data = pd.read_csv(os.path.join(dataset_folder, 'swat_train2.csv'))
+        test_data = pd.read_csv(os.path.join(dataset_folder, 'swat2.csv'))
+        labels = test_data.values[:, -1:]
+        train_data = train_data.values[:, :-1]
+        test_data = test_data.values[:, :-1]
         normal = np.asarray(normal)
         print(dataset, 'train', normal.shape)
-        with open(os.path.join(output_folder, dataset + "_" + 'train' + ".pkl"), "wb") as file:
+        with open(os.path.join(output_folder, dataset + "_" + 'train' + ".npy"), "wb") as file:
             dump(normal, file)
 
         attack = pd.read_csv("SWaT/SWaT_Dataset_Attack_v0.csv")
@@ -75,19 +81,19 @@ def load_data(dataset):
         print(dataset, 'labels', labels.shape)
         attack = np.asarray(attack)
         print(dataset, 'test', attack.shape)
-        with open(os.path.join(output_folder, dataset + "_" + 'test' + ".pkl"), "wb") as file:
+        with open(os.path.join(output_folder, dataset + "_" + 'test' + ".npy"), "wb") as file:
             dump(attack, file)
-        with open(os.path.join(output_folder, dataset + "_" + 'test_label' + ".pkl"), "wb") as file:
+        with open(os.path.join(output_folder, dataset + "_" + 'test_label' + ".npy"), "wb") as file:
             dump(labels, file)
 
     elif dataset == 'WADI':
-        dataset_folder = 'WADI'
-        normal = pd.read_csv("WADI/WADI_14days_new.csv")
+        normal = pd.read_csv(os.path.join(root,"WADI/WADI_14days.csv"))
+        # normal = pd.read_csv(os.path.join(root,"WADI/WADI_14days_new.csv"))#*没用上new怎么办？
         normal = normal.drop(['Row', 'Date', 'Time'], axis=1)
         normal = np.asarray(normal)
         print(dataset, 'train', normal.shape)
-        with open(os.path.join(output_folder, dataset + "_" + 'train' + ".pkl"), "wb") as file:
-            dump(normal, file)
+        with open(os.path.join(output_folder, dataset + "_" + 'train' + ".npy"), "wb") as file:
+            np.save(normal, file)
 
         attack = pd.read_csv('WADI/WADI_attackdataLABLE.csv')
         labels = [float(label != 1) for label in attack['Attack LABLE (1:No Attack, -1:Attack)'].values]
@@ -96,20 +102,22 @@ def load_data(dataset):
         print(dataset, 'labels', labels.shape)
         attack = np.asarray(attack)
         print(dataset, 'test', attack.shape)
-        with open(os.path.join(output_folder, dataset + "_" + 'test' + ".pkl"), "wb") as file:
-            dump(attack, file)
-        with open(os.path.join(output_folder, dataset + "_" + 'test_label' + ".pkl"), "wb") as file:
-            dump(labels, file)
+        with open(os.path.join(output_folder, dataset + "_" + 'test' + ".npy"), "wb") as file:
+            np.save(attack, file)
+        with open(os.path.join(output_folder, dataset + "_" + 'test_label' + ".npy"), "wb") as file:
+            np.save(labels, file)
 
 
 if __name__ == '__main__':
     datasets = ['SMAP', 'MSL', 'SWaT', 'WADI']
-    commands = sys.argv[1:]
+    root = '/home/yiruolei/ALLDATASET/anomaly/data'
+    # datasets = ['WADI']
+    commands = sys.argv[1:]#?还不会用
     load = []
     if len(commands) > 0:
         for d in commands:
             if d in datasets:
-                load_data(d)
+                load_data(d,root )
     else:
         print("""
         Usage: python data_preprocess.py <datasets>
