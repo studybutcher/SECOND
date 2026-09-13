@@ -1,0 +1,263 @@
+{
+  "model": "MUTANT",
+  "source_repo": "/home/sdb/yrlcd/anamolybench/MUTANT",
+  "dataset": "SMAP",
+  "config": {
+    "input_dim": 25,
+    "out_dim": 5,
+    "window_length": 20,
+    "hidden_size": 100,
+    "latent_size": 100,
+    "batch_size": 120
+  },
+  "protocol": {
+    "harness_path": "/home/sdb/yrlcd/anamolybench/SECOND/bench/collect_cost_mutant.py",
+    "harness_sha256": "f88a62ac311034f3cf3796e204053b6791ce6e92b98aeea864399e933e13166a",
+    "input_shape_b1": [
+      1,
+      20,
+      25
+    ],
+    "unit": "per_window_forward",
+    "include_vae_head": true,
+    "include_dataloader": false,
+    "include_padding_batch": false,
+    "eval_mode": true,
+    "precision": "fp32 + fp64(GCN spmm)",
+    "warmup_iters": 5,
+    "timed_iters": "adaptive(target_ms=2000)",
+    "repeats": 3,
+    "batch_sweep": [
+      1,
+      8,
+      32,
+      64,
+      120
+    ],
+    "cudnn_benchmark": false,
+    "tf32_enabled": false,
+    "torch_num_threads": 1,
+    "omp_num_threads": "1",
+    "mkl_num_threads": "1",
+    "cwd": "/tmp/mb",
+    "note_returnA": "returnA 在 cwd 写 tmp_{pid}.txt/tmp2_{pid}.txt 并读回"
+  },
+  "env": {
+    "gpu": "NVIDIA RTX 5880 Ada Generation",
+    "cuda": "12.6",
+    "torch": "2.14.0+cu126",
+    "platform": "Linux-6.11.0-26-generic-x86_64-with-glibc2.39"
+  },
+  "ckpt": {
+    "path": "/home/sdb/yrlcd/anamolybench/MUTANT/checkpoints/SMAP_model.pt",
+    "sha256": "a2e8e215d498215770d2f38eb62e47992f41f957ac2463aa17e912da977475c5"
+  },
+  "cost": {
+    "n_params": 101761,
+    "n_params_M": 0.101761,
+    "weight_mem_MB": 0.3881874084472656,
+    "flops_per_window": 121500,
+    "macs_per_window": 60750.0,
+    "flops_per_window_G": 0.0001215,
+    "macs_per_window_M": 0.06075,
+    "flops_per_timestep_G": 6.075e-06,
+    "counter": "torch.utils.flop_counter.FlopCounterMode",
+    "counter_ops_seen": [
+      "addmm",
+      "mm"
+    ],
+    "counter_ops_missing": [
+      "spmm(GCN, fp64)",
+      "LSTM(encoder_lstm)"
+    ],
+    "coverage_note": "nn.LSTM 与稀疏 spmm 均不计入；手工公式见 PRD2 附录 B"
+  },
+  "latency": {
+    "as_shipped": {
+      "1": {
+        "mean": 5.217169411480427,
+        "std": 0.019961570014539774,
+        "min": 5.1966336369514465,
+        "p50": 5.218372214585543,
+        "p95": 5.236502382904291,
+        "reps_ms": [
+          5.236502382904291,
+          5.1966336369514465,
+          5.218372214585543
+        ],
+        "timed_iters": 100,
+        "ms_per_window": 5.217169411480427,
+        "windows_per_s": 191.6748184943911
+      },
+      "8": {
+        "mean": 31.85678693273711,
+        "std": 0.9638540269606097,
+        "min": 31.26647453459482,
+        "p50": 31.334836627282794,
+        "p95": 32.96904963633371,
+        "reps_ms": [
+          32.96904963633371,
+          31.334836627282794,
+          31.26647453459482
+        ],
+        "timed_iters": 63,
+        "ms_per_window": 3.9820983665921386,
+        "windows_per_s": 251.12388191851608
+      },
+      "32": {
+        "mean": 121.10544089227915,
+        "std": 0.22482853016101825,
+        "min": 120.91799906920642,
+        "p50": 121.04360782541335,
+        "p95": 121.35471578221768,
+        "reps_ms": [
+          121.35471578221768,
+          120.91799906920642,
+          121.04360782541335
+        ],
+        "timed_iters": 16,
+        "ms_per_window": 3.7845450278837234,
+        "windows_per_s": 264.23255441069205
+      },
+      "64": {
+        "mean": 239.4909462891519,
+        "std": 0.20899715570752994,
+        "min": 239.26183534786105,
+        "p50": 239.53984398394823,
+        "p95": 239.67115953564644,
+        "reps_ms": [
+          239.53984398394823,
+          239.67115953564644,
+          239.26183534786105
+        ],
+        "timed_iters": 8,
+        "ms_per_window": 3.7420460357679985,
+        "windows_per_s": 267.2334841532127
+      },
+      "120": {
+        "mean": 448.0430380751689,
+        "std": 0.6061446866203745,
+        "min": 447.3446726799011,
+        "p50": 448.351900652051,
+        "p95": 448.4325408935547,
+        "reps_ms": [
+          447.3446726799011,
+          448.351900652051,
+          448.4325408935547
+        ],
+        "timed_iters": 5,
+        "ms_per_window": 3.733691983959741,
+        "windows_per_s": 267.83141306141084
+      }
+    },
+    "core_only": {
+      "1": {
+        "mean": 1.7017027735710144,
+        "std": 0.05368751983639434,
+        "min": 1.668676771223545,
+        "p50": 1.6727810725569725,
+        "p95": 1.7636504769325256,
+        "reps_ms": [
+          1.6727810725569725,
+          1.668676771223545,
+          1.7636504769325256
+        ],
+        "timed_iters": 100,
+        "ms_per_window": 1.7017027735710144,
+        "windows_per_s": 587.6466886761342
+      },
+      "8": {
+        "mean": 3.540131983657678,
+        "std": 0.04250715656445369,
+        "min": 3.5137934796512127,
+        "p50": 3.5174324363470078,
+        "p95": 3.5891700349748135,
+        "reps_ms": [
+          3.5891700349748135,
+          3.5137934796512127,
+          3.5174324363470078
+        ],
+        "timed_iters": 100,
+        "ms_per_window": 0.44251649795720976,
+        "windows_per_s": 2259.802752250601
+      },
+      "32": {
+        "mean": 9.625923925389847,
+        "std": 0.0041564336302536056,
+        "min": 9.622918646782637,
+        "p50": 9.624185860157013,
+        "p95": 9.630667269229889,
+        "reps_ms": [
+          9.630667269229889,
+          9.622918646782637,
+          9.624185860157013
+        ],
+        "timed_iters": 100,
+        "ms_per_window": 0.3008101226684327,
+        "windows_per_s": 3324.356212248375
+      },
+      "64": {
+        "mean": 17.704362993439037,
+        "std": 0.08694479917132927,
+        "min": 17.61011764407158,
+        "p50": 17.72152304649353,
+        "p95": 17.781448289752007,
+        "reps_ms": [
+          17.781448289752007,
+          17.61011764407158,
+          17.72152304649353
+        ],
+        "timed_iters": 100,
+        "ms_per_window": 0.27663067177248496,
+        "windows_per_s": 3614.9281408044676
+      },
+      "120": {
+        "mean": 31.888117613170735,
+        "std": 0.2588375343308895,
+        "min": 31.738329738859207,
+        "p50": 31.739025917505064,
+        "p95": 32.18699718314794,
+        "reps_ms": [
+          31.738329738859207,
+          31.739025917505064,
+          32.18699718314794
+        ],
+        "timed_iters": 62,
+        "ms_per_window": 0.26573431344308945,
+        "windows_per_s": 3763.1572191152623
+      }
+    }
+  },
+  "memory": {
+    "1": {
+      "after_load_MB": 8.515625,
+      "inference_peak_MB": 16.72900390625,
+      "reserved_peak_MB": 22.0,
+      "activation_delta_MB": 8.21337890625
+    },
+    "8": {
+      "after_load_MB": 8.521484375,
+      "inference_peak_MB": 16.84375,
+      "reserved_peak_MB": 22.0,
+      "activation_delta_MB": 8.322265625
+    },
+    "32": {
+      "after_load_MB": 8.5390625,
+      "inference_peak_MB": 17.2314453125,
+      "reserved_peak_MB": 24.0,
+      "activation_delta_MB": 8.6923828125
+    },
+    "64": {
+      "after_load_MB": 8.5634765625,
+      "inference_peak_MB": 17.75,
+      "reserved_peak_MB": 24.0,
+      "activation_delta_MB": 9.1865234375
+    },
+    "120": {
+      "after_load_MB": 8.6064453125,
+      "inference_peak_MB": 18.65966796875,
+      "reserved_peak_MB": 22.0,
+      "activation_delta_MB": 10.05322265625
+    }
+  }
+}

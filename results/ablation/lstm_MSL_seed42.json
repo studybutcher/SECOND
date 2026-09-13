@@ -1,0 +1,45 @@
+{
+  "model": "SECOND",
+  "backbone": "lstm",
+  "dataset": "MSL",
+  "seed": 42,
+  "config": {
+    "input_dim": 55,
+    "out_dim": 5,
+    "window_length": 70,
+    "latent_size": 256,
+    "batch_size": 60,
+    "n_layer": 8,
+    "epochs": 10,
+    "lr": 0.01,
+    "N": 256,
+    "val": 0.35,
+    "noise": 0
+  },
+  "params": {
+    "n_params": 91446585,
+    "n_params_M": 91.446585,
+    "n_midstack": 37822464,
+    "n_midstack_M": 37.822464,
+    "midstack_share": 0.4136017107691884
+  },
+  "metrics": {
+    "f1": 0.9469868255541298,
+    "precision": 0.9194668922168342,
+    "recall": 0.9762155637871209,
+    "threshold": 98.63000000000288,
+    "TP": 6485,
+    "TN": 40643,
+    "FP": 568,
+    "FN": 158
+  },
+  "ckpt": {
+    "path": "/home/sdb/yrlcd/anamolybench/SECOND/checkpoint/ablation/lstm/MSL/best.pt"
+  },
+  "env": {
+    "gpu": "NVIDIA RTX 5880 Ada Generation",
+    "cuda": "12.6",
+    "torch": "2.14.0+cu126"
+  },
+  "timestamp": "2026-09-12 14:33:16"
+}

@@ -1,5 +1,10 @@
  #coding=utf-8
 #*这个是为了超参才写的一个文件
+import json
+import os
+import random
+import time
+
 import torch
 import numpy as np
 import torch.optim as optim
@@ -7,10 +12,23 @@ from utils import get_data, get_data_dim, get_loader
 from eval_method import bf_search, adjust_predicts
 from tqdm import tqdm
 import argparse
-from model.Model import patchattmamba 
 from model.mamba import ModelArgs
 
 from plotting import plotter
+
+# 中间块消融：三个变体的模型类同名，仅 import 来源不同
+BACKBONE_REGISTRY = {
+    'mamba':       'model.Model',        # 基线（attmambaBlock）
+    'transformer': 'model.Model_trans',  # 换成 Transformer mixer
+    'lstm':        'model.Model_lstm',   # 换成双向 LSTM mixer
+}
+
+
+def set_seed(seed):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
 
 class ExpConfig(argparse.ArgumentParser):
     # save_step=500
@@ -36,6 +54,9 @@ class ExpConfig(argparse.ArgumentParser):
         self.add_argument('--latent_size', type=int,default=256)
         self.add_argument('--max_train_size', type=float,default=None)
         self.add_argument('--noise', type=float,default=0)
+        self.add_argument('--backbone', type=str, default='mamba',
+                          choices=list(BACKBONE_REGISTRY), help='中间块消融变体')
+        self.add_argument('--seed', type=int, default=42, help='随机种子')
         self.parse_args(namespace=self)
         if self.dataset == 'SWaT':
             self.window_length = 35
@@ -81,10 +102,13 @@ def main():
     config = ExpConfig()
     # args = argparse.ArgumentParser()
     # args = vars(args)
-    
+
+    set_seed(config.seed)
     config.input_dim= get_data_dim(config.dataset)
     print('==============================================================================================')
     print('name:',config.name)
+    print('backbone:',config.backbone)
+    print('seed:',config.seed)
     print('batch:',config.batch_size)
     print('window_length',config.window_length)
     # print('hidden_size',config.hidden_size)
@@ -134,9 +158,14 @@ def main():
 
     argsa = ModelArgs()
     # print('mamba的潜在层数',argsa.d_model)
-    model = patchattmamba(config.input_dim, w_size, config.latent_size, config.batch_size, config.window_length, config.out_dim,args=argsa)
+    import importlib
+    _mod = importlib.import_module(BACKBONE_REGISTRY[config.backbone])
+    model = _mod.patchattmamba(config.input_dim, w_size, config.latent_size, config.batch_size, config.window_length, config.out_dim,args=argsa)
     ##?因为这个导致的问题？？
     model = model.cuda()
+    n_params = sum(p.numel() for p in model.parameters())
+    n_midstack = sum(p.numel() for p in model.attmamba.parameters())
+    print(f'params={n_params/1e6:.4f}M  中间块={n_midstack/1e6:.4f}M ({100*n_midstack/n_params:.2f}%)')
 
     optimizer = optim.Adam(model.parameters(), lr=0.01)
     
@@ -191,6 +220,35 @@ def main():
         print("FP:", t[5])
         print("FN:", t[6])
         print("precision:", t[1], "recall:", t[2], "f_score", t[0])
+
+        #* 结果落盘（与 MUTANT 的 schema 对齐，便于统一聚合）
+        out_dir = os.path.join('results', 'ablation')
+        os.makedirs(out_dir, exist_ok=True)
+        rec = {
+            'model': 'SECOND',
+            'backbone': config.backbone,
+            'dataset': config.dataset,
+            'seed': config.seed,
+            'config': {'input_dim': config.input_dim, 'out_dim': config.out_dim,
+                       'window_length': config.window_length, 'latent_size': config.latent_size,
+                       'batch_size': config.batch_size, 'n_layer': argsa.n_layer,
+                       'epochs': 10, 'lr': 0.01, 'N': config.N, 'val': config.val,
+                       'noise': config.noise},
+            'params': {'n_params': n_params, 'n_params_M': n_params / 1e6,
+                       'n_midstack': n_midstack, 'n_midstack_M': n_midstack / 1e6,
+                       'midstack_share': n_midstack / n_params},
+            'metrics': {'f1': float(t[0]), 'precision': float(t[1]), 'recall': float(t[2]),
+                        'threshold': float(th), 'TP': int(t[3]), 'TN': int(t[4]),
+                        'FP': int(t[5]), 'FN': int(t[6])},
+            'ckpt': {'path': os.path.abspath(config.loadpath)},
+            'env': {'gpu': torch.cuda.get_device_name(0), 'cuda': torch.version.cuda,
+                    'torch': torch.__version__},
+            'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
+        }
+        out_json = os.path.join(out_dir, f"{config.backbone}_{config.dataset}_seed{config.seed}.json")
+        with open(out_json, 'w') as f:
+            json.dump(rec, f, indent=2, ensure_ascii=False)
+        print('metrics saved to:', out_json)
 
         return t[1], t[2], t[0]
     

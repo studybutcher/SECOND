@@ -1,0 +1,49 @@
+  ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+     
+    /btw 现有这个推理统计的实验结果放在哪里?
+    /btw 这两个模型是怎么替换的?换成多大的模型?和原来控制什么水平差不多?
+  
+      替换方式
+      
+      不是改网络内部，而是只替换那 8 层中间块的 mixer，走的是同一套残差骨架。
+
+      接口契约：新 mixer 必须和 mamba.py:340 的 attmambaBlock 同签名 —— __init__(args: ModelArgs) + forward(x: 
+      [b,l,d]) -> [b,l,d]（形状不变）。
+
+      骨架复用：model/backbone.py 里有个 ResidualBlockGeneric(args, mixer_cls)，和 mamba.py:146 的 ResidualBlock
+      同构（mixer(RMSNorm(x)) + x），只是把 mixer 变成可传入的参数。
+ 
+      实际改动：Model_trans.py / Model_lstm.py 由脚本生成，相对 Model.py 各只有 5 行 diff，全落在两处：
+ 
+      -from .mamba import ModelArgs, ResidualBlock
+      +from .mamba import ModelArgs
+      +from .backbone import TransformerResidualBlock      # 或 LSTMMixerBlock
+      ...
+      -  self.attmamba = nn.ModuleList([ResidualBlock(args) for _ in range(args.n_layer)])
+      +  self.attmamba = nn.ModuleList([TransformerResidualBlock(args) for _ in range(args.n_layer)])
+
+      两个 mixer 的具体结构（d = d_model = 512）：
+  
+      - TransformerMixer：标准 pre-norm block。nn.MultiheadAttention(512, nhead=4) + 两个 LayerNorm + FFN
+      Linear(512→1024) → GELU → Dropout(0.1) → Linear(1024→512)。forward 是 x = x + attn(ln1(x))，再 x = x + 
+      ffn(ln2(x))。
+      - LSTMMixer：nn.LSTM(512, 512, num_layers=1, bidirectional=True) + nn.Linear(1024, 512) 投影回 512。forward 是 x
+      + proj(lstm(x))。
+  
+      换成了多大
+  
+      中间块（8 层）参数量对比：
+
+      ┌─────────────┬──────────┬──────────────────────┬─────────────────────┬──────────────────────┐
+      │             │  中间块  │ 总参数（SMAP，C=25） │ 总参数（MSL，C=55） │ 总参数（SWaT，C=51） │
+      ├─────────────┼──────────┼──────────────────────┼─────────────────────┼──────────────────────┤
+      │ 原 mamba    │ 147.99 M │ 193.52 M             │ ~210 M              │ 199.69 M             │
+      ├─────────────┼──────────┼──────────────────────┼─────────────────────┼──────────────────────┤
+      │ transformer │ 16.83 M  │ 62.36 M              │ 70.45 M             │ 68.52 M              │
+      ├─────────────┼──────────┼──────────────────────┼─────────────────────┼──────────────────────┤
+      │ lstm        │ 37.82 M  │ 83.35 M              │ 91.45 M             │ 89.52 M              │
+      └─────────────┴──────────┴──────────────────────┴─────────────────────┴──────────────────────┘
+  
+      中间块那两个数是跨数据集恒定的（只由 d_model 决定）；总数随通道数 C 变，因为非中间块部分有 Linear(input_dim × 
+      512, 512)。
+

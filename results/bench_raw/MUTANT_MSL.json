@@ -1,0 +1,263 @@
+{
+  "model": "MUTANT",
+  "source_repo": "/home/sdb/yrlcd/anamolybench/MUTANT",
+  "dataset": "MSL",
+  "config": {
+    "input_dim": 55,
+    "out_dim": 5,
+    "window_length": 20,
+    "hidden_size": 100,
+    "latent_size": 100,
+    "batch_size": 120
+  },
+  "protocol": {
+    "harness_path": "/home/sdb/yrlcd/anamolybench/SECOND/bench/collect_cost_mutant.py",
+    "harness_sha256": "f88a62ac311034f3cf3796e204053b6791ce6e92b98aeea864399e933e13166a",
+    "input_shape_b1": [
+      1,
+      20,
+      55
+    ],
+    "unit": "per_window_forward",
+    "include_vae_head": true,
+    "include_dataloader": false,
+    "include_padding_batch": false,
+    "eval_mode": true,
+    "precision": "fp32 + fp64(GCN spmm)",
+    "warmup_iters": 5,
+    "timed_iters": "adaptive(target_ms=2000)",
+    "repeats": 3,
+    "batch_sweep": [
+      1,
+      8,
+      32,
+      64,
+      120
+    ],
+    "cudnn_benchmark": false,
+    "tf32_enabled": false,
+    "torch_num_threads": 1,
+    "omp_num_threads": "1",
+    "mkl_num_threads": "1",
+    "cwd": "/tmp/mb",
+    "note_returnA": "returnA 在 cwd 写 tmp_{pid}.txt/tmp2_{pid}.txt 并读回"
+  },
+  "env": {
+    "gpu": "NVIDIA RTX 5880 Ada Generation",
+    "cuda": "12.6",
+    "torch": "2.14.0+cu126",
+    "platform": "Linux-6.11.0-26-generic-x86_64-with-glibc2.39"
+  },
+  "ckpt": {
+    "path": "/home/sdb/yrlcd/anamolybench/MUTANT/checkpoints/MSL_model.pt",
+    "sha256": "8dcdc2c0a89d34f67a06ee2bf675622cb288c12866a4596ced37782c8671d980"
+  },
+  "cost": {
+    "n_params": 174061,
+    "n_params_M": 0.174061,
+    "weight_mem_MB": 0.6639900207519531,
+    "flops_per_window": 283800,
+    "macs_per_window": 141900.0,
+    "flops_per_window_G": 0.0002838,
+    "macs_per_window_M": 0.1419,
+    "flops_per_timestep_G": 1.419e-05,
+    "counter": "torch.utils.flop_counter.FlopCounterMode",
+    "counter_ops_seen": [
+      "addmm",
+      "mm"
+    ],
+    "counter_ops_missing": [
+      "spmm(GCN, fp64)",
+      "LSTM(encoder_lstm)"
+    ],
+    "coverage_note": "nn.LSTM 与稀疏 spmm 均不计入；手工公式见 PRD2 附录 B"
+  },
+  "latency": {
+    "as_shipped": {
+      "1": {
+        "mean": 6.306714098900557,
+        "std": 0.01022891826036443,
+        "min": 6.295950002968311,
+        "p50": 6.3078852742910385,
+        "p95": 6.31630701944232,
+        "reps_ms": [
+          6.295950002968311,
+          6.3078852742910385,
+          6.31630701944232
+        ],
+        "timed_iters": 100,
+        "ms_per_window": 6.306714098900557,
+        "windows_per_s": 158.56117533127576
+      },
+      "8": {
+        "mean": 40.339045365955556,
+        "std": 0.15993338074737043,
+        "min": 40.18049550299742,
+        "p50": 40.336313334350685,
+        "p95": 40.50032726051856,
+        "reps_ms": [
+          40.336313334350685,
+          40.50032726051856,
+          40.18049550299742
+        ],
+        "timed_iters": 49,
+        "ms_per_window": 5.0423806707444445,
+        "windows_per_s": 198.31902137058654
+      },
+      "32": {
+        "mean": 157.16644790437485,
+        "std": 0.49999002732861036,
+        "min": 156.83367305124798,
+        "p50": 156.92425767580667,
+        "p95": 157.74141298606992,
+        "reps_ms": [
+          156.92425767580667,
+          156.83367305124798,
+          157.74141298606992
+        ],
+        "timed_iters": 12,
+        "ms_per_window": 4.911451497011714,
+        "windows_per_s": 203.60579771752452
+      },
+      "64": {
+        "mean": 313.3742517481248,
+        "std": 1.7738867180513822,
+        "min": 311.3337146739165,
+        "p50": 314.24014922231436,
+        "p95": 314.5488913481434,
+        "reps_ms": [
+          314.5488913481434,
+          314.24014922231436,
+          311.3337146739165
+        ],
+        "timed_iters": 6,
+        "ms_per_window": 4.89647268356445,
+        "windows_per_s": 204.22864878969105
+      },
+      "120": {
+        "mean": 582.884773860375,
+        "std": 1.4409418034957477,
+        "min": 581.3561074435711,
+        "p50": 583.0801628530025,
+        "p95": 584.2180512845516,
+        "reps_ms": [
+          583.0801628530025,
+          581.3561074435711,
+          584.2180512845516
+        ],
+        "timed_iters": 5,
+        "ms_per_window": 4.857373115503125,
+        "windows_per_s": 205.87259331763735
+      }
+    },
+    "core_only": {
+      "1": {
+        "mean": 1.7056767269968987,
+        "std": 0.00948211133184092,
+        "min": 1.6986539214849472,
+        "p50": 1.7019134759902954,
+        "p95": 1.7164627835154533,
+        "reps_ms": [
+          1.7164627835154533,
+          1.7019134759902954,
+          1.6986539214849472
+        ],
+        "timed_iters": 100,
+        "ms_per_window": 1.7056767269968987,
+        "windows_per_s": 586.2775660664907
+      },
+      "8": {
+        "mean": 3.7099829129874706,
+        "std": 0.0010899097831564182,
+        "min": 3.708831835538149,
+        "p50": 3.710117805749178,
+        "p95": 3.710999097675085,
+        "reps_ms": [
+          3.708831835538149,
+          3.710999097675085,
+          3.710117805749178
+        ],
+        "timed_iters": 100,
+        "ms_per_window": 0.46374786412343383,
+        "windows_per_s": 2156.344163202085
+      },
+      "32": {
+        "mean": 10.39163338020444,
+        "std": 0.011372921098230328,
+        "min": 10.382245555520058,
+        "p50": 10.388374626636505,
+        "p95": 10.404279958456755,
+        "reps_ms": [
+          10.388374626636505,
+          10.404279958456755,
+          10.382245555520058
+        ],
+        "timed_iters": 100,
+        "ms_per_window": 0.3247385431313887,
+        "windows_per_s": 3079.4004011879842
+      },
+      "64": {
+        "mean": 19.231384601444006,
+        "std": 0.05001329665748246,
+        "min": 19.195698369294405,
+        "p50": 19.209905974566936,
+        "p95": 19.288549460470676,
+        "reps_ms": [
+          19.209905974566936,
+          19.288549460470676,
+          19.195698369294405
+        ],
+        "timed_iters": 100,
+        "ms_per_window": 0.3004903843975626,
+        "windows_per_s": 3327.8935098201146
+      },
+      "120": {
+        "mean": 34.77159963800894,
+        "std": 0.023658358702188773,
+        "min": 34.750264562797135,
+        "p50": 34.7674912201208,
+        "p95": 34.797043131108865,
+        "reps_ms": [
+          34.797043131108865,
+          34.750264562797135,
+          34.7674912201208
+        ],
+        "timed_iters": 57,
+        "ms_per_window": 0.2897633303167411,
+        "windows_per_s": 3451.092306631406
+      }
+    }
+  },
+  "memory": {
+    "1": {
+      "after_load_MB": 8.79150390625,
+      "inference_peak_MB": 17.07373046875,
+      "reserved_peak_MB": 22.0,
+      "activation_delta_MB": 8.2822265625
+    },
+    "8": {
+      "after_load_MB": 8.79736328125,
+      "inference_peak_MB": 17.21533203125,
+      "reserved_peak_MB": 22.0,
+      "activation_delta_MB": 8.41796875
+    },
+    "32": {
+      "after_load_MB": 8.81494140625,
+      "inference_peak_MB": 17.6953125,
+      "reserved_peak_MB": 24.0,
+      "activation_delta_MB": 8.88037109375
+    },
+    "64": {
+      "after_load_MB": 8.83935546875,
+      "inference_peak_MB": 18.33935546875,
+      "reserved_peak_MB": 22.0,
+      "activation_delta_MB": 9.5
+    },
+    "120": {
+      "after_load_MB": 8.88232421875,
+      "inference_peak_MB": 19.859375,
+      "reserved_peak_MB": 24.0,
+      "activation_delta_MB": 10.97705078125
+    }
+  }
+}
