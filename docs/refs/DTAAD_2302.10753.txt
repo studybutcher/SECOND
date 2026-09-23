@@ -1,0 +1,1127 @@
+                                                                                                                                                                                        1
+
+
+
+
+                                               DTAAD: Dual Tcn-Attention Networks for
+                                             Anomaly Detection in Multivariate Time Series
+                                                                 Data
+                                                                                                         Ling-rui Yu
+
+
+                                              Abstract—Anomaly detection techniques enable effective anomaly detection and diagnosis in multi-variate time series data, which are
+                                              of major significance for today’s industrial applications. However, establishing an anomaly detection system that can be rapidly and
+                                              accurately located is a challenging problem due to the lack of anomaly labels, the high dimensional complexity of the data, memory
+arXiv:2302.10753v3 [cs.LG] 29 Apr 2024
+
+
+
+
+                                              bottlenecks in actual hardware, and the need for fast reasoning. In this paper, we propose an anomaly detection and diagnosis model,
+                                              DTAAD, based on Transformer and Dual Temporal Convolutional Network (TCN). Our overall model is an integrated design in which an
+                                              autoregressive model (AR) combines with an autoencoder (AE) structure. Scaling methods and feedback mechanisms are introduced
+                                              to improve prediction accuracy and expand correlation differences. Constructed by us, the Dual TCN-Attention Network (DTA) uses only
+                                              a single layer of Transformer encoder in our baseline experiment, belonging to an ultra-lightweight model. Our extensive experiments on
+                                              seven public datasets validate that DTAAD exceeds the majority of currently advanced baseline methods in both detection and diagnostic
+                                              performance. Specifically, DTAAD improved F1 scores by 8.38% and reduced training time by 99% compared to the baseline. The code
+                                              and training scripts are publicly available on GitHub at https://github.com/Yu-Lingrui/DTAAD.
+
+
+                                              Index Terms—Anomaly Detection, Deep Learning, Encoder–Decoder, Autoregressive, Unsupervised Learning.
+
+                                                                                                                ✦
+
+
+
+                                         1    I NTRODUCTION                                                         complexity of data types. The proliferation of IoT technol-
+                                                                                                                    ogy has led to the generation of vast amounts of data from
+                                         A      NOMALY detection refers to the detection of these
+                                                anomalies from the expected data that deviate sub-
+                                         stantially from the rest of the distribution, and they are
+                                                                                                                    numerous sensors and devices, which pose difficulties not
+                                                                                                                    only in volume but also in diversity, complicating accurate
+                                         then labeled as anomalies. Multivariate time series are ubiq-              data analysis. Moreover, modern applications demand high
+                                         uitous in the real world, and anomaly detection in this                    responsiveness, necessitating rapid reasoning for quick re-
+                                         regard has always been a research hotspot of the times                     covery and optimal service quality. Time series databases,
+                                         [1]. Anomaly detection techniques are now widely used in                   often comprising data from various engineering devices
+                                         various application domains such as finance [2], epidemic                  interacting with the environment, humans, or other sys-
+                                         [3], industry, cyber hacking, credit fraud, power industry,                tems, frequently exhibit uncertainty and temporal trends.
+                                         unmanned vehicles, healthcare, and many data-driven in-                    Hence, accurately identifying anomalies and distinguishing
+                                         dustries like distributed computing, urban IoT, robotics,                  non-conforming observations against the temporal trend
+                                         traffic, and sensor network monitoring [4], satellite aviation,            is crucial. However, the scarcity of labeled data and the
+                                         etc., and are particularly prominent in data mining, prob-                 diversity of outlier types exacerbate the challenge. Tradi-
+                                         abilistic statistics [5], machine learning [6], [7], computer              tional supervised learning models face limitations in direct
+                                         vision [8], etc. In recent years, anomaly detection methods                application, while unsupervised learning may prove effec-
+                                         suitable for Deep Learning (DL) have been all the rage.                    tive in other domains [11]. Furthermore, beyond anomaly
+                                         DL has shown great ability in learning complex data such                   detection, pinpointing the root cause of anomalies is essen-
+                                         as temporal data, streaming media data, graphical spatial                  tial, requiring multi-category predictions to determine both
+                                         data, and high-dimensional data, raising the upper limit of                the presence of an anomaly and its source. In summary,
+                                         various learning tasks. DL for anomaly detection is referred               addressing multivariate time series anomaly detection in
+                                         to as deep anomaly detection [9], [10], which is performed                 modern applications entails overcoming challenges related
+                                         by deep neural networks to learn features to determine                     to data complexity, inference speed, and anomaly source
+                                         or get anomaly scores to achieve the purpose of anomaly                    tracking.
+                                         detection, and it is usually performed in the context of                       Existing solutions. Conventional anomaly detection
+                                         prediction.                                                                methods are generally based on machine learning for pro-
+                                                                                                                    cessing, which can be basically subdivided into three cases:
+                                             Challenges. In contemporary data science research, de-
+                                                                                                                    supervised learning [12], unsupervised learning [13], [14],
+                                         tecting anomalies in large-scale databases has become in-
+                                                                                                                    [15] and weakly supervised learning [16], depending on the
+                                         creasingly challenging due to the growing richness and
+                                                                                                                    labeling of the data. However, in most real cases, the time se-
+                                                                                                                    ries often lack labels, and the collected data are often stream-
+                                         •   This paper has been accepted to Knowledge-Based Systems
+                                                                                                                    ing time series data. At the same time, labeling anomalies
+                                                                                                                               2
+
+requires high expert cost and this does not guarantee that all   so the computational complexity of the model for long
+anomaly types are accurately labeled, hence unsupervised         sequences is larger and the training is slower. A simple
+learning is widely used, such as based on the statistical        transformer-based codec may not be able to recognize little
+distribution (HBOS) [17], based on distance (KNN) [18],          anomalies when the proportion of data anomalies is too
+based on density estimation (LOF, LFCOF) [19], [20], based       small. Therefore, we propose a Transformer and Time Series
+on clustering (EM, OC-SVM, SVDD) [21], [22], [23]. Al-           Convolution Based Anomaly Detection Model (DTAAD).
+though there are many unsupervised methods available,            Convolutional networks can outperform RNN in many se-
+they cannot handle the intrinsic features of time series data,   quence modeling tasks [35], while avoiding common pitfalls
+and these classical methods do not take into account the         of recursive models, such as the inability to model quickly
+temporal correlation, making it difficult to capture inductive   or gradient explosion/disappearance. In addition, using a
+information effectively in real-life scenarios. In addition,     convolutional network instead of a recursive network can
+the dependencies between high-dimensional variables are          improve performance because it allows parallel computa-
+mostly ignored when dealing with multi-variate time series,      tion of the output. TCN represents causal, dilated convolu-
+which decreases the precision of prediction. Today, a large      tional networks in the time domain, which consists of 1D
+number of DL-based anomaly detection methods are avail-          convolutional layers with the same input and output length
+able, and they perform significantly better than traditional     [35]. TCN has many advantages, such as stable gradients,
+methods in solving challenging detection problems in a va-       parallelism, flexible receptive fields, and lower memory, etc.
+riety of real-world applications. Therefore, a major challenge   Next, we briefly describe the model architecture designed
+in multivariate time series prediction is how to capture the     with TCN for the main components and the reasons for
+dynamic correlation between multiple variables. In this case,    doing so: 1) We first send the input time series into two
+the model is more adaptable in realistic scenarios. Deep         parallel TCN components, which are called global TCN and
+learning methods use neural networks with more hidden            local TCN, to simulate the complex mode of both the global
+layers and are therefore able to capture complex latent          and local time patterns simultaneously. Next, the time series
+features and temporal correlations. For example, recurrent       learned from each temporal convolutional component are
+neural networks (RNN) [24] have pioneered sequence mod-          sent to a separate encoder with the aim of studying the
+eling. However, for long sequence modeling that may lead         dependencies between the different series; 2) After all, TCN
+to gradient disappearance, traditional RNN have difficulty       is a variant of the CNN, although the perceptual field can
+capturing remote dependencies. As its variants, long short-      be extended using dilated convolution, but still subject to
+term memory (LSTM) [25] and gated recurrent unit (GRU)           limitations, so we treat the overall model as an AR and
+[26] overcome their limitations. The crossover of the atten-     adding AE structure combined, using the Transformer’s
+tion mechanism [27] can also help RNN to model temporal          feature of being able to capture relevant information of any
+patterns, and by selecting the partial sequence that focuses     length for an integrated design. Using causal convolution
+on the input, the dependencies of the inputs and outputs can     and dilated convolution as local TCN and global TCN,
+be modeled. Time series prediction models with attention         introducing scaling methods and feedback mechanisms to
+mechanisms based on LSTM or GRU have been proposed               improve the prediction accuracy and expand the association
+and have shown good performance in mining long-term              discrepancy; 3) The perceptual field of dilation convolution
+dependencies and dealing with nonlinear dynamics [28].           is set for the global TCN, and the minimum number of
+However, this structure may perform less well for dynamic        convolution layers is set to ensure the global perceptual field
+periodic or aperiodic modes commonly encountered in com-         according to the input sequence length, convolution kernel
+plex environments, and recursive models such as LSTM             size, and dilation coefficient. Our experiments are to show
+require a large amount of computation are relatively slow        that this can assign an appropriate training loss ratio for a
+in speed, and cannot continuously and effectively simulate       Dual Time Series Convolution to local and global anomaly
+long-term trends [29], [30]. This is because the recursive       detection of the input sliding window sequence, a construc-
+model requires information about all previous units to be        tion that amplifies the reconstruction error. We construct
+passed first when performing the next inference step.            the Dual TCN-Attention Network (DTA) lightweight model
+    New approaches. Recent developments in the Trans-            with only a single-layer Transformer encoder for baseline
+former model [31] allow for a single-step inference using        experiments, which greatly reduces the computational com-
+a complete input sequence encoded by position, which             plexity of the Transformer. Our extensive experiments on
+can be detected faster than recursive methods using the          publicly available datasets validate that DTAAD exceeds
+Transformer by reasoning in parallel on the GPU. Moreover,       the majority of currently advanced baseline methods in
+the benefit of the Transformer’s encoding of large sequences     both detection and diagnostic performance. In particular,
+enables accuracy and inference time to be almost indepen-        DTAAD improved F1 scores by up to 8.38% and reduced
+dent of sequence length. Therefore, we use the Transformer       training time by up to 99% compared to baseline.
+to increase the temporal contextual information without              The main contributions of this paper are summarized as
+significantly increasing the computational overhead. For the     follows.
+above studies, many Transformer-based anomaly detection
+models [32], [33], [34] are proposed today with good results.       •   According to our knowledge, TCN is rarely intro-
+    Our model. Although the Deep anomaly detection con-                 duced in deep anomaly detection designs for multi-
+structed based on Transformer has the above advantages,                 variate time and is usually used only for pure pre-
+it has limitations in capturing long-term dependencies and              diction. We introduce it into anomaly detection and
+the complexity of each layer of Self-Attention is a O n2 · d ,
+                                                             
+                                                                        combine it with meta-learning (MAML) [36] to help
+                                                                                                                               3
+
+        maintain the best anomaly detection performance          misaligned due to anomalous disturbances such as noise
+        with limited data.                                       in the training data, which can lead to a more inefficient
+                                                                 representation. iii) Deep one-class Classification-based Mea-
+    •   Here, we propose an anomaly detection framework
+                                                                 sure. In this framework, the algorithm learns the single-
+        based on local and global attention based on the
+                                                                 classification discriminant boundary around the normal
+        architecture of AR and AE combined with the intro-
+                                                                 instances. This technique usually suffers from suboptimal
+        duction of a feedback mechanism to reflect anomaly
+                                                                 performance when the dimension increases in traditional
+        differences.
+                                                                 single-classification methods. A one-class neural network
+    •   The dilation convolution in the design of DTAAD is       (OC-NN) model was proposed in [43] for efficient anomaly
+        only set to the minimum convolution layers ensur-        detection on complex data. OC-NN combines the rich data
+        ing the global perception field. In addition, only a     representation capabilities of deep network extraction to
+        single-layer transformer encoder is used. This model     create tightly enveloped single-class targets around nor-
+        belongs to the ultra-lightweight model, and the train-   mal data. [44] fuses the multiscale temporal features of
+        ing time is reduced by 99% compared with other           the intermediate layers through a hierarchical clustering
+        baseline methods.                                        mechanism, which captures temporal dynamics at multiple
+                                                                 scales using an expansive recurrent neural network with
+    •   DTAAD obtained the most advanced anomaly detec-          skip connections. The disadvantage of single classification
+        tion results in benchmark tests for most real applica-   is that its model may be ineffective in datasets with high-
+        tions.                                                   dimensional distributions within normal classes, and the
+                                                                 detection performance depends on the anomaly measure of
+2   R ELATED W ORKS                                              single classification.
+
+2.1 Deep Unsupervised & Weakly Supervised Anomaly
+Detection                                                        2.2   Transformers for Deep Anomaly Detection
+In recent years, deep unsupervised learning [32], [37] and       Many anomaly detection models [33], [34] based on Trans-
+deep weakly supervised learning [38] anomaly detection           former [31] have been proposed today with good results. Its
+methods have been widely studied for their ability to ob-        ability in point-by-point representation and unified mod-
+tain complex internal relationships directly from unlabeled      eling of pairwise associations is shown to be tremendous,
+data or a small part of finitely labeled data through net-       and we find that the distribution of self-attention weights at
+work feature extraction learning. Most studies are based         each time point can reflect rich associations with the whole
+on the following three main categories: i) Deep distance-        sequence. In [33], a new converter of anomalous attention
+based Measure. Depth distance-based anomaly detection            mechanism is technically proposed to compute association
+seeks to study characteristic representations dedicated to       differences, and a very large and very small strategy is
+specific types of distance anomalies. One drawback of            designed to amplify the positive anomaly discriminability of
+traditional distance-based methods is that they cannot be        association differences. [34] proposed TranAD, which uses
+effective in multidimensional data, while depth-distance-        an attention-based serial encoder to capture trends in the
+based anomaly detection techniques can overcome this             temporal data and make fast inferences. We use it as one
+limitation well by first projecting the data into a low-         of the baseline experiments since outperforms most current
+dimensional space before distance measurement. In [39], a        baselines.
+ranking model-based framework RAMODO was proposed                    In our baseline experiments, our model DTAAD is com-
+to make a specific low-dimensional representation of ultra-      pared with the most popular and advanced TranAD [34],
+high-dimensional data based on random distances. Repre-          LSTM-NDT [45], DAGMM [46], OmniAnomaly [47], MS-
+sentative Neighbors [40], which projects high-dimensional        CRED [48], MAD-GAN [49], USAD [29], MTAD-GAT [50],
+data to a low-dimensional space through sparse opera-            CAE-M [51], and GDN [30]. These approaches offer unique
+tions and learns to explore representative neighborhood fea-     advantages in abnormality detection and diagnosis, but
+tures through self-representation. However, distance-based       each also has disadvantages in terms of performance on var-
+methods tend to be more computationally intensive, and           ious time series datasets. In summary, the main disadvan-
+secondly, the detection capability is limited by inherent        tages include 1) Limited view of the local context window,
+drawbacks. ii) Deep clustering-based Measure. Anomaly            which makes it unable to capture global information and
+detection based on deep clustering focuses on making the         incapable of detecting long-term anomalies; 2) High com-
+anomalies significantly deviate from the clustering clus-        plexity of the model, requiring significant computational
+ters in the studied representation space, which is more          resources and training time, particularly for graph neural
+effective than the traditional clustering methods. In [41],      networks and recurrent networks; 3) Noise-sensitive, the
+Ruff et al. proposed Deep SVDD, a deep anomaly de-               method is prone to generate many false positives when
+tection method, to aggregate ordinary data into a tight          training data contains high noise, limiting its capability
+hypersphere. A dual self-encoder network was designed            for complex behavior learning. In short, it is unable to
+in [42], which robustly represents the latent features and       balance performance and the accuracy of global prediction
+reconfiguration constraints on noise, embedding the inputs       in high-dimensional data. We developed the DTAAD model
+into a latent space for clustering. However, the performance     with a strong generalization ability for learning by using
+of this method for anomaly detection relies strongly on          different public training datasets as a way to easier detection
+the clustering effect, and the clustering process may be         of anomalies in the test data. In this task, we optimize
+                                                                                                                                                                    4
+
+                                                                                  TABLE 1
+                                                          Glossary of terms used in the paper and their explanations
+
+        descriptions                   Symbol                           Meaning
+    a set of multivariate            n
+                                       (i)  (i)        (i)
+                                                           o
+                                  T = x1 , x2 . . . , xT                It is a set of fully observed time series with a time stamp T .
+         time series
+          arbitrary
+                                                 zi,t                   The zi,t ∈ Rm denotes the value of t time series i.
+        observations
+          observed                                                      Observed values are not independent but exhibit some kind of structure, such as a
+                                              p (z1:t )
+     time-dependence                                                    1st-order Markov chain.
+    non-linear mapping
+                                     p ( zi,t | zi,t−1 , xi,1:t )       Non-linear relationship of observations with potential space and inputs.
+         probability
+                                                                        Noise is generated according to a certain signal-to-noise ratio with the variation of
+        white noise                               ϵt
+                                                                        input time.
+                                                                        The resulting predicted value is reconstructed with the input value according to the
+      anomaly score                              si
+                                                                        input window to produce the error as an exception score.
+    encoding network                                                    where ϕe is the encoding network with the parameters combined with the input ẑ
+                                            ϕe (ẑ; Θe )
+       parameters                                                       of TCN.
+    decoding network                                                    where ϕd is the decoding network with the parameters combined with the hidden
+                                            ϕd (h; Θd )
+       parameters                                                       state h of encoder.
+          loss                             ∥O − Xt ∥2                   Calculate the loss with L2-norm.
+
+
+the performance bottleneck of anomaly detection with a                                                •    Anomaly detection, i.e., For an input training time
+significant reduction in training time.                                                                    series T , our aim is to use the sliding window for
+                                                                                                           subsequent h-step predictions, where h ≥ 1. We
+                                                                                                           predict that xT +h based on the known T , we need to
+3     BACKGROUND                                                                                           predict the value of Y = {yT , . . . , yT +h }, yt ∈ {0, 1}
+                                                                                                           for detecting anomaly events at h time steps after T .
+3.1     Problem Definition
+                                                                                                                      n predict the next sequenceo of xT +h+k
+                                                                                                           Similarly, we
+We now discuss the input sequence, which is a group of                                                     based on x1+k (i) , x(i) 2+k , . . . , xT +k (i) , k ∈ R+ ,
+fully observed time series with a time stamp T                                                             The sliding window size is generally set to a fixed
+                                                                                                           value.
+                             T = {x1 , x2 . . . , xT }
+Because a given input time series is obtained after it has                                            •    Anomaly diagnosis, i.e., Global qualitative analy-
+been fully observed, statisticians call the constant dynamics                                              sis of each dimension is performed based on the
+stationary. Thus, the estimates of the entire series obey the                                              anomaly detection results of all input timings, and
+following conditional probability distribution:                                                            the time period of each anomaly is accurately iden-
+                                                                                                           tified to analyze n
+                                                                                                                             the severity of the oanomaly. we
+                                 T                                                                                              (i) (i)         (i)
+                                 Y                                                                         will forecast Y = y1 , y2 , . . . , yT +h , where yt ∈
+                      p(x) =            p ( xt | x1 , . . . , xt−1 )                      (1)                    m
+                                  t=1
+                                                                                                           {0, 1} indicates which patterns of the data point are
+                                                                                                           anomalous at the τ time tamp.
+Given an input multivariate time series
+                        XN Xm n                        o
+                                                l
+                 T =                           zi,1:t0                                          3.2       Data Preprocessing
+                              i=1       l=1
+                                                                                                In the real world, due to various natural or extreme events
+                h                           i
+       l          l      l           l               l
+where zi,1:t   ≜ zi,1 , zi,2 , ..., zi,1:t    and zi,1:t   ∈ Rm denotes
+             0                            0              0
+                                                                                                and other different reasons, the collected time series data are
+the value of time series i in the l-th dimension at time
+                                                                                                often disturbed by some noise in addition to system failures,
+t where each datapoint xt ∈ Rm , ∀t. Here, N represents                                         etc. To enable our model training to be more effective, we
+the number of samples in the dataset and m refers to the
+                                                                                                standardize the training and test data and add white noise
+number of time dimensions. Our goal is to make the model
+                                                                                                with a signal-to-noise ratio of 50 dB as data enhancement.
+conform to the following conditional probability distribu-
+                                                                                                Experimental testing demonstrated that the addition of ap-
+tion:
+                                                                                                propriate noise did indeed enhance the generalization abil-
+                                                tY
+                                                 0 +τ
+                                            
+ p zli,t0 +1:t0 +τ zli,1:t0 , xli,1:t0 +τ ; Θ =
+                                                       
+                                                      p zli,t zli,1:t−1 , xli,1:t ; Θ
+                                                                                      
+                                                                                          (2)   ity and robustness of the model against noise interference,
+                                               t=t0 +1                                          and finally slice into sliding time windows
+We will predict the time series for the next τ time steps, be-                                                               xt − min (T )
+cause single-step prediction is convenient for experiments,                                                        x̂t ←                                           (3)
+                                                                                                                        max (T ) − min (T ) + ϵ
+our subsequent  baseline experiments let the model learn the
+                  l   l
+                                                                                                                                     PN         2
+parameters p zi,t    zi,1:t−1 , xli,1:t ; Θ based on single-step                                                                          (x̂t )
+                                                                                                                     SN R = 10log10 P1N         2                  (4)
+prediction. Since unsupervised learning does not have well-                                                                             1 (ϵt )
+labeled data, our main goal is to achieve the following two                                                                           ϵt
+effects:                                                                                                                  xt = x̂t +                               (5)
+                                                                                                                                     100
+                                                                                                                                                                                                          5
+
+
+
+
+Fig. 1. Dual Tcn-Attention Network (DTANet). This model mainly consists of two parts, i.e., a Tcn-based approximate autoregression layer and a
+Transformer-based encoder-decoder layer. Among them, TCN is generally a fixed layer in order to satisfy the receptive field, and the encoding
+layer can be integrated multiple times. Different attentions are sent to the decoder through the residual connection and the final prediction of the
+local attentions is sent back to the global TCN together with the original input overlay by a copy operation, finally, the two losses are reconstructed
+according to a certain proportion λ.
+
+
+where x̂t and ϵt denote the signal and noise, N represents                   paragraphs describe the details of the building blocks one
+the number of samples in the dataset, and the signal-to-                     by one.
+noise ratio SNR is in dB. where max (T ) and min (T ) are
+the minimum and maximum vectors in the training time-                           Our network, concluded in Fig 1, is an approximate
+series T . ϵ is a very small constant added to prevent divide-               autoregressive architecture. We suppose that our AR net-
+by-zero overflow, and the entire input data has a range                      work distribution QΘ ( zi,t0 :T | zi,1:t0 −1 , xi,1:T ) consists of a
+of (0, 1+ ). We consider a fixed local contextual window                     product of likelihood factors:
+of length K as Wt = {xt−K+1 , . . . , xt }. We use copy fill                                                            T                                          T
+                                                                                                                                                                                                        (7)
+                                                                                                                        Y                                          Y
+                                                                              QΘ ( zi,t0 :T | zi,1:t0 −1 , xi,1:T ) =          QΘ ( zi,t | zi,1:t−1 , xi,1:T ) =          ℓ ( zi,t | θ (hi,1:t , Θ))
+for t < K and transform the input time series T into the                                                                t=t0                                       t=t0
+
+sliding windows W = {W1 , . . . , Wt }. We use W as the                      parametrized by the hidden state hi,t of the AR model:
+model training, and Ŵ as the test sequences to replace
+T . Our aim is to generate reconstruction errors from the                                                                hi,t = h (xi,t , Θ)                                                            (8)
+predicted values to the original values based on the input
+                                                                             In (7), the likelihood ℓ ( zi,t | θ (hi,1:t , Θ)) is a fixed distribu-
+window, which are then used as anomaly scores si . Here,
+                                                                             tion whose parameters are given by a function θ (hi,1:t , Θ)
+we select the anomaly threshold automatically using the
+                                                                             of the AR model hidden state hi,t , Θ is the AR model pa-
+Peak Over Threshold (POT) [52] approach and then combine
+                                                                             rameter, which strictly consumes all previous hidden states
+all abnormal labels yi (si ≥ POT (si )) into a total abnormal
+                                                                             hi,1:t . h in (8) is the functional function implemented in the
+distribution:
+                                                                             AR section, as detailed in the training computational flow
+                            D = ∨ yi                       (6)
+                                      i                                      diagram referable in Fig.5. The basic formula for the codec
+                                                                             part is as follows:
+4     M ETHODOLOGY                                                                                       h = ϕe (ẑ; Θe ) , z = ϕd (h; Θd )                                                             (9)
+                                                                                                                                                                                          !2
+4.1   Model Framework                                                                                                          P
+                                                                                                                                       xt − ϕd (ϕe (ẑ; Θe ) ; Θd )
+Overall Architecture. Figure 1 illustrates our overall model                                                                xt ∈X                                                                      (10)
+DTAAD. Our overall model can be approximated as an                            {Θ∗e , Θ∗d } = arg min
+                                                                                              Θe ,Θd                                                     n
+autoregressive model (AR). The first half of the model con-
+                                                                                                                                                                            2
+sists of dual TCN, and the codec layer model (AE) is built                                             st = (xt − ϕd (ϕe (x; Θ∗e ) ; Θ∗d ))                                                            (11)
+based on the Transformer in the back. DTAAD utilizes two
+temporal convolutional structures, causal convolution, and                   where ϕe is the encoding network with the parameters Θe
+dilated convolution as local TCN and global TCN, which                       and ϕd is the decoding network with the parameters Θd . ẑ is
+will generate the same number of temporal prediction out-                    the output of the AR part.n is the number of total datasets.
+puts as the input, and then into a Transformer encoding                      st is a reconstruction error-based anomaly score of xt .
+layer for capturing the dependencies between multiple se-
+                                                                                Dual TCN. The overall part consists of two parts, Local
+ries. Then, the global attention and local attention output
+                                                                             Tcn and Global Tcn. TCN is dependent on two main criteria:
+from the coding layer are flowed into a specific decoding
+                                                                             the output length of the network is the equal to the input,
+layer according to the residual connection [53], and the final
+                                                                             and there is no leakage of information from the past to the
+prediction results of the local attention are feedback to the
+                                                                             future. Input time series X ∈ RN ×d . Excluding the fill-and-
+global TCN and the original input overlay by the replication
+                                                                             crop operation in TCN, its single-layer basic computational
+operation, and finally, the reconstruction errors obtained
+                                                                             flow is as follows:
+based on the two sets of prediction values are combined in a
+certain proportion to obtain the training loss. The following                                      Z = W eight-N orm (Conv1D (X ))                                                                     (12)
+                                                                                                                                            6
+
+             F = Dropout (Leaky Re lu (Z))               (13)
+             n                   o
+                (i) (i)      (i)
+where X = x1 , x2 . . . , xT       with dmodel channels. The
+Z is output after 1D convolutional network and Weight
+normalization [54]. The F is the final output of pass-
+ing Z through LeakyRelu [55] and Dropout [56] where
+Leaky Re lu = max (0, Z) + leak · min (0, Z), the leak is
+a very small constant. Now we introduce these two Tcn
+structures one by one (see below). Local Tcn: Figure 2
+demonstrates its basic design structure.
+    Due to the excellent ability of convolutional structures
+in capturing features and parallel computation, we ap-
+ply causal convolution [57] to our local temporal con-              Fig. 2. Local TCN (Causal Convolutions). This is the structure consisting
+                                                                    of three sets of hidden layers, The convolution kernel of size k = 3, Each
+volution section. For causality, given an input sequence            layer pads k − 1 inputs from the leftmost.
+T = {x1 , x2 . . . , xT }, the i-th element xt of its output
+sequence may be based on only a small segment of the input
+sequence. Obviously, the elements in the output sequence
+can only depend on the elements whose index precedes it in
+the input sequence. As mentioned before, to guarantee that
+an output tensor has the same length as the input tensor, we
+need to perform zero padding. The zero padding length is
+(Kernel -1) to maintain all layers at the same length as the
+input. As we know from the figure, for each element in the
+output sequence, its latest dependency in the input sequence
+has the same index as itself. So in causal convolution, the
+input xt at moment t can only reach the current layer output        Fig. 3. Global TCN (Dilated Convolutions). This is the structure consist-
+                                                                    ing of three sets of hidden layers, The convolution kernel of size k = 3,
+X t,l at moment t , and the output is convolved with the            Each layer pads bn−1 · (k − 1) inputs from the leftmost.
+earlier elements in the previous layer
+                                               
+             X t,l = f W l ∗ X t−k+1:t,l−1 + bl          (14)       where d is the dilation factor, k is the convolutional filter
+                                                                    size, s − d · i indicates the index to the past according to
+where ∗ denotes the convolutional operation, f (·) is the ac-
+tivation function, W l denotes convolutional kernels of size
+                                                                    d. d is equivalent to jumping a fixed step size between
+                                                                    two adjacent layers.In general, the received field r of a 1D
+k , bl is a bias term. Since models with causal convolution do
+                                                                    convolutional network with n layers and a kernel-size of k
+not have circular transfer, their training speed is superior
+                                                                    is
+to that of RNN. However, causal convolutions also have
+shortcomings, they usually need many layers to increase
+                                                                                          r = 1 + n · (k − 1)                (16)
+the receptive field, are computationally expensive for long         We set the size of the receptive field to the input-length and
+sequences, and are prone to gradient vanishing. Therefore,          solve for the number of layers n such that it completely
+we only use it as a local detection, generally for a fixed          covers
+number of shallow layers. In the following presentation, we                             n = ⌈(l − 1)/(k − 1) ⌉                 (17)
+use dilation convolution to increase the order of magnitude
+of the receiver field as global detection without adding            where ⌈·⌉ is rounded up. We found that with a fixed kernel
+much computational cost. Global Tcn: Figure 3 demonstrates          size, the number of layers required for complete history
+its basic design structure.                                         coverage is a tensor of the linear input length, which causes
+                                                                    the network to become very deep, resulting in a model with
+    One desirability of the predictive model is that the value      a large number of parameters. From Figure 3, we see that
+of a particular observation in the output depends on all pre-       the final output value depends on the entire input coverage.
+vious inputs, i.e., all entries whose index is less than or equal   In general, the current receptive field width increases by
+to itself. This is possible when the size of the convolution        d · (k − 1) for each additional layer, where d = bn−1 , is the
+field is input-length, which we also call "complete history".       expansion base b, and n is the count of convolution layers.
+Next, we analyze our design: using dilation convolution as          Thus, the width of the receptive field w based on the b-
+global receptive field detection.                                   exponential expansion, the kernel size k , and the number of
+    The dilation convolution is equivalent to a jump fil-           layers n for the time-dilated convolution is
+ter [57], where each layer is expanded to achieve exponential                      n
+                                                                                   X                                        bn − 1
+receptive field expansion. For a 1-D sequence input x ∈ Rn              w =1+             (k − 1) · bi−1 = 1+ (k − 1) ·                  (18)
+and the filter f = {0, . . . , k − 1} ∈ R,the dilated convolution                   i=1
+                                                                                                                             b−1
+operation F on the element s of the sequence is defined             Further analysis shows us that the range of the acceptance
+as [35]                                                             field is indeed larger than the size of the input. However,
+                                      k−1
+                                       X                            the acceptance field is holed, i.e., there are entries in the
+            F (s) = (x∗d f ) (s) =        f (i) · xs−d·i     (15)
+                                                                    input sequence on which the output value does not depend.
+                                   i=0
+                                                                                                                                                          7
+
+                                                                             by independent learning to transform them. This h group of
+                                                                             transformed queries, keys and values is then sent in parallel
+                                                                             to the attention aggregation, which we call multi-headed at-
+                                                                             tention. It enables the model to focus on spatially diverse in-
+                                                                             formation at different embedding locations simultaneously.
+                                                                             The final transformation is performed by another linear pro-
+                                                                             jection layer. The matrix of learnable parameters is mapped
+                                                                                      Q
+                                                                             here, Wi ∈ Rdmodel dk , Wi K ∈ Rdmodel dk , WV
+                                                                                                                          i ∈R
+                                                                                                                               dmodel dv
+                                                                                                                                         .
+                                                                                         headi = Attention(QWQ     K      V
+                                                                                                             i , KWi , V Wi )                          (22)
+                                                                                                                                                  O
+                                                                              M ultiHead(Q, K, V) = Concat(head1 , ..., headh )W                       (23)
+                                                                             The second sublayer is a fully connected feedforward
+                                                                             neural network. It consists of two linear transformations
+                                                                             and an activation function in the middle, here we choose
+                                                                             LeakyRelu [55] as the activation function. In addition, we
+Fig. 4. Transformer (Encoder). Each base layer of the Encoder contains
+                                                                             use a positional encoding of the sine and cosine for the input
+two sub-layers. The first sub-layer is a multi-head attention mecha-         matrix [31].
+nism, which takes as its input q, k, v , respectively, from the outputs of
+global and local temporal convolutions, as well as the superposition          F F N (Ẑ) = (max(0, Z W1 + b1 ) + leak · min (0, Z W1 + b1 )) W2 + b2   (24)
+of corresponding positional encoding. The second sublayer is a fully
+connected feedforward neural network. Residual connections and layer         The second half of our model consists mainly of two en-
+normalization [58] are introduced for both sublayers.                        coders and two decoders (Fig. 1). We combine the output of
+                                                                             the first half of the model with the positional encoding to
+                                                                             obtain the input Ii , which is fed into two separate encoders:
+Given an expansion base b, a kernel size k , where k ≥ b and
+an input length l, in order to cover the entire input history,                     Ii1 = Layer-N orm (Ii + M ultiHead(Ii , Ii , Ii ))
+                                                                                                                                                       (25)
+the following inequalities must be satisfied:                                      Ii2 = Layer-N orm Ii1 + F F N (Ii1 )
+                                                                                                                       
+
+                               bn − 1                                        where i ∈ {1, 2}for the first and second encoder. The output
+                        (k − 1) ·       ≥l                  (19)
+                                b−1                                          of the encoder is then residual-connected to the feedforward
+Thus we can solve for b, to obtain the minimum number of                     layer and sent separately to the two decoders to obtain the
+layers we need to design the global TCN:                                     final two predicted outputs:
+                                                                                              Ii3 = Ii2 + F F N Ii2
+                                                                                                                    
+                          (l − 1) · (b − 1)
+                                              
+              n = logb                      +1              (20)                                                                      (26)
+                                                                                              Oi = Sigmoid F F N Ii3
+                                                                                                                        
+                              (k − 1)
+It has a computational complexity of O k · l · m2 per layer.
+                                                     
+                                                                             Sigmoid activation makes the output range Oi ∈ [0, 1] to
+Moreover, we only need to stack to the minimum number of                     perform the later error reconstruction with the normalized
+layers of the computation for the model to be able to access                 sliding window input. Figure 5: The basic computational
+the information of each input. Therefore, the total cost of                  flow diagram of the overall model is shown.
+memory usage is only O (k · l · n).
+    Transformer Encoder Figure 4 shows the basic structure.
+Transformer, as the most popular deep learning model in                      4.2    Training Procedure
+recent years [31], has gained significant advantages in nu-
+merous fields like natural language processing and machine                   Objective Function. Our overall goal is to jointly optimize
+vision. We will then briefly describe its architecture, which is             the two parts of the model. We calculate the error of the
+typically designed to be stackable and integrated. However,                  output prediction of each of the two decoders with respect
+when trying to decrease the model parameters, only its sin-                  to the original window input xt , and introduce the MSE as
+gle coding layer is introduced in our baseline experiments.                  our loss criterion:
+The core of the Transformer is the attention, Its attention-
+                                                                                                       Pn                2
+                                                                                                              (O1 − xi )
+scoring function takes a dot product attention, and the input                                    L1 = i=1
+                                                                                                                n                    (27)
+contains dk -dimensional query and key, and dv -dimensional                                            Pn                2
+                                                                                                          i=1 (O 2 − xi )
+value. Typically, in principle, we copy and map the inputs                                       L2 =
+into queries and key-value pairs and pack them into three                                                       n
+matrices Q (query), K (key), and V (value). We calculate the                 Our second part combines the generated losses of the two
+attention-scoring function output matrix as:                                 decoders in a balanced manner in a certain hyperparameter
+                                                                             ratio λ ∈ (0, 1) to obtain the total loss:
+                                              QKT
+                                                   
+          Attention(Q, K, V) = sof tmax √              V    (21)                      L (ψ (ϕ (·; Θe ; Θd ) ; W)) = λL1 + (1 − λ) L2                   (28)
+                                                dk
+where Q, K, V ∈ Rn×dmodel . We take here h = dmodel , which is               Our ultimate goal is to minimize the total loss:
+learned separately for different dimensions of time, and we
+                                                                                                      X
+                                                                               {Θ∗ , W∗ } = arg min       L (ψ (ϕ (·; Θe ; Θd ) ; W))                  (29)
+can use the different linear projections of the h sets obtained                                     Θ,W     x∈X
+                                                                                                                                             8
+
+                                                                               Algorithm 2 Network Testing Procedure
+                                                                               Input:
+                                                                                   Testing time series X ∈ RT ×M
+                                                                                   Ŵ for testing sliding windows
+                                                                                   Split time series into the dataset D̂ = {Xd }1:D , X ∈
+                                                                                   RW×M
+                                                                                   Encoders E1 and E2 , Decoders D1
+                                                                                   Set hyperparameters W
+                                                                                1: Well-trained parameters Θ̂e , Θ̂d
+                                                                                2: Randomly sample one batch from the dataset D̂
+                                                                                3: for t = 1 to Ŵ do
+                                                                                                                         
+                                                                                4:   Ô1 ← φD  ϕ
+                                                                                                 1
+                                                                                                   ϕ   X:,t ; Θ̂ E 1
+                                                                                                                       ; W
+                                                                                5:   s = Ô1 − Xt
+                                                                                                    2
+                                                                                6:   yi (si ≥ POT (si ))
+                                                                                7:   D = ∨ yi
+                                                                                            i
+                                                                               return: D;
+
+
+                                                                                   Meta Learning The anomaly rate of real-world collected
+                                                                               data tends to be low, which makes the training of the model
+                                                                               often under-fitted. We use model-agnostic meta learning
+                                                                               (MAML) [36] to do data augmentation, which helps us to
+Fig. 5. Overall computational flow. The likelihood ℓ ( ẑi,t | θi,t−2:t ) is   better the training effect with limited data. Formally, it is
+a distribution whose parameters θi,t−2:t are given by the Dual TCN             the training process in which a single gradient update is
+hidden state hi,t−2:t . The ϕ (zi,t ; Θd ) is the decoder network that ag-
+gregates the encoder inputs to the final output zi,t .                         recorded for the model fθ with parameters θ in each random
+                                                                               batch task Ti :
+Algorithm 1 Network Training Procedure                                                            θ′ i = θ − α∇θ LTi (fθ )             (30)
+Input:                                                                         where α is the learning rate and the total update of multiple
+    Training time series X ∈ RT ×M                                             gradients using multiple tasks after each training phase is
+    W for training sliding windows                                             completed:
+    Evolutionary hyperparameter ϵ                                                                             X
+    Split time series into the dataset D = {Xd }1:D , X ∈                                     θ = θ − β∇θ          LTi (fθ′ i )         (31)
+    RW×M                                                                                                    Ti ∼p(T )
+
+    Encoders E1 and E2 , Decoders D1 and D2                                    where β is the meta step size. It assembles the total sample
+    Set hyperparameters W                                                      batch of tasks Ti ∼ p (T ) to update the model fθ′ i , which
+    Iteration number N                                                         appearing Algorithm 1 (line 13).
+ 1: Randomly initialize Θe , Θd                                                   In the test session, we test the trained model using
+ 2: n ← 0                                                                      the test dataset, and we perform online decoding inference
+ 3: While n < N                                                                (summarized in Algorithm 2 ) using decoder 1 that obtains
+ 4:    Randomly sample one batch from the dataset D                            global attention and compares it with the real value to
+ 5:    for t = 1 to W do                                                       obtain the reconstruction loss.
+ 6:      O1 ← φD ϕ (ϕ (X:,t ; ΘE1 ) ; W)
+                   1
+
+                 D2
+ 7:      O2 ← φϕ (ϕ (X:,t ; ΘE2 ) ; W)
+                                                                               4.3   Anomaly Detection and Diagnosis
+ 8:      Ô1 ← φDϕ (ϕ (X:,t + O2 ; ΘE1 ) ; W)
+                   1
+
+                                                                               The online inference is performed sequentially for the input
+ 9:    L1 = Ô1 − Xt , L2 = ∥O2 − Xt ∥2
+                         2                                                     data of our current sliding window, and we will continu-
+10:    L (Θe , Θd ) = λL1 + (1 − λ) L2                                         ously obtain anomaly scores for each dimensional times-
+11:    Compute the gradient ∇θ L (Θe , Θd ) and update the                     tamp. We apply the POT [52] approach to select thresholds
+        network parameter {Θe , Θd }                                           dynamically and automatically for each dimension. During
+12:   n←n+1                                                                    offline training, the anomaly scores of each dimension will
+13:   Meta-Learn weights E1 , E2 , D1 , D2 using a random                      form a univariate time series S = {S1 , S2 , ...SN }. Next, we
+      batch                                                                    set the threshold thrF based on the offline anomaly score
+return: ϕ (·; Θe ; Θd );                                                       combined with the Extreme Value Theory (EVT).
+                                                                                   Essentially, this is a statistical method. Instead of manu-
+                                                                               ally setting thresholds and making any assumptions about
+where ϕ represents the overall network, Θe , Θd are the total                  the distribution, it uses "extreme value theory" following
+model parameters. W stands for the collection of hyperpa-                      Generalized Pareto Distribution (GPD) to fit the data and
+rameters, and ψ represents the overall learning mapping                        determine the proper value-at-risk (label) to dynamically set
+under the task of anomaly detection.                                           the threshold. The POT is the second theorem in EVT. In our
+                                                                                                                                                                           9
+
+           Predicted Anomaly         Anomaly Scores         True        Predicted                                                      TABLE 2
+                                                                                                                                  Dataset Information
+
+                                                                                    1.0                Dataset        Dimensions         Train          Test   Anomalies (%)
+                                                                                                       MSDS           10 (1)           146430     146430                5.37
+                                                                                                       SMD            38 (4)           708420     708420                4.16
+                               Above Peak Over                                                         WADI           123 (1)         1048571     172801                5.99
+                                Threshld(POT)                                                          SWaT           51 (1)           496800     449919               11.98
+
+
+
+
+                                                                                    Attention Scores
+    Local attention
+                                                                                                       MSL            55 (3)            58317      73729               10.72
+                                                                                                       SMAP           25 (55)          135183     427617               13.13
+                                                                                                       MBA            2 (8)            100000     100000                0.14
+                                                                                                       UCR            1 (4)              1600       5900                1.88
+                                                                                                       NAB            1 (6)              4033       4033                0.92
+
+
+                                                      Above Peak Over                                  priori.
+                                                       Threshld(POT)
+   Global attention
+                                                                                    0.5
+                                                                                                       5     E XPERIMENTS
+                                                                                                       In this chapter, we first describe the experimental dataset
+                                                                                                       and performance metrics. In our baseline experiments, our
+                                                                                                       model DTAAD is compared with the most popular and
+                                                                                                       advanced methods currently available1 . Finally, the neces-
+Fig. 6. Detection effect of two dimensions in the WADI dataset.                                        sity of the components of our model is verified by ablation
+                                                                                                       experiments.
+                                                                                                           We set the hyperparameters as described in the baseline
+experiments, I mainly focus on anomalies distributed at the                                            models in their respective papers. We used the PyTorch-
+high end. The GPD function is shown below:                                                             1.10.1 [59] library to train all models. For more experimental
+                                                1                                                     details refer to Appendix A.
+                                            γs − γ
+                                       
+   F̄ (s) = P ( S − thr > s| S > thr) ∼ 1 +            (32)
+                                             β                                                         5.1        Datasets
+Similar to [52], where thr is the initial threshold of anomaly                                         We adopt nine available datasets in our experiments (Seven
+scores. The part that exceeds the threshold is denoted as                                              of them are public data sets). We summarize their features
+S − thr, which follows the Generalized Pareto Distribution                                             in Table 2. Table 2 illustrates the details of these datasets,
+with parameters γ, β with high probability. we estimate                                                including the name, the number of entities, the number
+the values of parameters γ̂ and β̂ by Maximum Likelihood                                               of dimensions, the size of the train and test sets, and the
+Estimation(MLE). The final threshold thrF can be computed                                              anomaly rate for each test subset. For example, the MBA
+by the following formula:                                                                              dataset has 8 entities, each with 2 dimensions.
+                                                 !
+                                   qN −γ̂                                                                           Numenta Anomaly Benchmark (NAB): This is a bench-
+                                        
+                            β̂                                                                               1)
+             thrF ≃ thr −                     −1           (33)                                                     mark containing a real data stream with marked
+                            γ̂     Nthr
+                                                                                                                    exceptions, containing multiple real data traces [60].
+where q is the probability of desire to observe S > thr,                                                            The current NAB data includes various kinds of
+N is the number of observations, and Nthr is the number                                                             sources, from social media to temperature sensors
+of peaks i.e. the number of Si s.t. Si > thr. Here are                                                              to server network utilization, and incorrectly tagged
+two parameters (thr) and (q ) that can be set based on                                                              sequences of anomalies were removed from our
+experience: low quantile (e.g., less than 7% and q (10−4 )),                                                        experiments.
+seeing Appendix A.                                                                                           2)     HexagonML (UCR) dataset: is a dataset consisting of
+    Impact of Dual Attention. Figure 6 shows the detec-                                                             multivariate time series [61] that was used in the
+tion effect of two dimensions in the WADI dataset with                                                              KDD 2021 cup. We used only the portion of the
+double attention. With global and local attention mecha-                                                            dataset obtained from the real world.
+nisms, peaks and noise in the data receive extremely high                                                    3)     MIT-BIH Supraventricular Arrhythmia Database
+attention. The model is designed with the dimensionality of                                                         (MBA): This is the first generally available set
+the dataset as the amounts of heads for the multi-headed                                                            of standard test materials for the evaluation of
+attention. We chose this number to enable the model to
+                                                                                                         1. We use publicly available code sources for most of the
+fully consider features across all dimensions, enhancing its                                           baselines. LSTM-NDT https://github.com/khundman/telemanom,
+ability to capture relationships and patterns in the data,                                             openGauss               https://gitee.com/opengauss/openGauss-AI,
+which makes the attention scores of different dimensions                                               DAGMM        https://github.com/tnakae/DAGMM,       OmniAnomaly
+also have some spatial correlation. Thus, our model is well                                            https://github.com/NetManAIOps/OmniAnomaly,                  MS-
+                                                                                                       CRED       https://github.com/7fantasysz/MSCRED,       MAD-GAN
+able to detect anomalies in each dimension separately and                                              https://github.com/LiDan456/MAD-GANs. Other models were
+specifically, using the context of the entire time series as                                           re-implemented by us.
+                                                                                                                                     10
+
+             arrhythmia detectors, and it has been used in about       then apply a discount factor to diminish the weight of lower
+             500 basic studies of cardiac dynamics [62]. This is a     ranks. This implies that higher-ranked projects contribute
+             popular large dataset.                                    more to loss, and their normalized value eliminates inter-
+      4)     Soil Moisture Active Passive (SMAP) dataset: This         dataset dimensionality differences. Finally, the loss value
+             is a 25-dimensional public dataset collected by           obtained is divided by the theoretical best-ranked loss value.
+             NASA [45] that contains telemetry information             NDCG@P% and HitRate@P% priorities are considered in
+             anomaly data extracted from Anomalous Event               the same way.
+             Anomaly (ISA) reports from spacecraft monitoring
+             systems.                                                  5.3   Results and Analysis
+      5)     Mars Science Laboratory (MSL) dataset: This is a          Tables 3 and 4 show the P, R, AUC, F1, AUC*, and F1*
+             SMAP-like dataset that includes actuator and sensor       scores of DTAAD and baseline methods on nine datasets.
+             data from the Mars rover itself [45]. We adopt only       Our model outperforms most of the baseline, both on the
+             the three non-trivial ones (A4, C2, and T1).              full dataset and on the training dataset with only 20%.
+      6)     Secure Water Treatment (SWaT) dataset: This is the col-   Specifically, on the total dataset (i.e., the union of these nine
+             lected data obtained from 51 sensors of the critical      datasets) compared to the mean of all comparison baselines
+             infrastructure in the continuously operating water        (i.e., the arithmetic mean of the DTAAD model scores for
+             treatment system [63] (water level, flow rate, etc.).     the nine datasets is compared to the arithmetic mean of
+      7)     Water Distribution (WADI) dataset: WADI is currently      the respective scores of all other models when summed
+             used for security analysis of water distribution          and then averaged), the F1 score for DTAAD improved by
+             networks and experimental evaluation of detection         8.38%, F1* score by 8.97%, AUC score by 1%, and AUC*
+             mechanisms for physical attacks and potential cy-         score by 9.98%.
+             ber [64]. Longer collection time for the dataset,              On the complete training dataset, the DTAAD model
+             including 14 days of normal scenarios and 2 days of       outperforms most baseline models except for TranAD. For
+             attack scenarios. For the WADI dataset, we utilized       UCR and SMD datasets, TranAD achieves the highest F1
+             zero values to fill in the missing values.                and AUC scores. On SWaT, TranAD achieves the highest F1
+      8)     Server Machine Dataset (SMD): This is a new 5-            score (0.8143), while on WADI it attains the highest AUC
+             week-long dataset collected from a large Internet         score (0.8998). Similarly, on 20% of the training dataset,
+             company [47], and SMD is divided into two subsets         the DTAAD model outperforms the baseline models on all
+             of equal size as the training and test sets. Similar to   datasets except for WADI, where OmniAnomaly performs
+             MSL, we use the four non-trivial sequences in this        well and achieves the highest AUC* score (0.7912) and the
+             dataset.                                                  highest F1* score (0.1016). In summary, our model outper-
+      9)     Multi-Source Distributed System (MSDS) Dataset: This      forms most of the baseline, both on the full dataset and on
+             is multi-source distributed system data for AI anal-      the training dataset with only 20%.
+             ysis, consisting of application logs, metrics, and             Specifically, DAGMM models perform well on short
+             distributed traces [65].                                  datasets such as NAB, UCR, MBA, and SMAP, but their
+                                                                       detection capabilities significantly diminish when dealing
+                                                                       with longer sequences. This is because it does not use the
+5.2        Performance Metrics                                         sliding sequence window. DTAAD’s global TCN can fully
+We adopt Precision, Recall, F1-Score and AUC value (area               map long sequence information and is therefore capable of
+under the ROC curve) as metrics to evaluate the DTAAD                  detecting anomalies. Other models such as OmniAnomaly,
+and baseline models.                                                   CAE-M, and MSCRED employ sequential input but this
+                                  TP                                   can lead to near-normal trends being ignored due to the
+                P recision =                        (34)               accumulation of long-term information. In contrast, DTAAD
+                               TP + FP
+                                                                       uses a ratio feedback mechanism to amplify anomalies.
+                                  TP                                   More recent models like USAD, MTAD-GAT, and GDN also
+                         Recall =                     (35)
+                              TP + FN                                  only use local windows as inputs for the reconstruction of
+                     2 × P recision × Recall                           the prediction sequence. Both TranAD and DTAAD utilize
+               F1 =                                   (36)             position embeddings, which undoubtedly enhance the abil-
+                       P recision + Recall
+                                                                       ity to capture long-term trends in sequences. However, due
+    To validate the model performance with limited data,               to the inherent limitations of Transformer, which can only
+we also set up to test the above metrics on all model                  see the local context window, TranAD fails to fully compen-
+training with only 20% training data (AUC* and F1*). We                sate for this. Moreover, although OmniAnomaly performs
+also introduced two other metrics to measure performance:              well on the 20% WADI dataset, this is due to the specific
+HitRate@P% is to rank the anomaly scores and determine                 reconstruction design of the model being better suited for
+how many true dimensions are hit by the top-ranked pri-                fewer datasets with higher noise levels. However, DTAAD
+ority [47]. For instance, if at timestamp t, 2 dimensions              only slightly trails OmniAnomaly in terms of F1* and AUC*
+are labeled anomalous in the ground truth, HitRate@100%                on the WADI dataset. On the other hand, all models perform
+would consider top 2 dimensions and HitRate@150%                       relatively poorly on the full WADI dataset due to its mas-
+would consider 3 dimensions. NDCG@P% is the Normal-                    sive sequence length and complex dimensions. However, it
+ized Discounted Cumulative Gain (NDCG) [47]. The main                  becomes clear that DTAAD outperforms all other models in
+principle of NDCG is to compute the anomaly scores, and                terms of detection accuracy in the WADI dataset.
+                                                                                                                                          11
+
+                                                               TABLE 3
+Performance comparison of DTAAD with baseline methods on the nine complete datasets. The P, R, AUC, and F1 represent the Precision, Recall,
+              and Area under the ROC curve and F1 scores respectively. The best AUC and F1 scores are highlighted in bold.
+
+
+                                      NAB                                         UCR                                  MBA
+ Method
+                         P        R       AUC        F1          P            R       AUC      F1         P        R      AUC        F1
+ LSTM-NDT              0.5333   0.6667   0.8316    0.5926      0.5320    0.8293      0.9780   0.5230    0.9206   0.9717   0.9779   0.9455
+ DAGMM                 0.7621   0.7291   0.8571    0.7452      0.5336    0.9717      0.9915   0.6889    0.9474   0.9900   0.9857   0.9682
+ OmniAnomaly           0.8420   0.6666   0.8329    0.7441      0.8345    0.9999      0.9980   0.9097    0.8560   1.0000   0.9569   0.9224
+ MSCRED                0.8521   0.6700   0.8400    0.7501      0.5440    0.9717      0.9919   0.6975    0.9271   1.0000   0.9798   0.9622
+ MAD-GAN               0.8665   0.7011   0.8477    0.7751      0.8537    0.9890      0.9983   0.9164    0.9395   1.0000   0.9835   0.9688
+ USAD                  0.8421   0.6667   0.8332    0.7443      0.8953    1.0000      0.9990   0.8953    0.8954   0.9990   0.9702   0.9444
+ MTAD-GAT              0.8422   0.7273   0.8222    0.7803      0.7813    0.9973      0.9979   0.8762    0.9019   1.0000   0.9720   0.9483
+ CAE-M                 0.7919   0.8020   0.8020    0.7969      0.6982    1.0000      0.9958   0.8223    0.8443   0.9998   0.9662   0.9155
+ GDN                   0.8130   0.7873   0.8543    0.7999      0.6895    0.9989      0.9960   0.8159    0.8833   0.9893   0.9529   0.9333
+ TranAD                0.8889   0.9892   0.9541    0.9364      0.9407    1.0000      0.9994   0.9694    0.9576   1.0000   0.9886   0.9783
+ DTAAD                 0.8889   0.9999   0.9996    0.9412      0.8880    1.0000      0.9988   0.9407    0.9608   1.0000   0.9896   0.9800
+                                      SMAP                                        MSL                                  SWaT
+ Method
+                         P        R       AUC        F1          P            R       AUC      F1         P        R      AUC        F1
+ LSTM-NDT              0.8522   0.7325   0.8601    0.7877      0.6287    1.0000      0.9531   0.7720    0.7777   0.5108   0.7139   0.6166
+ DAGMM                 0.8068   0.9890   0.9884    0.8887      0.7362    1.0000      0.9715   0.8481    0.9932   0.6878   0.8435   0.8127
+ OmniAnomaly           0.8129   0.9418   0.9888    0.8727      0.7847    0.9923      0.9781   0.8764    0.9781   0.6956   0.8466   0.8130
+ MSCRED                0.8174   0.9215   0.9820    0.8663      0.8911    0.9861      0.9806   0.9362    0.9991   0.6769   0.8432   0.8071
+ MAD-GAN               0.8156   0.9215   0.9890    0.8653      0.8515    0.9929      0.9861   0.9168    0.9592   0.6956   0.8462   0.8064
+ USAD                  0.7481   0.9628   0.9890    0.8419      0.7949    0.9912      0.9795   0.8822    0.9977   0.6879   0.8460   0.8143
+ MTAD-GAT              0.7992   0.9992   0.9846    0.8882      0.7918    0.9825      0.9890   0.8769    0.9719   0.6958   0.8465   0.8110
+ CAE-M                 0.8194   0.9568   0.9902    0.8828      0.7752    1.0000      0.9904   0.8734    0.9698   0.6958   0.8465   0.8102
+ GDN                   0.7481   0.9892   0.9865    0.8519      0.9309    0.9893      0.9815   0.9592    0.9698   0.6958   0.8463   0.8102
+ TranAD                0.8104   0.9998   0.9887    0.8953      0.9037    0.9999      0.9915   0.9493    0.9977   0.6879   0.8438   0.8143
+ DTAAD                 0.8220   0.9999   0.9911    0.9023      0.9038    0.9999      0.9918   0.9495    0.9697   0.6957   0.8462   0.8101
+                                      WADI                                        SMD                                  MSDS
+ Method
+                         P        R       AUC        F1          P            R       AUC      F1         P        R      AUC        F1
+ LSTM-NDT              0.0137   0.7822   0.6720    0.0270      0.9735    0.8439      0.9670   0.9041    0.9998   0.8011   0.8012   0.8896
+ DAGMM                 0.0759   0.9980   0.8562    0.1411      0.9102    0.9913      0.9953   0.9490    0.9890   0.8025   0.9012   0.8861
+ OmniAnomaly           0.3157   0.6540   0.8197    0.4259      0.8880    0.9984      0.9945   0.9400    0.9998   0.7963   0.8981   0.8867
+ MSCRED                0.2512   0.7318   0.8411    0.3740      0.7275    0.9973      0.9920   0.8413    0.9998   0.7982   0.8942   0.8878
+ MAD-GAN               0.2232   0.9123   0.8025    0.3587      0.9990    0.8439      0.9932   0.9149    0.9981   0.6106   0.8053   0.7578
+ USAD                  0.1874   0.8297   0.8724    0.3057      0.9061    0.9975      0.9934   0.9496    0.9913   0.7960   0.8980   0.8829
+ MTAD-GAT              0.2819   0.8013   0.8822    0.4170      0.8211    0.9216      0.9922   0.8684    0.9920   0.7965   0.8983   0.8835
+ CAE-M                 0.2783   0.7917   0.8727    0.4118      0.9081    0.9670      0.9782   0.9368    0.9909   0.8440   0.9014   0.9115
+ GDN                   0.2913   0.7932   0.8778    0.4261      0.7171    0.9975      0.9925   0.8343    0.9990   0.8027   0.9106   0.8900
+ TranAD                0.3959   0.8295   0.8998    0.5360      0.9051    0.9973      0.9933   0.9490    0.9998   0.8625   0.9012   0.8904
+ DTAAD                 0.9017   0.3910   0.6950    0.5455      0.8463    0.9974      0.9892   0.9147    0.9999   0.8026   0.9013   0.8905
+
+
+
+    Table 5 shows the diagnostic performance where H                    included it in Table 6 for comparison). Instead of sequential
+and N refer to HitRate and NDCG (with complete data).                   inference over a sliding window, we use the Transformer’s
+Table 6 shows the average training and inference time                   positional encoding to take the complete sequence as input
+in seconds per epoch for all models on each dataset (we                 and combine a single Transformer encoding layer with a
+conducted model inferencing immediately after each epoch                lightweight design of a Dual TCN. This is a strong indication
+of training), calculated on the same machine and GPU with               of the lightweight nature of our model and the advantages
+the same random seeds. Table 5 illustrates that DTAAD is                of having positional encoding.
+capable of detecting abnormalities in the range of 40.87%-
+62.35% and that DTAAD is able to increase the diagnostic                5.4       Ablation Experiment
+scores of SMD and MSD by 7.5% and 18%, respectively,                    Table 7 shows the necessity of each component of the
+compared to the baseline method. Table 6 shows that the                 DTAAD model and provides the following findings:
+training and inference time of DTAAD is 62%-99% below
+the baseline methods (Given that TranAD’s model also                          •    The complete DTAAD model outperforms all non-
+belongs to a very lightweight design, its model training                           complete models on a 20% training dataset, espe-
+and inference time does not significantly differ from the                          cially on larger datasets (e.g., WADI&SMD), with
+model training time of this paper’s model, thus we have not                        significant improvements. This reflects the necessity
+                                                                                   of all components.
+                                                                                                                                  12
+
+                               TABLE 4
+Performance comparison of DTAAD with baseline methods with 20% of
+ the training dataset. The AUC* and F1* represent the AUC with 20%
+training data and F1 score with 20% training data. The best AUC* and
+                   F1* scores are highlighted in bold.
+
+
+                      NAB               UCR              MBA
+Method
+                  AUC*      F1*    AUC*       F1*    AUC*       F1*
+LSTM-NDT         0.8012   0.6211   0.8912   0.5197   0.9616   0.9281
+DAGMM            0.7826   0.6124   0.9811   0.5717   0.9670   0.9395
+OmniAnomaly      0.8128   0.6712   0.9727   0.7917   0.9406   0.9216
+MSCRED           0.8298   0.7012   0.9636   0.4928   0.9498   0.9107
+MAD-GAN          0.8193   0.7108   0.9958   0.8215   0.9549   0.9191
+USAD             0.7268   0.6782   0.9968   0.8539   0.9698   0.9426
+MTAD-GAT         0.6957   0.7012   0.9975   0.8672   0.9689   0.9426
+CAE-M            0.7313   0.7127   0.9927   0.7526   0.9617   0.9003
+GDN              0.8300   0.7014   0.9938   0.8030   0.9672   0.9317
+TranAD           0.9216   0.8420   0.9983   0.9211   0.9946   0.9897
+DTAAD            0.9330   0.9057   0.9984   0.9220   0.9955   0.9912
+                      SMAP              MSL              SWaT
+Method
+                  AUC*      F1*    AUC*       F1*    AUC*       F1*
+LSTM-NDT         0.7006   0.5417   0.9519   0.7607   0.6689   0.4144
+DAGMM            0.9880   0.8368   0.9605   0.8009   0.8420   0.8000
+OmniAnomaly      0.9878   0.8130   0.9702   0.8423   0.8318   0.7432
+MSCRED           0.9810   0.8049   0.9796   0.8231   0.8384   0.7921
+MAD-GAN          0.9876   0.8467   0.9648   0.8189   0.8455   0.8011
+USAD             0.9884   0.8380   0.9650   0.8191   0.8439   0.8088
+MTAD-GAT         0.9815   0.8226   0.9783   0.8025   0.8460   0.8080   Fig. 7. F1 score and ROC/AUC score with window size.
+CAE-M            0.9893   0.8313   0.9837   0.7304   0.8459   0.7842
+GDN              0.9888   0.8412   0.9415   0.8960   0.8391   0.8073
+TranAD           0.9884   0.8936   0.9856   0.9171   0.8461   0.8093
+DTAAD            0.9894   0.8996   0.9864   0.9212   0.8460   0.8087
+                      WADI              SMD             MSDS
+Method
+                  AUC*      F1*    AUC*       F1*    AUC*       F1*
+LSTM-NDT         0.6636   0.0000   0.9562   0.6753   0.7812   0.7911
+DAGMM            0.6496   0.0629   0.9844   0.8985   0.7762   0.8388
+OmniAnomaly      0.7912   0.1016   0.9857   0.9351   0.5612   0.8388
+MSCRED           0.6028   0.0412   0.9767   0.8003   0.7715   0.8282
+MAD-GAN          0.5382   0.0936   0.8634   0.9317   0.5001   0.7389
+USAD             0.7012   0.0734   0.9855   0.9214   0.7614   0.8390
+MTAD-GAT         0.6268   0.0521   0.9799   0.6662   0.6123   0.8249
+                                                                       Fig. 8. Visualization of the attention matrix.
+CAE-M            0.6110   0.0782   0.9570   0.9319   0.6002   0.8390
+GDN              0.6122   0.0413   0.9812   0.7108   0.6820   0.8390
+TranAD           0.6852   0.0698   0.9847   0.8794   0.8112   0.8389
+                                                                       outperformed state-of-the-art on nine benchmark datasets,
+DTAAD            0.7818   0.0977   0.9866   0.8941   0.8115   0.8390
+                                                                       improving F1 and F1* scores by 8.38% and 8.97% for
+                                                                       complete and small datasets, respectively, and providing a
+                                                                       promising solution for unsupervised anomaly detection on
+    •   Of all the model components, TCN_Global and
+                                                                       high-dimensional data. Our model as a whole combines AR
+        TCN_Local design components have the most signif-
+                                                                       and AE, with the addition of the Transformer to capture the
+        icant performance improvement. Therefore, remov-
+                                                                       information of long sequences. Designing causal convolu-
+        ing these two components resulted in the biggest
+                                                                       tion and dilated convolution as local TCN and global TCN,
+        drop in F1* scores and AUC* for the majority of
+                                                                       introducing a feedback mechanism, loss ratio to improve
+        the datasets. This decline is even more obvious for
+                                                                       detection accuracy and expand association differences.
+        the WADI and SMD datasets (In particular, the full
+                                                                           Our proposed DTAAD is a well-generalized model that
+        dataset which is not shown here), proving the neces-
+                                                                       can be suitable for various devices. It can achieve this goal
+        sity of TCN_Global for large datasets.
+                                                                       with up to 99% less training time than baseline methods,
+                                                                       making DTAAD ideal for modern industrial and embedded
+6   C ONCLUSION                                                        systems requiring accurate, fast anomaly prediction.
+In this article, we design an anomaly detection model
+DTAAD based on Transformer and Dual TCN, which allows                  A PPENDIX A
+for rapid and specific anomaly detection and diagnosis of              HYPER-PARAMETERS
+multivariate time series. The codec in Transformer allows              We trained our model using the stochastic gradient descent
+for fast modeling in an experimental study, DTAAD largely              optimizer AdamW [66] with an initial learning rate of 0.01,
+                                                                                                                                                            13
+
+                                                                                TABLE 5
+                                                                  Comparison of diagnosing Performance.
+
+
+                                                                  SMD                                                          MSDS
+  Method
+                               H@100%                  H@150%             N@100%             N@150%        H@100%      H@150%      N@100%       N@150%
+  LSTM-NDT                           0.1920             0.2951             0.2586            0.3175         0.3166      0.4551       0.2966      0.3780
+  DAGMM                              0.2617             0.4333             0.3153            0.4151         0.4627      0.6021       0.5169      0.5658
+  OmniAnomaly                        0.2839             0.4365             0.3338            0.4231         0.3967      0.5652       0.4545      0.5125
+  MSCRED                             0.2322             0.3469             0.2297            0.2962         0.3672      0.5180       0.4609      0.5164
+  MAD-GAN                            0.3856             0.5589             0.4277            0.5292         0.4030      0.5785       0.4681      0.5522
+  USAD                               0.3095             0.4769             0.3534            0.4515         0.4325      0.6005       0.5179      0.5711
+  MTAD-GAT                           0.4912             0.5885             0.4126            0.4822         0.3493      0.4777       0.3759      0.4530
+  CAE-M                              0.2530             0.4171             0.2047            0.3010         0.4107      0.4707       0.5174      0.5528
+  GDN                                0.2276             0.3382             0.2921            0.3570         0.3143      0.4386       0.2980      0.3724
+  TranAD                             0.3710             0.5509             0.4106            0.5204         0.4392      0.5797       0.4688      0.5528
+  DTAAD                              0.4087             0.6235             0.4298            0.5565         0.4636      0.6034       0.4887      0.5718
+
+
+                             TABLE 6                                                           and a weight decay of 10−5 (using bias correction by de-
+  Comparison of training and inference time per epoch in seconds.                              fault). We also used the step-scheduler with a step size of
+                                                                                               5 [67] and a learning decay rate of 0.9. For POT parameters,
+Method         NAB UCR       MBA      SMAP      MSL     SWaT    WADI       SMD      MSDS       q = 10−4 for all data sets, low quantile is 0.07 for SMAP, 0.01
+LSTM-NDT       2.10   1.74   5.56      5.52     5.25    5.29     59.42     74.63    72.22
+                                                                                               for MSL, and 0.001 for others. Note that the number of heads
+                                                                                               in the multi-head attention mechanism is controlled to be
+DAGMM          4.38   4.16   14.92     3.81     3.28    3.70     80.98     40.87    37.51
+                                                                                               the same size as the dataset size. We use 80% of each time
+OmniAnomaly    7.65   5.59   21.97     5.41     4.26    5.68     96.47     55.39    55.42
+                                                                                               series as the training set and the remaining 20% of data as
+MSCRED         51.77 52.49 118.43      3.23     6.69    36.73   269.81     47.53    21.93
+                                                                                               the testing set. Since this is an unsupervised method, we do
+MAD-GAN        7.96   5.14   30.06     5.90     5.25    5.56    104.63     62.96    57.05
+                                                                                               not use any labeling information in the training process. For
+USAD           6.24   4.22   24.17     4.73     4.24    4.54    109.52     50.19    46.56
+                                                                                               each time series, only the next timestamp is predicted and
+MTAD-GAT       29.01 19.42   46.62    203.01 257.48     20.78   1962.43 1312.82 260.82
+                                                                                               marked as normal or abnormal. We use the early stopping
+CAE-M          4.50   3.88   13.49    37.47    115.19   8.25    1105.12    620.42   110.57
+                                                                                               strategy to train DTAAD, i.e., we stop the training as soon
+GDN            16.77 11.76   31.80    12.47    19.34    11.88   812.61     161.99   117.07
+                                                                                               as the verification accuracy starts to drop, this is done to
+DTAAD          0.51   0.23   0.97      1.47     2.70    0.37     52.33     24.47     6.38
+                                                                                               prevent overfitting and reduce the performance fluctuations
+                                                                                               on the validation set. We incorporate the moving average
+                              TABLE 7                                                          of validation performance to smooth fluctuations and make
+  Ablation Study - F1* scores and AUC* for DTAAD and its ablated                               more informed decisions about the optimal stopping point.
+                              versions.                                                        The objective of considering trends rather than single fluctu-
+                                                                                               ations is to ensure a more stable convergence of the model.
+                         NAB                       UCR                       MBA               We use the following hyperparameter values.
+Method
+                  AUC*          F1*           AUC*         F1*           AUC*         F1*
+                                                                                                  •   Window size = 10
+DTAAD             0.9330      0.9057          0.9984     0.9220          0.9955     0.9912        •   Loss weights generated by the two decoders = 0.8
+ Tcn_Local        0.9325      0.9050          0.9980     0.9188          0.9952     0.9910        •   Convolutional kernel size of TCN = 3 & 4
+ Tcn_Global       0.9325      0.8987          0.9980     0.9084          0.9952     0.9902
+                                                                                                  •   Number of layers in transformer encoders = 1
+ Callback         0.9325      0.9055          0.9980     0.9195          0.9950     0.9903
+ Transformer      0.9325      0.9050          0.9980     0.9188          0.9926     0.9858
+                                                                                                  •   Number of layers of encoders feedforward units = 2
+                                                                                                  •   Hidden units in encoder layers = 16
+                        SMAP                       MSL                       SWaT
+Method                                                                                            •   Dropout in encoders = 0.2
+                  AUC*          F1*           AUC*         F1*           AUC*         F1*
+DTAAD             0.9892      0.8985          0.9864     0.9212          0.8460     0.8088
+ Tcn_Local        0.9869      0.8805          0.9196     0.6638          0.8459     0.8086
+                                                                                               A PPENDIX B
+ Tcn_Global       0.9870      0.8815          0.9316     0.6989          0.8459     0.8086     VISUALIZATION
+ Callback         0.9854      0.8688          0.9688     0.8356          0.8446     0.8000     The performance of the DTAAD model and its variants with
+ Transformer      0.9853      0.8682          0.9700     0.8412          0.8459     0.8086
+                                                                                               different sliding windows is illustrated as shown in Figure 7.
+                        WADI                       SMD                       MSDS              We found that if the window is too small or too large,
+Method
+                  AUC*          F1*           AUC*         F1*           AUC*         F1*      there are problems with contextual information not being
+DTAAD             0.7818      0.0977          0.9866     0.8941          0.8115     0.8390     captured and local anomalies potentially hidden in a large
+ Tcn_Local        0.7397      0.0832          0.9794     0.8417          0.8110     0.8389     number of data points in the window (F1 and AUC scores
+ Tcn_Global       0.7407      0.0835          0.9828     0.8654          0.5000     0.8389     drop). The window size of 10 provides a reasonable balance
+ Callback         0.7767      0.0957          0.9860     0.8940          0.8112     0.8388     between F1 scores and training time, and importantly we
+ Transformer      0.7762      0.0951          0.9862     0.8920          0.8110     0.8388     also found that when the model adds the Tcn_Global’s
+                                                                                                                                                     14
+
+design component, the final score rebounded as the window                    [20] M. Amer and M. Goldstein, “Nearest-neighbor and clustering
+size was increased. Figure 8, from its visualization of the                       based anomaly detection algorithms for rapidminer,” in Proc. of
+                                                                                  the 3rd RapidMiner Community Meeting and Conference (RCOMM
+attention matrix, we can see that global attention pays more                      2012), 2012, pp. 1–12.
+balanced attention to the overall trend, while local attention               [21] X. Pan, J. Tan, S. Kavulya, R. Gandhi, and P. Narasimhan, “Gane-
+will focus on the local anomalous part.                                           sha: Blackbox diagnosis of mapreduce systems,” ACM SIGMET-
+                                                                                  RICS Performance Evaluation Review, vol. 37, no. 3, pp. 8–13, 2010.
+                                                                             [22] B. Schölkopf, J. C. Platt, J. Shawe-Taylor, A. J. Smola, and R. C.
+R EFERENCES                                                                       Williamson, “Estimating the support of a high-dimensional distri-
+                                                                                  bution,” Neural computation, vol. 13, no. 7, pp. 1443–1471, 2001.
+[1]  M. Gupta, J. Gao, C. C. Aggarwal, and J. Han, “Outlier detection        [23] D. M. Tax and R. P. Duin, “Support vector data description,”
+     for temporal data: A survey,” IEEE Transactions on Knowledge and             Machine learning, vol. 54, no. 1, pp. 45–66, 2004.
+     data Engineering, vol. 26, no. 9, pp. 2250–2267, 2013.                  [24] D. E. Rumelhart, G. E. Hinton, and R. J. Williams, “Learning
+[2] Y. Wu, J. M. Hernández-Lobato, and G. Zoubin, “Dynamic covari-                representations by back-propagating errors,” nature, vol. 323, no.
+     ance models for multivariate financial time series,” in International        6088, pp. 533–536, 1986.
+     Conference on Machine Learning. PMLR, 2013, pp. 558–566.                [25] S. Hochreiter and J. Schmidhuber, “Long short-term memory,”
+[3] N. Wu, B. Green, X. Ben, and S. O’Banion, “Deep transformer                   Neural computation, vol. 9, no. 8, pp. 1735–1780, 1997.
+     models for time series forecasting: The influenza prevalence case,”     [26] K. Cho, B. Van Merriënboer, C. Gulcehre, D. Bahdanau,
+     arXiv preprint arXiv:2001.08317, 2020.                                       F. Bougares, H. Schwenk, and Y. Bengio, “Learning phrase rep-
+[4] S. Roberts, M. Osborne, M. Ebden, S. Reece, N. Gibson, and                    resentations using rnn encoder-decoder for statistical machine
+     S. Aigrain, “Gaussian processes for time-series modelling,” Philo-           translation,” arXiv preprint arXiv:1406.1078, 2014.
+     sophical Transactions of the Royal Society A: Mathematical, Physical    [27] D. Bahdanau, K. Cho, and Y. Bengio, “Neural machine trans-
+     and Engineering Sciences, vol. 371, no. 1984, p. 20110550, 2013.             lation by jointly learning to align and translate,” arXiv preprint
+[5] S.-E. Benkabou, K. Benabdeslem, V. Kraus, K. Bourhis, and B. Cani-            arXiv:1409.0473, 2014.
+     tia, “Local anomaly detection for multivariate time series by           [28] S.-Y. Shih, F.-K. Sun, and H.-y. Lee, “Temporal pattern attention for
+     temporal dependency based on poisson model,” IEEE Transactions               multivariate time series forecasting,” Machine Learning, vol. 108,
+     on Neural Networks and Learning Systems, 2021.                               no. 8, pp. 1421–1441, 2019.
+[6] W. Chen, H. Xu, Z. Li, D. Pei, J. Chen, H. Qiao, Y. Feng, and            [29] J. Audibert, P. Michiardi, F. Guyard, S. Marti, and M. A. Zu-
+     Z. Wang, “Unsupervised anomaly detection for intricate kpis                  luaga, “Usad: Unsupervised anomaly detection on multivariate
+     via adversarial training of vae,” in IEEE INFOCOM 2019-IEEE                  time series,” in Proceedings of the 26th ACM SIGKDD International
+     Conference on Computer Communications. IEEE, 2019, pp. 1891–                 Conference on Knowledge Discovery & Data Mining, 2020, pp. 3395–
+     1899.                                                                        3404.
+[7] L. Li, J. Yan, H. Wang, and Y. Jin, “Anomaly detection of time series    [30] A. Deng and B. Hooi, “Graph neural network-based anomaly
+     with smoothness-inducing sequential variational auto-encoder,”               detection in multivariate time series,” in Proceedings of the AAAI
+     IEEE transactions on neural networks and learning systems, vol. 32,          Conference on Artificial Intelligence, vol. 35, no. 5, 2021, pp. 4027–
+     no. 3, pp. 1177–1191, 2020.                                                  4035.
+[8] W. Luo, W. Liu, D. Lian, J. Tang, L. Duan, X. Peng, and S. Gao,          [31] A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones, A. N.
+     “Video anomaly detection with sparse coding inspired deep neu-               Gomez, Ł. Kaiser, and I. Polosukhin, “Attention is all you need,”
+     ral networks,” IEEE transactions on pattern analysis and machine             Advances in neural information processing systems, vol. 30, 2017.
+     intelligence, vol. 43, no. 3, pp. 1070–1084, 2019.                      [32] M. Ma, L. Han, and C. Zhou, “Btad: A binary transformer deep
+[9] S. Bulusu, B. Kailkhura, B. Li, P. K. Varshney, and D. Song,                  neural network model for anomaly detection in multivariate time
+     “Anomalous example detection in deep learning: A survey,” IEEE               series data,” Advanced Engineering Informatics, vol. 56, p. 101949,
+     Access, vol. 8, pp. 132 330–132 347, 2020.                                   2023.
+[10] G. Pang, C. Shen, L. Cao, and A. V. D. Hengel, “Deep learning for       [33] J. Xu, H. Wu, J. Wang, and M. Long, “Anomaly transformer: Time
+     anomaly detection: A review,” ACM Computing Surveys (CSUR),                  series anomaly detection with association discrepancy,” arXiv
+     vol. 54, no. 2, pp. 1–38, 2021.                                              preprint arXiv:2110.02642, 2021.
+[11] R. Chalapathy and S. Chawla, “Deep learning for anomaly detec-          [34] S. Tuli, G. Casale, and N. R. Jennings, “TranAD: Deep Transformer
+     tion: A survey,” arXiv preprint arXiv:1901.03407, 2019.                      Networks for Anomaly Detection in Multivariate Time Series
+[12] J. Liu, X. Song, Y. Zhou, X. Peng, Y. Zhang, P. Liu, D. Wu, and              Data,” Proceedings of VLDB, vol. 15, no. 6, pp. 1201–1214, 2022.
+     C. Zhu, “Deep anomaly detection in packet payload,” Neurocom-           [35] S. Bai, J. Z. Kolter, and V. Koltun, “An empirical evaluation
+     puting, vol. 485, pp. 205–218, 2022.                                         of generic convolutional and recurrent networks for sequence
+[13] T. Ergen and S. S. Kozat, “Unsupervised anomaly detection with               modeling,” arXiv preprint arXiv:1803.01271, 2018.
+     lstm neural networks,” IEEE transactions on neural networks and         [36] C. Finn, P. Abbeel, and S. Levine, “Model-agnostic meta-learning
+     learning systems, vol. 31, no. 8, pp. 3127–3141, 2019.                       for fast adaptation of deep networks,” in International conference on
+[14] Y. Shi, B. Wang, Y. Yu, X. Tang, C. Huang, and J. Dong, “Robust              machine learning. PMLR, 2017, pp. 1126–1135.
+     anomaly detection for multivariate time series through temporal         [37] X. Wang, D. Pi, X. Zhang, H. Liu, and C. Guo, “Variational
+     gcns and attention-based vae,” Knowledge-Based Systems, p. 110725,           transformer-based anomaly detection approach for multivariate
+     2023.                                                                        time series,” Measurement, vol. 191, p. 110791, 2022.
+[15] J. Zhang, Z. Li, K. Nai, Y. Gu, and A. Sallam, “Delr: A double-level    [38] Y. Liu, J. Liu, M. Zhao, S. Li, and L. Song, “Collaborative normality
+     ensemble learning method for unsupervised anomaly detection,”                learning framework for weakly supervised video anomaly detec-
+     Knowledge-Based Systems, vol. 181, p. 104783, 2019.                          tion,” IEEE Transactions on Circuits and Systems Ii-express Briefs,
+[16] Y. Zhou, X. Song, Y. Zhang, F. Liu, C. Zhu, and L. Liu, “Feature             2022.
+     encoding with autoencoders for weakly supervised anomaly de-            [39] G. Pang, L. Cao, L. Chen, and H. Liu, “Learning representations
+     tection,” IEEE Transactions on Neural Networks and Learning Systems,         of ultrahigh-dimensional data for random distance-based outlier
+     2021.                                                                        detection,” in Proceedings of the 24th ACM SIGKDD international
+[17] M. Goldstein and A. D. H.-b. O. Score, “A fast unsupervised                  conference on knowledge discovery & data mining, 2018, pp. 2041–
+     anomaly detection algorithm,” KI-2012: Poster and Demo Track, pp.            2050.
+     59–63.                                                                  [40] H. Liu, X. Xu, E. Li, S. Zhang, and X. Li, “Anomaly detection with
+[18] S. Ramaswamy, R. Rastogi, and K. Shim, “Efficient algorithms for             representative neighbors,” IEEE Transactions on Neural Networks
+     mining outliers from large data sets,” in Proceedings of the 2000            and Learning Systems, 2021.
+     ACM SIGMOD international conference on Management of data, 2000,        [41] L. Ruff, R. Vandermeulen, N. Goernitz, L. Deecke, S. A. Siddiqui,
+     pp. 427–438.                                                                 A. Binder, E. Müller, and M. Kloft, “Deep one-class classification,”
+[19] M. M. Breunig, H.-P. Kriegel, R. T. Ng, and J. Sander, “Lof:                 in International conference on machine learning. PMLR, 2018, pp.
+     identifying density-based local outliers,” in Proceedings of the 2000        4393–4402.
+     ACM SIGMOD international conference on Management of data, 2000,        [42] X. Yang, C. Deng, F. Zheng, J. Yan, and W. Liu, “Deep spectral
+     pp. 93–104.                                                                  clustering using dual autoencoder network,” in Proceedings of the
+                                                                                  IEEE/CVF conference on computer vision and pattern recognition, 2019,
+                                                                                  pp. 4066–4075.
+                                                                                                                                                      15
+
+[43] R. Chalapathy, A. K. Menon, and S. Chawla, “Anomaly detection            [55] A. L. Maas, A. Y. Hannun, A. Y. Ng et al., “Rectifier nonlinearities
+     using one-class neural networks,” arXiv preprint arXiv:1802.06360,            improve neural network acoustic models,” in Proc. icml, vol. 30,
+     2018.                                                                         no. 1. Atlanta, Georgia, USA, 2013, p. 3.
+[44] L. Shen, Z. Li, and J. Kwok, “Timeseries anomaly detection us-           [56] N. Srivastava, G. Hinton, A. Krizhevsky, I. Sutskever, and
+     ing temporal hierarchical one-class network,” Advances in Neural              R. Salakhutdinov, “Dropout: a simple way to prevent neural
+     Information Processing Systems, vol. 33, pp. 13 016–13 026, 2020.             networks from overfitting,” The journal of machine learning research,
+[45] K. Hundman, V. Constantinou, C. Laporte, I. Colwell, and                      vol. 15, no. 1, pp. 1929–1958, 2014.
+     T. Soderstrom, “Detecting spacecraft anomalies using lstms and           [57] A. v. d. Oord, S. Dieleman, H. Zen, K. Simonyan, O. Vinyals,
+     nonparametric dynamic thresholding,” in Proceedings of the 24th               A. Graves, N. Kalchbrenner, A. Senior, and K. Kavukcuoglu,
+     ACM SIGKDD international conference on knowledge discovery & data             “Wavenet: A generative model for raw audio,” arXiv preprint
+     mining, 2018, pp. 387–395.                                                    arXiv:1609.03499, 2016.
+[46] B. Zong, Q. Song, M. R. Min, W. Cheng, C. Lumezanu, D. Cho,              [58] J. L. Ba, J. R. Kiros, and G. E. Hinton, “Layer normalization,” arXiv
+     and H. Chen, “Deep autoencoding gaussian mixture model for                    preprint arXiv:1607.06450, 2016.
+     unsupervised anomaly detection,” in International conference on          [59] A. Paszke, S. Gross, F. Massa, A. Lerer, J. Bradbury, G. Chanan,
+     learning representations, 2018.                                               T. Killeen, Z. Lin, N. Gimelshein, L. Antiga et al., “Pytorch: An im-
+[47] Y. Su, Y. Zhao, C. Niu, R. Liu, W. Sun, and D. Pei, “Robust                   perative style, high-performance deep learning library,” Advances
+     anomaly detection for multivariate time series through stochastic             in neural information processing systems, vol. 32, 2019.
+     recurrent neural network,” in Proceedings of the 25th ACM SIGKDD         [60] S. Ahmad, A. Lavin, S. Purdy, and Z. Agha, “Unsupervised real-
+     international conference on knowledge discovery & data mining, 2019,          time anomaly detection for streaming data,” Neurocomputing, vol.
+     pp. 2828–2837.                                                                262, pp. 134–147, 2017.
+[48] C. Zhang, D. Song, Y. Chen, X. Feng, C. Lumezanu, W. Cheng,              [61] H. A. Dau, A. Bagnall, K. Kamgar, C.-C. M. Yeh, Y. Zhu,
+     J. Ni, B. Zong, H. Chen, and N. V. Chawla, “A deep neural network             S. Gharghabi, C. A. Ratanamahatana, and E. Keogh, “The ucr time
+     for unsupervised anomaly detection and diagnosis in multivariate              series archive,” IEEE/CAA Journal of Automatica Sinica, vol. 6, no. 6,
+     time series data,” in Proceedings of the AAAI conference on artificial        pp. 1293–1305, 2019.
+     intelligence, vol. 33, no. 01, 2019, pp. 1409–1416.                      [62] G. B. Moody and R. G. Mark, “The impact of the mit-bih arrhyth-
+[49] D. Li, D. Chen, B. Jin, L. Shi, J. Goh, and S. Ng, “Madgan: Mul-              mia database,” IEEE Engineering in Medicine and Biology Magazine,
+     tivariate anomaly detection for time series data with generative              vol. 20, no. 3, pp. 45–50, 2001.
+     adversarial networks: 703–716,” 2019.                                    [63] A. P. Mathur and N. O. Tippenhauer, “Swat: A water treatment
+[50] H. Zhao, Y. Wang, J. Duan, C. Huang, D. Cao, Y. Tong, B. Xu,                  testbed for research and training on ics security,” in 2016 inter-
+     J. Bai, J. Tong, and Q. Zhang, “Multivariate time-series anomaly              national workshop on cyber-physical systems for smart water networks
+     detection via graph attention network,” in 2020 IEEE International            (CySWater). IEEE, 2016, pp. 31–36.
+     Conference on Data Mining (ICDM). IEEE, 2020, pp. 841–850.               [64] C. M. Ahmed, V. R. Palleti, and A. P. Mathur, “Wadi: a water
+[51] Y. Zhang, Y. Chen, J. Wang, and Z. Pan, “Unsupervised deep                    distribution testbed for research in the design of secure cyber
+     anomaly detection for multi-sensor time-series signals,” IEEE                 physical systems,” in Proceedings of the 3rd international workshop
+     Transactions on Knowledge and Data Engineering, 2021.                         on cyber-physical systems for smart water networks, 2017, pp. 25–28.
+[52] A. Siffer, P.-A. Fouque, A. Termier, and C. Largouet, “Anomaly           [65] S. Nedelkoski, J. Bogatinovski, A. K. Mandapati, S. Becker, J. Car-
+     detection in streams with extreme value theory,” in Proceedings               doso, and O. Kao, “Multi-source distributed system data for ai-
+     of the 23rd ACM SIGKDD International Conference on Knowledge                  powered analytics,” in European Conference on Service-Oriented and
+     Discovery and Data Mining, 2017, pp. 1067–1075.                               Cloud Computing. Springer, 2020, pp. 161–176.
+[53] K. He, X. Zhang, S. Ren, and J. Sun, “Deep residual learning for         [66] D. P. Kingma and J. Ba, “Adam: A method for stochastic optimiza-
+     image recognition,” in Proceedings of the IEEE conference on computer         tion,” arXiv preprint arXiv:1412.6980, 2014.
+     vision and pattern recognition, 2016, pp. 770–778.                       [67] N. Saleh and M. Mashaly, “A dynamic simulation environment
+[54] T. Salimans and D. P. Kingma, “Weight normalization: A sim-                   for container-based cloud data centers using containercloudsim,”
+     ple reparameterization to accelerate training of deep neural net-             in 2019 Ninth International Conference on Intelligent Computing and
+     works,” Advances in neural information processing systems, vol. 29,           Information Systems (ICICIS). IEEE, 2019, pp. 332–336.
+     2016.
+

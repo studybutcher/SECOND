@@ -1,0 +1,41 @@
+{
+  "model": "SECOND",
+  "dataset": "SMAP",
+  "eval_range": [
+    0,
+    277952
+  ],
+  "concat_len": 427617,
+  "pot": {
+    "level": 0.98,
+    "scale": 1.04,
+    "threshold": 28.165335668945318
+  },
+  "target": "P-1",
+  "subseries": [
+    {
+      "subseries": "P-1",
+      "range": [
+        354374,
+        362879
+      ],
+      "rows": 8505,
+      "windows": 8435,
+      "how": "fwd",
+      "anomaly_rate": 0.08903378778897451,
+      "oracle": {
+        "f1": 0.9375730352695438,
+        "precision": 0.8824911764689639,
+        "recall": 0.999999986684421,
+        "threshold_pct": 98.76000000000295
+      },
+      "pot": {
+        "f1": 0.7768420072595267,
+        "precision": 0.9074732934613293,
+        "recall": 0.6790945315699797,
+        "threshold": 28.165335668945318
+      }
+    }
+  ],
+  "timestamp": "2026-09-22 22:49:35"
+}

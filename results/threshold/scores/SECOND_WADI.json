@@ -1,0 +1,17 @@
+{
+  "model": "SECOND",
+  "dataset": "WADI",
+  "ckpt": "/home/sdb/yrlcd/anamolybench/SECOND/checkpoint/1-casestudy/WADI/best.pt",
+  "window_length": 140,
+  "batch_size": 24,
+  "latent_size": 256,
+  "input_dim": 127,
+  "val": 0.35,
+  "seed": 42,
+  "init_score_n": 19860,
+  "init_score_requested": 20000,
+  "test_score_n": 11093,
+  "dropout_active": true,
+  "note": "main.py 未调用 model.eval()，分数含 Dropout 噪声，与阈值结果文档口径一致",
+  "timestamp": "2026-09-22 19:46:21"
+}

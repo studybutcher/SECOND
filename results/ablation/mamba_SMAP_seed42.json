@@ -24,22 +24,22 @@
     "midstack_share": 0.7647344370117543
   },
   "metrics": {
-    "f1": 0.9702894577664241,
-    "precision": 0.9718779562507384,
-    "recall": 0.9687161108565429,
-    "threshold": 99.50000000000333,
-    "TP": 41091,
-    "TN": 234275,
-    "FP": 1189,
-    "FN": 1327
+    "f1": 0.9683615983904907,
+    "precision": 0.9573129993878428,
+    "recall": 0.9796784381678347,
+    "threshold": 99.22000000000318,
+    "TP": 41556,
+    "TN": 233611,
+    "FP": 1853,
+    "FN": 862
   },
   "ckpt": {
-    "path": "/home/sdb/yrlcd/anamolybench/SECOND/checkpoint/ablation/mamba/SMAP/best.pt"
+    "path": "/home/sdb/yrlcd/anamolybench/SECOND/checkpoint/casestudy补充/SMAP/best.pt"
   },
   "env": {
     "gpu": "NVIDIA RTX 5880 Ada Generation",
     "cuda": "12.6",
     "torch": "2.14.0+cu126"
   },
-  "timestamp": "2026-09-12 14:10:53"
+  "timestamp": "2026-09-14 00:43:41"
 }

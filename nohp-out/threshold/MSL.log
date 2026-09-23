@@ -1,0 +1,35 @@
+==============================================================================================
+name: threshold_MSL
+backbone: mamba
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: test
+noise: 0
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=201.6167M  中间块=147.9926M (73.40%)
+*************
+dataset: MSL
+testname: threshold_MSL
+th: 98.26000000000269
+TP: 6542
+FP: 722
+FN: 101
+precision: 0.900605725632426 recall: 0.9847960244094596 f_score 0.9408161778386142
+--- POT (paramset=fixed, q=0.001, level=0.98, scale=1.0) ---
+  init_score n=20000  fit_ok=True  init_threshold=95.39981079101562  真EVT=100.101333649279
+  pot_dtaad    th=95.400007  F1=0.9338  P=0.8879  R=0.9848
+  pot_evt      th=100.101334  F1=0.4751  P=0.9844  R=0.3131
+  pot_dynamic  th=99.694766  F1=0.7125  P=0.9869  R=0.5574
+POT saved to: results/threshold/SECOND_MSL_fixed.json
+metrics saved to: results/ablation/mamba_MSL_seed42.json

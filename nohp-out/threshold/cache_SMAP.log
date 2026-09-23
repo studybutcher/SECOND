@@ -1,0 +1,12 @@
+load data of: SMAP
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (135183, 25)
+test set shape:  (427617, 25)
+test set label shape:  (427617,)
+--- SMAP: W=70 batch=60 test_windows=277882 ---
+test_score: n=277882  251.6s  range=[4.9974, 34.5448]
+init_score: n=135113  range=[6.0878, 34.6504]
+saved: results/threshold/scores/SECOND_SMAP.npz

@@ -1,0 +1,35 @@
+==============================================================================================
+name: threshold_WADI
+backbone: mamba
+seed: 42
+batch: 24
+window_length 140
+latent_size 256
+trian or test: test
+noise: 0
+load data of: WADI
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (20000, 127)
+test set shape:  (17281, 127)
+test set label shape:  (17281,)
+test_data: (11233, 127)
+val_data: (6048, 127)
+params=222.7439M  中间块=147.9926M (66.44%)
+*************
+dataset: WADI
+testname: threshold_WADI
+th: 99.8300000000035
+TP: 174.98250174982496
+FP: 18.017498250174985
+FN: 0.0
+precision: 0.9066450398102311 recall: 0.9999999428514318 f_score 0.9510320390856472
+--- POT (paramset=fixed, q=0.001, level=0.98, scale=1.0) ---
+  init_score n=19860  fit_ok=True  init_threshold=166.1107635498047  真EVT=173.66132062317257
+  pot_dtaad    th=166.148880  F1=0.6272  P=0.4569  R=1.0000
+  pot_evt      th=173.661321  F1=0.0000  P=0.0000  R=0.0000
+  pot_dynamic  th=173.339548  F1=0.0000  P=0.0000  R=0.0000
+POT saved to: results/threshold/SECOND_WADI_fixed.json
+metrics saved to: results/ablation/mamba_WADI_seed42.json

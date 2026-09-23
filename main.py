@@ -9,7 +9,7 @@ import torch
 import numpy as np
 import torch.optim as optim
 from utils import get_data, get_data_dim, get_loader
-from eval_method import bf_search, adjust_predicts
+from eval_method import bf_search, adjust_predicts, pot_eval, DTAAD_LM, DTAAD_Q
 from tqdm import tqdm
 import argparse
 from model.mamba import ModelArgs
@@ -57,6 +57,21 @@ class ExpConfig(argparse.ArgumentParser):
         self.add_argument('--backbone', type=str, default='mamba',
                           choices=list(BACKBONE_REGISTRY), help='中间块消融变体')
         self.add_argument('--seed', type=int, default=42, help='随机种子')
+        #* ---- 阈值选择策略（POT），默认 'bf' 时行为与改动前完全一致 ----
+        self.add_argument('--threshold-mode', type=str, default='bf',
+                          choices=['bf', 'pot_dtaad', 'pot_evt', 'pot_dynamic',
+                                   'both', 'all'],
+                          help="bf=原有 oracle 阈值搜索（默认）；both=bf+pot_dtaad；all=bf+三种 POT")
+        self.add_argument('--pot-q', type=float, default=DTAAD_Q, help='SPOT 风险水平')
+        self.add_argument('--pot-level', type=float, default=None,
+                          help='初始阈值分位数；None 时按 DTAAD 的 lm_d 表取')
+        self.add_argument('--pot-scale', type=float, default=None,
+                          help='阈值放大系数；None 时按 DTAAD 的 lm_d 表取')
+        self.add_argument('--pot-init-n', type=int, default=-1,
+                          help='init_score 取训练集前多少个窗口；<=0 表示用**全部**训练窗口，'
+                               '与 DTAAD 的 pot_eval(lossTfinal, ...)（全程训练集）一致')
+        self.add_argument('--pot-fixed', action='store_true',
+                          help='用全数据集固定参数 (q=1e-3, level=0.98, scale=1) 作为对照列')
         self.parse_args(namespace=self)
         if self.dataset == 'SWaT':
             self.window_length = 35
@@ -65,7 +80,8 @@ class ExpConfig(argparse.ArgumentParser):
             # self.window_length = 140
         # elif self.dataset =='MSL':
         #     # self.window_length = 70
-        #     self.latent_size=256 #?256？512貌似就不好了？
+        #     self.latent_size=256 #?256？512貌981226
+        # 似就不好了？
         #*下面是为了超参来设置的
         
 
@@ -96,6 +112,39 @@ def add_noise(data, noise_ratio):
     return data
 
 
+
+
+# 阈值模式 -> 要计算的 POT 口径（'bf' 不跑 POT）
+POT_MODE_MAP = {
+    'bf':          (),
+    'pot_dtaad':   ('pot_dtaad',),
+    'pot_evt':     ('pot_evt',),
+    'pot_dynamic': ('pot_dynamic',),
+    'both':        ('pot_dtaad',),
+    'all':         ('pot_dtaad', 'pot_evt', 'pot_dynamic'),
+}
+
+
+def compute_init_score(model, train_data, config, n):
+    """POT 的 init_score：训练集窗口的分数（训练集无标签）。
+
+    n <= 0 时用**全部**训练窗口，与 DTAAD 的 `pot_eval(lossTfinal, ...)` 一致
+    （DTAAD 对整段 trainD 前向取 lossTfinal）。n > 0 时只取前 n 个窗口。
+
+    单独建一个 shuffle=False 的 loader，保证可复现；不使用 train_loader
+    （后者是 shuffle=True 的，且只应服务于训练）。
+    """
+    if n is None or n <= 0 or n >= train_data.shape[0]:
+        sub = train_data
+    else:
+        sub = train_data[:n]
+    num_i = int(sub.shape[0] / config.batch_size)
+    con_i = sub.shape[0] % config.batch_size
+    loader = get_loader(sub, batch_size=config.batch_size,
+                        window_length=config.window_length,
+                        input_size=config.input_dim, shuffle=False)
+    s = model.is_anomaly(loader, num_i, con_i)
+    return s.detach().cpu().numpy() if hasattr(s, 'detach') else np.asarray(s)
 
 
 def main():
@@ -220,6 +269,65 @@ def main():
         print("FP:", t[5])
         print("FN:", t[6])
         print("precision:", t[1], "recall:", t[2], "f_score", t[0])
+
+        #* ---- POT 阈值（标签无关）。threshold-mode='bf' 时这一段完全不执行 ----
+        if POT_MODE_MAP[config.threshold_mode]:
+            if config.pot_fixed:
+                paramset, q = 'fixed', 1e-3
+                level, scale = 0.98, 1.0
+            else:
+                paramset, q = 'dtaad', config.pot_q
+                lm = DTAAD_LM.get(config.dataset, (0.98, 1.0))
+                level = lm[0] if config.pot_level is None else config.pot_level
+                scale = lm[1] if config.pot_scale is None else config.pot_scale
+            modes = POT_MODE_MAP[config.threshold_mode]
+            print(f'--- POT (paramset={paramset}, q={q}, level={level}, scale={scale}) ---')
+            init_score = compute_init_score(model, train_data, config, config.pot_init_n)
+            pres = pot_eval(init_score, test_score.detach().cpu().numpy(),
+                            test_label[-len(test_score):],
+                            q=q, level=level, scale=scale, modes=modes)
+            print(f"  init_score n={pres['init_score_size']}  fit_ok={pres['fit_ok']}  "
+                  f"init_threshold={pres.get('init_threshold')}  "
+                  f"真EVT={pres.get('extreme_quantile_raw')}")
+            for m, r in pres['modes'].items():
+                mt = r['metrics']
+                print(f"  {m:12s} th={r['threshold']:.6f}  F1={mt[0]:.4f}  "
+                      f"P={mt[1]:.4f}  R={mt[2]:.4f}")
+
+            out_dir2 = os.path.join('results', 'threshold')
+            os.makedirs(out_dir2, exist_ok=True)
+            out_json2 = os.path.join(out_dir2, f"SECOND_{config.dataset}_{paramset}.json")
+            with open(out_json2, 'w') as f:
+                json.dump({
+                    'model': 'SECOND', 'dataset': config.dataset,
+                    'threshold_mode': config.threshold_mode,
+                    'config': {'input_dim': config.input_dim, 'out_dim': config.out_dim,
+                               'window_length': config.window_length,
+                               'latent_size': config.latent_size,
+                               'batch_size': config.batch_size,
+                               'n_layer': argsa.n_layer},
+                    'bf_search_oracle': {'f1': float(t[0]), 'precision': float(t[1]),
+                                         'recall': float(t[2]), 'threshold_pct': float(th)},
+                    'pot': {'paramset': paramset, 'q': q, 'level': level, 'scale': scale,
+                            'modes': modes, 'fit_ok': pres['fit_ok'],
+                            'init_score': {'source': 'train_first_n',
+                                           'n': pres['init_score_size'],
+                                           'n_requested': config.pot_init_n},
+                            'init_threshold': pres.get('init_threshold'),
+                            'extreme_quantile_raw': pres.get('extreme_quantile_raw'),
+                            'level_used': pres.get('level_used'),
+                            'results': {m: {'threshold': r['threshold'],
+                                            'f1': r['metrics'][0], 'precision': r['metrics'][1],
+                                            'recall': r['metrics'][2],
+                                            'TP': int(r['metrics'][3]), 'TN': int(r['metrics'][4]),
+                                            'FP': int(r['metrics'][5]), 'FN': int(r['metrics'][6])}
+                                        for m, r in pres['modes'].items()}},
+                    'ckpt': {'path': os.path.abspath(config.loadpath)},
+                    'env': {'gpu': torch.cuda.get_device_name(0),
+                            'torch': torch.__version__, 'cuda': torch.version.cuda},
+                    'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
+                }, f, indent=2, ensure_ascii=False)
+            print('POT saved to:', out_json2)
 
         #* 结果落盘（与 MUTANT 的 schema 对齐，便于统一聚合）
         out_dir = os.path.join('results', 'ablation')

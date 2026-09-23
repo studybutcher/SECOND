@@ -1,0 +1,80 @@
+{
+  "model": "SECOND",
+  "dataset": "SWaT",
+  "threshold_mode": "all",
+  "config": {
+    "input_dim": 51,
+    "out_dim": 5,
+    "window_length": 35,
+    "latent_size": 256,
+    "batch_size": 60,
+    "n_layer": 8
+  },
+  "bf_search_oracle": {
+    "f1": 0.9836301117938561,
+    "precision": 0.9752404664802022,
+    "recall": 0.9921755294301874,
+    "threshold_pct": 99.49000000000332
+  },
+  "pot": {
+    "paramset": "fixed",
+    "q": 0.001,
+    "level": 0.98,
+    "scale": 1.0,
+    "modes": [
+      "pot_dtaad",
+      "pot_evt",
+      "pot_dynamic"
+    ],
+    "fit_ok": true,
+    "init_score": {
+      "source": "train_first_n",
+      "n": 20000,
+      "n_requested": 20000
+    },
+    "init_threshold": 13.216196060180664,
+    "extreme_quantile_raw": 18.10895424840374,
+    "level_used": 0.98,
+    "results": {
+      "pot_dtaad": {
+        "threshold": 13.217317127980698,
+        "f1": 0.9515511632829832,
+        "precision": 0.907589045499492,
+        "recall": 0.9999999997957056,
+        "TP": 48949,
+        "TN": 238480,
+        "FP": 4984,
+        "FN": 0
+      },
+      "pot_evt": {
+        "threshold": 18.10895424840374,
+        "f1": 0.9448888989141829,
+        "precision": 0.9950285854077624,
+        "recall": 0.8995689389161027,
+        "TP": 44033,
+        "TN": 243244,
+        "FP": 220,
+        "FN": 4916
+      },
+      "pot_dynamic": {
+        "threshold": 17.504401118951957,
+        "f1": 0.9692508691230899,
+        "precision": 0.9928233250513456,
+        "recall": 0.9467813436542561,
+        "TP": 46344,
+        "TN": 243129,
+        "FP": 335,
+        "FN": 2605
+      }
+    }
+  },
+  "ckpt": {
+    "path": "/home/sdb/yrlcd/anamolybench/SECOND/checkpoint/casestudy补充/SWaT/best.pt"
+  },
+  "env": {
+    "gpu": "NVIDIA RTX 5880 Ada Generation",
+    "torch": "2.14.0+cu126",
+    "cuda": "12.6"
+  },
+  "timestamp": "2026-09-14 01:00:34"
+}

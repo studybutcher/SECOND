@@ -1,0 +1,12 @@
+load data of: WADI
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (20000, 127)
+test set shape:  (17281, 127)
+test set label shape:  (17281,)
+--- WADI: W=140 batch=24 test_windows=11093 ---
+test_score: n=11093  43.4s  range=[117.3804, 178.4819]
+init_score: n=19860  range=[119.8221, 180.0002]
+saved: results/threshold/scores/SECOND_WADI.npz

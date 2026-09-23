@@ -1,0 +1,35 @@
+==============================================================================================
+name: threshold_SWaT
+backbone: mamba
+seed: 42
+batch: 60
+window_length 35
+latent_size 256
+trian or test: test
+noise: 0
+load data of: SWaT
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (495000, 51)
+test set shape:  (449919, 51)
+test set label shape:  (449919,)
+test_data: (292448, 51)
+val_data: (157471, 51)
+params=199.6879M  中间块=147.9926M (74.11%)
+*************
+dataset: SWaT
+testname: threshold_SWaT
+th: 99.49000000000332
+TP: 48566.0
+FP: 1233.0
+FN: 383.0
+precision: 0.9752404664802022 recall: 0.9921755294301874 f_score 0.9836301117938561
+--- POT (paramset=fixed, q=0.001, level=0.98, scale=1.0) ---
+  init_score n=20000  fit_ok=True  init_threshold=13.216196060180664  真EVT=18.10895424840374
+  pot_dtaad    th=13.217317  F1=0.9516  P=0.9076  R=1.0000
+  pot_evt      th=18.108954  F1=0.9449  P=0.9950  R=0.8996
+  pot_dynamic  th=17.504401  F1=0.9693  P=0.9928  R=0.9468
+POT saved to: results/threshold/SECOND_SWaT_fixed.json
+metrics saved to: results/ablation/mamba_SWaT_seed42.json

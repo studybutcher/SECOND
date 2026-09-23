@@ -1,0 +1,35 @@
+==============================================================================================
+name: threshold_SMAP
+backbone: mamba
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: test
+noise: 0
+load data of: SMAP
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (135183, 25)
+test set shape:  (427617, 25)
+test set label shape:  (427617,)
+test_data: (277952, 25)
+val_data: (149665, 25)
+params=193.5215M  中间块=147.9926M (76.47%)
+*************
+dataset: SMAP
+testname: threshold_SMAP
+th: 99.22000000000318
+TP: 41556
+FP: 1853
+FN: 862
+precision: 0.9573129993878428 recall: 0.9796784381678347 f_score 0.9683615983904907
+--- POT (paramset=fixed, q=0.001, level=0.98, scale=1.0) ---
+  init_score n=20000  fit_ok=True  init_threshold=27.029644012451172  真EVT=30.4885673711183
+  pot_dtaad    th=27.030329  F1=0.9445  P=0.8989  R=0.9950
+  pot_evt      th=30.488567  F1=0.8884  P=0.9946  R=0.8026
+  pot_dynamic  th=29.919813  F1=0.9504  P=0.9919  R=0.9122
+POT saved to: results/threshold/SECOND_SMAP_fixed.json
+metrics saved to: results/ablation/mamba_SMAP_seed42.json

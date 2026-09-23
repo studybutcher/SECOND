@@ -1,0 +1,12 @@
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+--- MSL: W=70 batch=60 test_windows=47854 ---
+test_score: n=47854  84.9s  range=[66.3258, 104.4094]
+init_score: n=58247  range=[66.1267, 104.8668]
+saved: results/threshold/scores/SECOND_MSL.npz

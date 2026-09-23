@@ -1,0 +1,12 @@
+load data of: SWaT
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (495000, 51)
+test set shape:  (449919, 51)
+test set label shape:  (449919,)
+--- SWaT: W=35 batch=60 test_windows=292413 ---
+test_score: n=292413  494.3s  range=[0.0001, 30.2606]
+init_score: n=494965  range=[0.0000, 23.9551]
+saved: results/threshold/scores/SECOND_SWaT.npz

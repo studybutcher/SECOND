@@ -1,0 +1,41 @@
+{
+  "model": "SECOND",
+  "dataset": "MSL",
+  "eval_range": [
+    0,
+    47924
+  ],
+  "concat_len": 73729,
+  "pot": {
+    "level": 0.9,
+    "scale": 1.04,
+    "threshold": 95.68385620117188
+  },
+  "target": "C-1",
+  "subseries": [
+    {
+      "subseries": "C-1",
+      "range": [
+        0,
+        2264
+      ],
+      "rows": 2264,
+      "windows": 2194,
+      "how": "cache",
+      "anomaly_rate": 0.1422060164083865,
+      "oracle": {
+        "f1": 0.9614741765829606,
+        "precision": 0.9258159962665877,
+        "recall": 0.999999967948719,
+        "threshold_pct": 98.73000000000293
+      },
+      "pot": {
+        "f1": 0.9369319287119127,
+        "precision": 0.8813559073063304,
+        "recall": 0.999999967948719,
+        "threshold": 95.68385620117188
+      }
+    }
+  ],
+  "timestamp": "2026-09-22 22:49:40"
+}
