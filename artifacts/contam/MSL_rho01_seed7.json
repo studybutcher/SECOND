@@ -1,0 +1,71 @@
+{
+ "dataset": "MSL",
+ "rho": 0.01,
+ "seed": 7,
+ "alpha": 1.5,
+ "n_rows_total": 58317,
+ "n_contaminated": 583,
+ "rho_win": 0.013562930279671056,
+ "n_segments": 3,
+ "mean_seg_len": 194.33333333333334,
+ "lbar_typ": 583.0,
+ "n_min": 3,
+ "window": 70,
+ "injection_space": "model_input_space",
+ "injection_note": "preprocess 已在本脚本内完成；main.py --contam-file 不得再 preprocess",
+ "injection_col": 0,
+ "blocks_injectable": [
+  "C-1",
+  "D-15",
+  "D-16",
+  "F-4",
+  "F-5",
+  "F-7",
+  "F-8",
+  "M-1",
+  "M-2",
+  "M-3",
+  "M-4",
+  "M-5",
+  "M-7",
+  "P-10",
+  "P-11",
+  "P-14",
+  "P-15",
+  "T-12",
+  "T-13",
+  "T-4",
+  "T-8",
+  "T-9"
+ ],
+ "segments": [
+  {
+   "t_start": 43711,
+   "L": 116,
+   "block": "P-14",
+   "block_idx": 18,
+   "type": "amplitude_scaling",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 17096,
+   "L": 351,
+   "block": "F-7",
+   "block_idx": 7,
+   "type": "perturbation",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 10800,
+   "L": 116,
+   "block": "F-4",
+   "block_idx": 5,
+   "type": "perturbation",
+   "alpha": 1.5
+  }
+ ],
+ "nested_key": "MSL_s7_v1",
+ "clean_sha256": "e865adecf57dbea5f309ecc19bb16a1d2e3fb252b8574f39b229bcc81a52e230",
+ "out_sha256": "6d9ad9cac41683e5ccd7fd7503dac4753537b893b7adc50bef72c38d588e35e5",
+ "gen_script": "bench/gen_contam.py"
+}

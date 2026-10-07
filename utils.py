@@ -72,9 +72,8 @@ def get_data(dataset, max_train_size=None, max_test_size=None, print_log=True, d
     return (train_data, None), (test_data, test_label)
 
 
-def preprocess(df):
-    """returns normalized and standardized data.
-    """
+def _clean(df):
+    """NaN→0、inf→100。与 preprocess 改动前的逐字等价。"""
     df = np.asarray(df, dtype=np.float32)
     # np.set_printoptions(threshold=99999999999999999)
     # print(df)
@@ -89,8 +88,22 @@ def preprocess(df):
         inx = np.isinf(df)
         print('Data contains inf values. Will be replaced with 100')
         df[inx] = 100
+    return df
+
+
+def preprocess(df, fit_data=None):
+    """returns normalized and standardized data.
+
+    fit_data 非 None 时：用 fit_data 拟合 MinMaxScaler，再 transform df
+    （两者须同维度）。供异常污染实验使用——异常在**原始物理空间**注入，
+    而 scaler 只能见过 clean 数据（见 docs/PRD4text_定量分析_r2.md §6 方案 B）。
+
+    fit_data=None 时行为与改动前完全一致（scaler 在 df 上拟合）。
+    """
+    df = _clean(df)
     # normalize data
-    df = MinMaxScaler().fit_transform(df)
+    scaler = MinMaxScaler().fit(df if fit_data is None else _clean(fit_data))
+    df = scaler.transform(df)
     print('Data normalized')
 
     return df

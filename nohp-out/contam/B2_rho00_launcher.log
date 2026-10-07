@@ -1,0 +1,6 @@
+待跑任务 3 个（已跳过 0 个已有结果）  过滤=:00:
+并发卡池: 5 7
+  启动 mamba_MSL_rho00_seed7 → GPU 5
+  启动 nompa_MSL_rho00_seed7 → GPU 7
+  启动 nomssa_MSL_rho00_seed7 → GPU 5
+全部任务已投递，等待收尾...

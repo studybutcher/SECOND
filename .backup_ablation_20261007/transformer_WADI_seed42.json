@@ -1,0 +1,45 @@
+{
+  "model": "SECOND",
+  "backbone": "transformer",
+  "dataset": "WADI",
+  "seed": 42,
+  "config": {
+    "input_dim": 127,
+    "out_dim": 5,
+    "window_length": 70,
+    "latent_size": 256,
+    "batch_size": 24,
+    "n_layer": 8,
+    "epochs": 10,
+    "lr": 0.01,
+    "N": 256,
+    "val": 0.35,
+    "noise": 0
+  },
+  "params": {
+    "n_params": 89878897,
+    "n_params_M": 89.878897,
+    "n_midstack": 16826368,
+    "n_midstack_M": 16.826368,
+    "midstack_share": 0.18721155423169022
+  },
+  "metrics": {
+    "f1": 0.9694740858400577,
+    "precision": 0.9407660878610975,
+    "recall": 0.9999999428514318,
+    "threshold": 99.90000000000353,
+    "TP": 174,
+    "TN": 10977,
+    "FP": 11,
+    "FN": 0
+  },
+  "ckpt": {
+    "path": "/home/sdb/yrlcd/anamolybench/SECOND/checkpoint/ablation/transformer/WADI/best.pt"
+  },
+  "env": {
+    "gpu": "NVIDIA RTX 5880 Ada Generation",
+    "cuda": "12.6",
+    "torch": "2.14.0+cu126"
+  },
+  "timestamp": "2026-09-12 21:50:51"
+}

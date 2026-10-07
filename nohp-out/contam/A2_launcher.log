@@ -1,0 +1,18 @@
+GPU 状态：
+  0, 25 MiB
+  1, 25 MiB
+  2, 25 MiB
+  3, 25 MiB
+  4, 829 MiB
+  5, 35 MiB
+  6, 9079 MiB
+  7, 30 MiB
+=================== WADI (rho=0%) ===================
+  启动 mamba  → GPU 0   日志 nohp-out/contam/mamba_WADI_rho00.out
+  启动 nomssa  → GPU 2   日志 nohp-out/contam/nomssa_WADI_rho00.out
+  启动 nompa  → GPU 5   日志 nohp-out/contam/nompa_WADI_rho00.out
+=================== 结果汇总 ===================
+  mamba    缺失结果 JSON —— 看 nohp-out/contam/mamba_WADI_rho00.out
+  nomssa   F1=0.9588 P=0.9210 R=1.0000  params=73.05M mid=0.00M  epoch=66.3s
+  nompa    缺失结果 JSON —— 看 nohp-out/contam/nompa_WADI_rho00.out
+=================== DONE ===================

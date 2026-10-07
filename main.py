@@ -16,11 +16,16 @@ from model.mamba import ModelArgs
 
 from plotting import plotter
 
-# 中间块消融：三个变体的模型类同名，仅 import 来源不同
+# 消融变体：所有变体的模型类同名，仅 import 来源不同。
+# 前三个是**替换型**（PRD1：测 SSM mixer 是否不可替代）；
+# 后两个是**删除型**（PRD4text_r2：测模块本身是否需要存在）。
+# 全部由 script/addition/make_ablation_models.py 生成，禁止手工编辑。
 BACKBONE_REGISTRY = {
-    'mamba':       'model.Model',        # 基线（attmambaBlock）
-    'transformer': 'model.Model_trans',  # 换成 Transformer mixer
-    'lstm':        'model.Model_lstm',   # 换成双向 LSTM mixer
+    'mamba':       'model.Model',         # 基线（attmambaBlock）
+    'transformer': 'model.Model_trans',   # 替换：中间块 mixer → Transformer
+    'lstm':        'model.Model_lstm',    # 替换：中间块 mixer → 双向 LSTM
+    'nomssa':      'model.Model_nomssa',  # 删除：整块拿掉 8 层中间块
+    'nompa':       'model.Model_nompa',   # 删除：MPA 多视图分块 + loss_c
 }
 
 
@@ -49,14 +54,34 @@ class ExpConfig(argparse.ArgumentParser):
         self.add_argument('--trainmode',type=str,help='train or test')
         self.add_argument('--dataset',default='SMAP',help='datset')
         self.add_argument('--loadpath',default='None')
-        self.add_argument('--window_length',type=int,default=70)#最开始是140但是发现70更好，后面都是用的70
-        self.add_argument('--batch_size', type=int,default=60)#60
+        # default=None：各数据集的默认值在下面按 dataset 补，**显式传入的命令行值优先**。
+        # 旧写法是在 parse_args 之后无条件覆盖（WADI 恒为 24、SWaT 恒为 35），
+        # 导致 `--batch_size 32` 被静默吃掉——历史最优的 WADI 用的是 bs=32，
+        # 在那个写法下根本无法复现。见 docs/定量分析_WADI基线诊断.md
+        self.add_argument('--window_length',type=int,default=None)#最开始是140但是发现70更好，后面都是用的70
+        self.add_argument('--batch_size', type=int,default=None)#60
         self.add_argument('--latent_size', type=int,default=256)
         self.add_argument('--max_train_size', type=float,default=None)
         self.add_argument('--noise', type=float,default=0)
         self.add_argument('--backbone', type=str, default='mamba',
                           choices=list(BACKBONE_REGISTRY), help='中间块消融变体')
         self.add_argument('--seed', type=int, default=42, help='随机种子')
+        self.add_argument('--result-dir', type=str, default=os.path.join('results', 'ablation'),
+                          help='结果 JSON 落盘目录（污染实验传 results/contam，'
+                               '避免覆盖 PRD1 中间块消融的结果）')
+        self.add_argument('--result-name', type=str, default=None,
+                          help='结果 JSON 文件名（不含 .json）；'
+                               '默认 {backbone}_{dataset}_seed{seed}')
+        self.add_argument('--contam-file', type=str, default=None,
+                          help='污染训练集 .npy（已 preprocess，直接替换 train_data，'
+                               '不再二次归一化）；见 bench/gen_contam.py')
+        self.add_argument('--contam-manifest', type=str, default=None,
+                          help='污染 manifest .json；默认与 --contam-file 同名')
+        self.add_argument('--ckpt-dir', type=str, default=None,
+                          help='checkpoint 目录；默认 checkpoint/<name>/<dataset>。'
+                               '⚠️ 并行的同变体 run（如 mamba 的多个 ρ/seed）必须各给一个，'
+                               '否则会并发写同一个 best.pt → 读到半截文件 '
+                               '（PytorchStreamReader ... central directory），且互相覆盖')
         #* ---- 阈值选择策略（POT），默认 'bf' 时行为与改动前完全一致 ----
         self.add_argument('--threshold-mode', type=str, default='bf',
                           choices=['bf', 'pot_dtaad', 'pot_evt', 'pot_dynamic',
@@ -73,10 +98,11 @@ class ExpConfig(argparse.ArgumentParser):
         self.add_argument('--pot-fixed', action='store_true',
                           help='用全数据集固定参数 (q=1e-3, level=0.98, scale=1) 作为对照列')
         self.parse_args(namespace=self)
-        if self.dataset == 'SWaT':
-            self.window_length = 35
-        elif self.dataset == 'WADI':
-            self.batch_size = 24
+        # 各数据集的默认值：只在命令行**没有**显式给出时才套用
+        if self.window_length is None:
+            self.window_length = 35 if self.dataset == 'SWaT' else 70
+        if self.batch_size is None:
+            self.batch_size = 24 if self.dataset == 'WADI' else 60
             # self.window_length = 140
         # elif self.dataset =='MSL':
         #     # self.window_length = 70
@@ -168,9 +194,31 @@ def main():
     (train_data, _), (test_data, test_label) = \
         get_data(config.dataset, config.max_train_size, config.max_test_size, train_start=config.train_start,
                  test_start=config.test_start)
-    # 在加载数据后添加噪声
 
-    train_data = add_noise(train_data, config.noise)
+    contam = None
+    if config.contam_file:            # PRD4text：训练集由 bench/gen_contam.py 物化，覆盖上面载入的 clean
+        # ⚠️ 该 .npy 已经过 preprocess（scaler 拟合于 clean），**不得再 preprocess 一次**
+        #    否则会二次归一化，把注入的异常压掉（见 gen_contam.py 顶部说明 1）
+        train_data = np.load(config.contam_file).astype(np.float32)
+        if train_data.shape[1] != config.input_dim:
+            raise SystemExit(f'[FAIL] 污染文件维度 {train_data.shape[1]} != '
+                             f'数据集 {config.dataset} 的 {config.input_dim}')
+        if config.noise:
+            print('[warn] 指定了 --contam-file，--noise 被忽略（污染已物化在文件里）')
+        man_path = config.contam_manifest
+        if man_path is None:
+            man_path = os.path.splitext(config.contam_file)[0] + '.json'
+        if os.path.exists(man_path):
+            with open(man_path) as f:
+                contam = json.load(f)
+            print(f"contam: rho={contam['rho']}  rho_win={contam['rho_win']:.4f}  "
+                  f"n_contaminated={contam['n_contaminated']}  "
+                  f"n_segments={contam['n_segments']}  alpha={contam['alpha']}")
+        else:
+            print(f'[warn] 找不到 manifest {man_path}，contam 字段留空')
+    else:
+        # 在加载数据后添加噪声（旧路径，保留不动）
+        train_data = add_noise(train_data, config.noise)
 
     n = int(test_data.shape[0] * config.val)
     train_data0 = train_data
@@ -217,17 +265,22 @@ def main():
     print(f'params={n_params/1e6:.4f}M  中间块={n_midstack/1e6:.4f}M ({100*n_midstack/n_params:.2f}%)')
 
     optimizer = optim.Adam(model.parameters(), lr=0.01)
-    
-    import os
-    checkpoint = os.path.join('checkpoint',f'{config.name}/{config.dataset}')
+
+    # 注意：这里原本有一句 `import os`。函数内的 import 会把 `os` 变成**整个函数的局部名**，
+    # 于是函数前面（污染文件路径处理）对 os 的使用会 UnboundLocalError。模块顶部已 import os。
+    # ckpt 路径：--ckpt-dir 优先。并行的同变体 run 必须各给一个，否则并发写同一个 best.pt。
+    checkpoint = config.ckpt_dir or os.path.join('checkpoint', f'{config.name}/{config.dataset}')
     if not os.path.exists(checkpoint):
         os.makedirs(checkpoint)
     save_path = os.path.join(checkpoint,'best.pt')
     
+    train_timing = None   # 每 epoch 真实耗时（供 PRD4text_r2 §12.2 用实测替换估算）
     if 'train' in config.trainmode:
         flag = 0
         f1 = -1
+        epoch_secs = []
         for epoch in tqdm(range(10)):
+            t_epoch = time.time()
             l = 0
             i = 0
             # for inputs in tqdm(train_loader):
@@ -240,10 +293,10 @@ def main():
                     optimizer.step()
                     optimizer.zero_grad()
                 i += 1
-            
+
             #*内存不够了，所以不用这个
             # torch.torch.save(model.state_dict(), os.path.join(checkpoint,str(epoch)+'.pt'))
-            
+
             if(flag == 1):
                 model.load_state_dict(torch.load(save_path))
             val_score = model.is_anomaly(val_loader, num_val, con_val)
@@ -252,7 +305,22 @@ def main():
                 f1 = t[0]
                 torch.torch.save(model.state_dict(), save_path)
                 flag = 1
-    
+            epoch_secs.append(time.time() - t_epoch)
+            print(f'[timing] epoch {epoch}: {epoch_secs[-1]:.1f}s '
+                  f'(steps={i})', flush=True)
+        train_timing = {
+            'epoch_secs': epoch_secs,
+            'mean_epoch_sec': sum(epoch_secs) / len(epoch_secs),
+            'n_windows': int(train_data.shape[0]),
+            'n_steps_per_epoch': int(len(train_loader)),
+            'batch_size': config.batch_size,
+        }
+        print(f'[timing] mean {train_timing["mean_epoch_sec"]:.1f}s/epoch  '
+              f'windows={train_timing["n_windows"]}', flush=True)
+
+    if 'test' in config.trainmode:
+        if config.loadpath == 'None':#？在参数中写入的是str结构，所以这里。
+            config.loadpath = save_path
     if 'test' in config.trainmode:
         if config.loadpath == 'None':#？在参数中写入的是str结构，所以这里。
             config.loadpath = save_path
@@ -330,7 +398,7 @@ def main():
             print('POT saved to:', out_json2)
 
         #* 结果落盘（与 MUTANT 的 schema 对齐，便于统一聚合）
-        out_dir = os.path.join('results', 'ablation')
+        out_dir = config.result_dir
         os.makedirs(out_dir, exist_ok=True)
         rec = {
             'model': 'SECOND',
@@ -345,6 +413,8 @@ def main():
             'params': {'n_params': n_params, 'n_params_M': n_params / 1e6,
                        'n_midstack': n_midstack, 'n_midstack_M': n_midstack / 1e6,
                        'midstack_share': n_midstack / n_params},
+            'timing': train_timing,
+            'contam': contam,
             'metrics': {'f1': float(t[0]), 'precision': float(t[1]), 'recall': float(t[2]),
                         'threshold': float(th), 'TP': int(t[3]), 'TN': int(t[4]),
                         'FP': int(t[5]), 'FN': int(t[6])},
@@ -353,7 +423,9 @@ def main():
                     'torch': torch.__version__},
             'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
         }
-        out_json = os.path.join(out_dir, f"{config.backbone}_{config.dataset}_seed{config.seed}.json")
+        out_name = config.result_name or \
+            f"{config.backbone}_{config.dataset}_seed{config.seed}"
+        out_json = os.path.join(out_dir, f"{out_name}.json")
         with open(out_json, 'w') as f:
             json.dump(rec, f, indent=2, ensure_ascii=False)
         print('metrics saved to:', out_json)

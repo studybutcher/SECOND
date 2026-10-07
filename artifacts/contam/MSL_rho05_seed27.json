@@ -1,0 +1,87 @@
+{
+ "dataset": "MSL",
+ "rho": 0.05,
+ "seed": 27,
+ "alpha": 1.5,
+ "n_rows_total": 58317,
+ "n_contaminated": 2916,
+ "rho_win": 0.0559857160025409,
+ "n_segments": 5,
+ "mean_seg_len": 583.2,
+ "lbar_typ": 583.0,
+ "n_min": 3,
+ "window": 70,
+ "injection_space": "model_input_space",
+ "injection_note": "preprocess 已在本脚本内完成；main.py --contam-file 不得再 preprocess",
+ "injection_col": 0,
+ "blocks_injectable": [
+  "C-1",
+  "D-15",
+  "D-16",
+  "F-4",
+  "F-5",
+  "F-7",
+  "F-8",
+  "M-1",
+  "M-2",
+  "M-3",
+  "M-4",
+  "M-5",
+  "M-7",
+  "P-10",
+  "P-11",
+  "P-14",
+  "P-15",
+  "T-12",
+  "T-13",
+  "T-4",
+  "T-8",
+  "T-9"
+ ],
+ "segments": [
+  {
+   "t_start": 41919,
+   "L": 353,
+   "block": "P-11",
+   "block_idx": 17,
+   "type": "perturbation",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 14563,
+   "L": 115,
+   "block": "F-5",
+   "block_idx": 6,
+   "type": "level_shift",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 52229,
+   "L": 115,
+   "block": "T-13",
+   "block_idx": 22,
+   "type": "amplitude_scaling",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 45799,
+   "L": 231,
+   "block": "P-15",
+   "block_idx": 19,
+   "type": "amplitude_scaling",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 10129,
+   "L": 2102,
+   "block": "F-4",
+   "block_idx": 5,
+   "type": "level_shift",
+   "alpha": 1.5
+  }
+ ],
+ "nested_key": "MSL_s27_v1",
+ "clean_sha256": "e865adecf57dbea5f309ecc19bb16a1d2e3fb252b8574f39b229bcc81a52e230",
+ "out_sha256": "3cd1821059d786595f8f05761b2af0b5855516f77b3cc62c0986170954aec394",
+ "gen_script": "bench/gen_contam.py"
+}

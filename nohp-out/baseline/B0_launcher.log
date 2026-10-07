@@ -1,0 +1,13 @@
+GPU 状态：
+  0, 13653 MiB
+  1, 25 MiB
+  2, 25 MiB
+  3, 25 MiB
+  4, 829 MiB
+  5, 13462 MiB
+  6, 9079 MiB
+  7, 30 MiB
+  启动 W=35 bs=24 → GPU 1   日志 nohp-out/baseline/mamba_WADI_W35_bs24.out
+  启动 W=35 bs=32 → GPU 2   日志 nohp-out/baseline/mamba_WADI_W35_bs32.out
+  启动 W=70 bs=32 → GPU 3   日志 nohp-out/baseline/mamba_WADI_W70_bs32.out
+  启动 W=140 bs=32 → GPU 7   日志 nohp-out/baseline/mamba_WADI_W140_bs32.out

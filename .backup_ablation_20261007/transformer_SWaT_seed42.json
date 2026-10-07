@@ -1,0 +1,45 @@
+{
+  "model": "SECOND",
+  "backbone": "transformer",
+  "dataset": "SWaT",
+  "seed": 42,
+  "config": {
+    "input_dim": 51,
+    "out_dim": 5,
+    "window_length": 35,
+    "latent_size": 256,
+    "batch_size": 60,
+    "n_layer": 8,
+    "epochs": 10,
+    "lr": 0.01,
+    "N": 256,
+    "val": 0.35,
+    "noise": 0
+  },
+  "params": {
+    "n_params": 68521725,
+    "n_params_M": 68.521725,
+    "n_midstack": 16826368,
+    "n_midstack_M": 16.826368,
+    "midstack_share": 0.24556252779684107
+  },
+  "metrics": {
+    "f1": 0.9794250540820163,
+    "precision": 0.9872154077190678,
+    "recall": 0.971766532314906,
+    "threshold": 99.75000000000345,
+    "TP": 47567,
+    "TN": 242848,
+    "FP": 616,
+    "FN": 1382
+  },
+  "ckpt": {
+    "path": "/home/sdb/yrlcd/anamolybench/SECOND/checkpoint/ablation/transformer/SWaT/best.pt"
+  },
+  "env": {
+    "gpu": "NVIDIA RTX 5880 Ada Generation",
+    "cuda": "12.6",
+    "torch": "2.14.0+cu126"
+  },
+  "timestamp": "2026-09-12 17:55:36"
+}
