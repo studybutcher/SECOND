@@ -45,7 +45,7 @@ def adjust_predicts(score, label, threshold, pred=None,
     if abs_threshold is not None:
         thresh = float(abs_threshold)      # POT：直接给绝对阈值
     else:
-        thresh = np.percentile(score, float(threshold))#!不是用的原始值他妈的，是用的百分比。并且是在所有的这些得分中选出的一个百分位数，而不是直接乘比例。
+        thresh = np.percentile(score, float(threshold))#!不是用的原始值，是用的百分比。并且是在所有的这些得分中选出的一个百分位数，而不是直接乘比例。
     if pred is None:
         predict = score > thresh#*直接生成对应位置的？？？
         # for i,n in enumerate(predict):

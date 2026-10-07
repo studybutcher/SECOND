@@ -31,13 +31,13 @@ def plotter(name, data_value, y_pred, ascore, labels,th=None):
     data_value = np.roll(data_value, 1, 0)##*这里滚动的意义是为了让每个批次来滚动，这个和这里貌似还是不同？
     os.makedirs(os.path.join('plots', name), exist_ok=True)
     # savepdf = f'plots/{name}/output.pdf'
-    savepdf = f'plots/test/output.pdf'#!重新测试一下看看细节
+    savepdf = f'plots/test/output.pdf'
     pdf = PdfPages(savepdf )
     # print('VISUAL.SHAPE',data_value.shape,y_pred.shape,labels.shape,ascore.shape)
     # np.save(f'casestudy/data/{name}_value.npy', data_value); np.save(f'casestudy/data/{name}_pred.npy', y_pred); np.save(f'casestudy/data/{name}_ascore.npy', ascore); np.save(f'casestudy/data/{name}_labels.npy', labels); np.save(f'casestudy/data/{name}_th.npy', th)
  
     for dim in range(data_value.shape[1]):
-        x_v, y_p, l, a_s = data_value[:, dim], y_pred, labels, ascore#?da大小不对应需要改嘛？(47924, 55) (47854,) (47924,) (47854,)
+        x_v, y_p, l, a_s = data_value[:, dim], y_pred, labels, ascore#?大小不对应需要改嘛？(47924, 55) (47854,) (47924,) (47854,)
         
         fig, (ax1, ax2) = plt.subplots(2, 1,figsize=(100,2), sharex=True)
         #*子图1
@@ -79,7 +79,6 @@ if __name__ =='__main__':
     name= f'casestudy/data/可视化_SWaT'
     ind1 = 4000
     ind2 = 120000
-    #?使用的时候（只需要显示曲线然后选择就可以了。）
     #*SWaT:270000-None.变量保持一致的情况下没有大幅度变化，但很多变量中是开始出现差异的地方，在利用不同变量相关性的前提下能学习到时序状态的连续性。
                     #*能很好的对变量加权，注意力分配的很好，才能在大段问题中完全识别。从不同变量中选出了核心问题
            #*:None-12000 另一个也是能体现加权性
