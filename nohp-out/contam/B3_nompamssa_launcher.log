@@ -1,0 +1,7 @@
+待跑任务 4 个（已跳过 0 个已有结果）
+并发卡池: 6 6 7 7
+  启动 nompamssa_MSL_rho01_seed7 → GPU 6
+  启动 nompamssa_MSL_rho05_seed7 → GPU 7
+  启动 nompamssa_MSL_rho10_seed7 → GPU 6
+  启动 nompamssa_MSL_rho20_seed7 → GPU 6
+全部任务已投递，等待收尾...

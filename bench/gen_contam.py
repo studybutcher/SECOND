@@ -54,10 +54,14 @@ MULT_P = np.array((5, 3, 2)) / 10.0
 WINDOW = 70          # MSL 的 W，用于统计 ρ_win
 
 
-def load_clean(dataset):
-    """读 clean train → 模型输入空间（preprocess，scaler 拟合于 clean）。"""
+def load_clean(dataset, split='train'):
+    """读 clean <split> → 模型输入空间。
+
+    与 `utils.get_data` 保持一致：train/test **各自**拟合自己的 scaler
+    （`get_data` 里两个 split 分别调用 preprocess）。
+    """
     K = get_data_dim(dataset)
-    raw = np.load(f'/data/sdc/yrlbkp/anomaly/{dataset}/{dataset}_train.npy').reshape(-1, K)
+    raw = np.load(f'/data/sdc/yrlbkp/anomaly/{dataset}/{dataset}_{split}.npy').reshape(-1, K)
     return preprocess(raw.astype(np.float64))
 
 
@@ -125,6 +129,9 @@ def sha256(a):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--dataset', default='MSL')
+    ap.add_argument('--split', default='train', choices=['train', 'test'],
+                    help='往哪个划分注入。test = 测试侧扰动（PRD4 路 B）：'
+                         '干净训练 → 含异常检测。块边界与统计量随之取自该 split')
     ap.add_argument('--rho', type=float, default=0.20)
     ap.add_argument('--all', action='store_true', help='生成 --rhos 的全部档（共享嵌套）')
     ap.add_argument('--rhos', default='0.01,0.05,0.10,0.20')
@@ -137,9 +144,9 @@ def main():
 
     rhos = [float(x) for x in a.rhos.split(',')] if a.all else [a.rho]
     rhos = sorted(rhos)
-    arr = load_clean(a.dataset)
+    arr = load_clean(a.dataset, a.split)
     N = arr.shape[0]
-    blk = stacked_blocks(a.dataset, RAW_DIR)
+    blk = stacked_blocks(a.dataset, RAW_DIR, split=a.split)
     blocks = blk['blocks']
     print(f'{a.dataset}: N={N}  通道块={len(blocks)}  可注入={len(blk["injectable_blocks"])}  '
           f'ρ={rhos}  seed={a.seed}  α={a.alpha}')
@@ -193,15 +200,17 @@ def main():
             win[max(0, x['t_start'] - WINDOW + 1):min(N, x['t_start'] + x['L'])] = True
         rho_win = float(win[WINDOW:].mean())
 
-        tag = f'{a.dataset}_rho{int(round(r*100)):02d}_seed{a.seed}'
+        tag = f'{a.dataset}' + ('' if a.split == 'train' else f'_{a.split}') \
+              + f'_rho{int(round(r*100)):02d}_seed{a.seed}'
         saved = out.astype(np.float32)
         np.save(os.path.join(a.out_dir, tag + '.npy'), saved)
         man = dict(dataset=a.dataset, rho=r, seed=a.seed, alpha=a.alpha,
                    n_rows_total=N, n_contaminated=n_cont, rho_win=rho_win,
                    n_segments=len(recs), mean_seg_len=float(np.mean([x['L'] for x in recs])),
                    lbar_typ=a.lbar_typ, n_min=a.n_min, window=WINDOW,
-                   injection_space='model_input_space',
-                   injection_note='preprocess 已在本脚本内完成；main.py --contam-file 不得再 preprocess',
+                   split=a.split, injection_space='model_input_space',
+                   injection_note='preprocess 已在本脚本内完成；main.py 的 --contam-file/'
+                                  '--contam-test-file 不得再 preprocess',
                    injection_col=0, blocks_injectable=blk['injectable_blocks'],
                    segments=recs, nested_key=f'{a.dataset}_s{a.seed}_v1',
                    clean_sha256=sha256(arr), out_sha256=sha256(saved),

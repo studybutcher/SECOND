@@ -1,0 +1,10 @@
+GPU: 6 7
+  0, 28905 MiB
+  1, 28921 MiB
+  2, 28899 MiB
+  3, 28933 MiB
+  4, 29725 MiB
+  5, 26398 MiB
+  6, 9079 MiB
+  7, 30 MiB
+[1/2] 干净训练 nompamssa on MSL  (W=70 bs=60 seed=7)

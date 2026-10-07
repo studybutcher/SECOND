@@ -1,0 +1,12 @@
+[14:58:16] MSL / nompamssa  GPU=1  开始
+[14:58:16] 启动 nompamssa_MSL_noise0.05_seed42
+[15:12:29] 完成 nompamssa_MSL_noise0.05_seed42
+[15:12:29] 启动 nompamssa_MSL_noise0.10_seed42
+[15:26:50] 完成 nompamssa_MSL_noise0.10_seed42
+[15:26:50] 启动 nompamssa_MSL_noise0.15_seed42
+[15:40:40] 完成 nompamssa_MSL_noise0.15_seed42
+[15:40:40] 启动 nompamssa_MSL_noise0.2_seed42
+[15:54:39] 完成 nompamssa_MSL_noise0.2_seed42
+[15:54:39] 启动 nompamssa_MSL_noise0.5_seed42
+[16:08:15] 完成 nompamssa_MSL_noise0.5_seed42
+[16:08:15] MSL / nompamssa 全部完成

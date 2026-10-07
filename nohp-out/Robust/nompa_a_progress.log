@@ -1,0 +1,8 @@
+[13:36:34] MSL / nompa / a  GPU=3  开始
+[13:36:34] 启动 nompa_MSL_noise0.05_seed42
+[14:38:25] 完成 nompa_MSL_noise0.05_seed42
+[14:38:25] 启动 nompa_MSL_noise0.10_seed42
+[15:40:23] 完成 nompa_MSL_noise0.10_seed42
+[15:40:23] 启动 nompa_MSL_noise0.15_seed42
+[16:42:21] 完成 nompa_MSL_noise0.15_seed42
+[16:42:21] MSL / nompa / a 全部完成

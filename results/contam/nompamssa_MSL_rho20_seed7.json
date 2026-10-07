@@ -1,0 +1,270 @@
+{
+  "model": "SECOND",
+  "backbone": "nompamssa",
+  "dataset": "MSL",
+  "seed": 7,
+  "config": {
+    "input_dim": 55,
+    "out_dim": 5,
+    "window_length": 70,
+    "latent_size": 256,
+    "batch_size": 60,
+    "n_layer": 8,
+    "epochs": 10,
+    "lr": 0.01,
+    "N": 256,
+    "val": 0.35,
+    "noise": 0
+  },
+  "params": {
+    "n_params": 51236153,
+    "n_params_M": 51.236153,
+    "n_midstack": 0,
+    "n_midstack_M": 0.0,
+    "midstack_share": 0.0
+  },
+  "timing": {
+    "epoch_secs": [
+      80.79327297210693,
+      78.83778858184814,
+      76.83526301383972,
+      78.84373950958252,
+      80.40380835533142,
+      78.70546245574951,
+      78.80431771278381,
+      79.73988175392151,
+      79.4595558643341,
+      78.54411149024963
+    ],
+    "mean_epoch_sec": 79.09672017097473,
+    "n_windows": 58247,
+    "n_steps_per_epoch": 971,
+    "batch_size": 60
+  },
+  "contam": {
+    "dataset": "MSL",
+    "rho": 0.2,
+    "seed": 7,
+    "alpha": 1.5,
+    "n_rows_total": 58317,
+    "n_contaminated": 11663,
+    "rho_win": 0.22392569574398682,
+    "n_segments": 20,
+    "mean_seg_len": 583.15,
+    "lbar_typ": 583.0,
+    "n_min": 3,
+    "window": 70,
+    "injection_space": "model_input_space",
+    "injection_note": "preprocess 已在本脚本内完成；main.py --contam-file 不得再 preprocess",
+    "injection_col": 0,
+    "blocks_injectable": [
+      "C-1",
+      "D-15",
+      "D-16",
+      "F-4",
+      "F-5",
+      "F-7",
+      "F-8",
+      "M-1",
+      "M-2",
+      "M-3",
+      "M-4",
+      "M-5",
+      "M-7",
+      "P-10",
+      "P-11",
+      "P-14",
+      "P-15",
+      "T-12",
+      "T-13",
+      "T-4",
+      "T-8",
+      "T-9"
+    ],
+    "segments": [
+      {
+        "t_start": 43711,
+        "L": 116,
+        "block": "P-14",
+        "block_idx": 18,
+        "type": "amplitude_scaling",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 17096,
+        "L": 351,
+        "block": "F-7",
+        "block_idx": 7,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 10800,
+        "L": 116,
+        "block": "F-4",
+        "block_idx": 5,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 30029,
+        "L": 1167,
+        "block": "M-5",
+        "block_idx": 13,
+        "type": "level_shift",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 387,
+        "L": 1166,
+        "block": "C-1",
+        "block_idx": 0,
+        "type": "level_shift",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 27679,
+        "L": 1144,
+        "block": "M-4",
+        "block_idx": 12,
+        "type": "amplitude_scaling",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 23802,
+        "L": 125,
+        "block": "M-2",
+        "block_idx": 10,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 52858,
+        "L": 1142,
+        "block": "T-4",
+        "block_idx": 23,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 51637,
+        "L": 380,
+        "block": "T-13",
+        "block_idx": 22,
+        "type": "amplitude_scaling",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 10513,
+        "L": 125,
+        "block": "F-4",
+        "block_idx": 5,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 23421,
+        "L": 169,
+        "block": "M-2",
+        "block_idx": 10,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 54297,
+        "L": 169,
+        "block": "T-4",
+        "block_idx": 23,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 50708,
+        "L": 169,
+        "block": "T-12",
+        "block_idx": 21,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 26337,
+        "L": 169,
+        "block": "M-3",
+        "block_idx": 11,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 21912,
+        "L": 515,
+        "block": "M-1",
+        "block_idx": 9,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 25510,
+        "L": 515,
+        "block": "M-3",
+        "block_idx": 11,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 36231,
+        "L": 1550,
+        "block": "P-10",
+        "block_idx": 16,
+        "type": "level_shift",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 7543,
+        "L": 515,
+        "block": "D-15",
+        "block_idx": 3,
+        "type": "level_shift",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 57237,
+        "L": 515,
+        "block": "T-8",
+        "block_idx": 25,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 32974,
+        "L": 1545,
+        "block": "M-7",
+        "block_idx": 15,
+        "type": "amplitude_scaling",
+        "alpha": 1.5
+      }
+    ],
+    "nested_key": "MSL_s7_v1",
+    "clean_sha256": "e865adecf57dbea5f309ecc19bb16a1d2e3fb252b8574f39b229bcc81a52e230",
+    "out_sha256": "9f7155360799c1a6df6522b841e00e5fe999fc599dadc668f94f3309c59753be",
+    "gen_script": "bench/gen_contam.py"
+  },
+  "metrics": {
+    "f1": 0.949359264350097,
+    "precision": 0.9379958846047666,
+    "recall": 0.9610115897019245,
+    "threshold": 98.99000000000306,
+    "TP": 6384,
+    "TN": 40789,
+    "FP": 422,
+    "FN": 259
+  },
+  "ckpt": {
+    "path": "/home/sdb/yrlcd/anamolybench/SECOND/checkpoint/contam_runs/nompamssa_MSL_rho20_seed7/best.pt"
+  },
+  "env": {
+    "gpu": "NVIDIA RTX 5880 Ada Generation",
+    "cuda": "12.6",
+    "torch": "2.14.0+cu126"
+  },
+  "timestamp": "2026-10-07 23:29:48"
+}

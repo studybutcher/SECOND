@@ -18,14 +18,15 @@ from plotting import plotter
 
 # 消融变体：所有变体的模型类同名，仅 import 来源不同。
 # 前三个是**替换型**（PRD1：测 SSM mixer 是否不可替代）；
-# 后两个是**删除型**（PRD4text_r2：测模块本身是否需要存在）。
+# 后三个是**删除型**（测模块本身是否需要存在）。
 # 全部由 script/addition/make_ablation_models.py 生成，禁止手工编辑。
 BACKBONE_REGISTRY = {
-    'mamba':       'model.Model',         # 基线（attmambaBlock）
-    'transformer': 'model.Model_trans',   # 替换：中间块 mixer → Transformer
-    'lstm':        'model.Model_lstm',    # 替换：中间块 mixer → 双向 LSTM
-    'nomssa':      'model.Model_nomssa',  # 删除：整块拿掉 8 层中间块
-    'nompa':       'model.Model_nompa',   # 删除：MPA 多视图分块 + loss_c
+    'mamba':       'model.Model',            # 基线（attmambaBlock）
+    'transformer': 'model.Model_trans',      # 替换：中间块 mixer → Transformer
+    'lstm':        'model.Model_lstm',       # 替换：中间块 mixer → 双向 LSTM
+    'nomssa':      'model.Model_nomssa',     # 删除：整块拿掉 8 层中间块
+    'nompa':       'model.Model_nompa',      # 删除：MPA 多视图分块 + loss_c
+    'nompamssa':   'model.Model_nompamssa',  # 删除：上面两个都删
 }
 
 
@@ -77,6 +78,9 @@ class ExpConfig(argparse.ArgumentParser):
                                '不再二次归一化）；见 bench/gen_contam.py')
         self.add_argument('--contam-manifest', type=str, default=None,
                           help='污染 manifest .json；默认与 --contam-file 同名')
+        self.add_argument('--contam-test-file', type=str, default=None,
+                          help='【路 B】测试侧污染 .npy（已 preprocess，直接替换 test_data；'
+                               '训练侧保持干净）。生成：bench/gen_contam.py --split test')
         self.add_argument('--ckpt-dir', type=str, default=None,
                           help='checkpoint 目录；默认 checkpoint/<name>/<dataset>。'
                                '⚠️ 并行的同变体 run（如 mamba 的多个 ρ/seed）必须各给一个，'
@@ -219,6 +223,29 @@ def main():
     else:
         # 在加载数据后添加噪声（旧路径，保留不动）
         train_data = add_noise(train_data, config.noise)
+
+    # ── 路 B：测试侧扰动（干净训练 → 含异常检测）─────────────────────────
+    # 训练侧不动，把物化的污染数组替换 test_data；test_label 保持不变（标签仍是真的）。
+    # 与 --contam-file 同理：该 .npy 已 preprocess 过，**不得再 preprocess**。
+    # 注意 val 是从 test 尾部切出来的（main.py 下方的 val⊂test 既存缺陷），
+    # 所以替换 test_data 会同时影响 val 与阈值选择 —— 这正是"部署时输入一直有扰"的语义。
+    contam_test = None
+    if config.contam_test_file:
+        te = np.load(config.contam_test_file).astype(np.float32)
+        if te.shape != test_data.shape:
+            raise SystemExit(f'[FAIL] 测试污染文件形状 {te.shape} != test_data {test_data.shape}')
+        test_data = te
+        man_path = config.contam_manifest or \
+            (os.path.splitext(config.contam_test_file)[0] + '.json')
+        if os.path.exists(man_path):
+            with open(man_path) as f:
+                contam_test = json.load(f)
+            print(f"contam_test: rho={contam_test['rho']}  "
+                  f"rho_win={contam_test['rho_win']:.4f}  "
+                  f"n_contaminated={contam_test['n_contaminated']}  "
+                  f"n_segments={contam_test['n_segments']}  alpha={contam_test['alpha']}")
+        else:
+            print(f'[warn] 找不到 test manifest {man_path}')
 
     n = int(test_data.shape[0] * config.val)
     train_data0 = train_data
@@ -415,6 +442,7 @@ def main():
                        'midstack_share': n_midstack / n_params},
             'timing': train_timing,
             'contam': contam,
+            'contam_test': contam_test,
             'metrics': {'f1': float(t[0]), 'precision': float(t[1]), 'recall': float(t[2]),
                         'threshold': float(th), 'TP': int(t[3]), 'TN': int(t[4]),
                         'FP': int(t[5]), 'FN': int(t[6])},

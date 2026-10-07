@@ -1,0 +1,64 @@
+{
+  "model": "SECOND",
+  "backbone": "nomssa",
+  "dataset": "MSL",
+  "seed": 42,
+  "config": {
+    "input_dim": 55,
+    "out_dim": 5,
+    "window_length": 70,
+    "latent_size": 256,
+    "batch_size": 60,
+    "n_layer": 8,
+    "epochs": 10,
+    "lr": 0.01,
+    "N": 256,
+    "val": 0.35,
+    "noise": 0.2
+  },
+  "params": {
+    "n_params": 53624121,
+    "n_params_M": 53.624121,
+    "n_midstack": 0,
+    "n_midstack_M": 0.0,
+    "midstack_share": 0.0
+  },
+  "timing": {
+    "epoch_secs": [
+      83.80999994277954,
+      83.65331435203552,
+      82.38034844398499,
+      82.05571818351746,
+      81.84297823905945,
+      82.17102694511414,
+      81.98418855667114,
+      83.09865355491638,
+      81.93876433372498,
+      82.38821697235107
+    ],
+    "mean_epoch_sec": 82.53232095241546,
+    "n_windows": 58247,
+    "n_steps_per_epoch": 971,
+    "batch_size": 60
+  },
+  "contam": null,
+  "metrics": {
+    "f1": 0.9437127655065651,
+    "precision": 0.937203086494651,
+    "recall": 0.950323647523222,
+    "threshold": 99.01000000000307,
+    "TP": 6313,
+    "TN": 40788,
+    "FP": 423,
+    "FN": 330
+  },
+  "ckpt": {
+    "path": "/home/sdb/yrlcd/anamolybench/SECOND/checkpoint/robust/nomssa_MSL_noise0.2_seed42/best.pt"
+  },
+  "env": {
+    "gpu": "NVIDIA RTX 5880 Ada Generation",
+    "cuda": "12.6",
+    "torch": "2.14.0+cu126"
+  },
+  "timestamp": "2026-10-07 14:18:45"
+}

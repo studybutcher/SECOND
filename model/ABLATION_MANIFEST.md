@@ -86,3 +86,41 @@ diff 共 27 行：
 +            x_a,pred_result,_ = self.simpip(x,'test')   # 消融：无 MPA 管线
 ```
 
+## `model/Model_nompamssa.py`
+
+同时删除 MPA 与 MSSA（前两者的并集）。剩余的路径：`simpembdding` → `project4` → `attention_sim` → `attention_ALL` → `projection3` → `predict`。
+
+diff 共 29 行：
+
+```diff
+-        self.embedding_inpatch = nn.ModuleList()
+-        self.embedding_patchwise = nn.ModuleList()
+-        self.attentiona = nn.ModuleList()
+-        self.attentionb = nn.ModuleList()
+-        self.projection1 = nn.ModuleList()
+-        self.projection2 = nn.ModuleList()
+-        for i, patchsize in enumerate(self.patch_size):
+-            patchnum=window_length //patchsize
+-            self.embedding_inpatch.append(DataEmbedding(patchsize, self.latent_size, dropout))#?没设置dropout
+-            self.embedding_patchwise.append(DataEmbedding(patchnum, self.latent_size, dropout))
+-            # if self.input_size == 25:
+-            #     head = 5
+-            # elif self.input_size == 51: 
+-            #     head = 3
+-            # elif self.input_size == 127: 
+-            #     head = 1
+-            # elif self.input_size == 55: 
+-            #     head = 5
+-            # self.attentiona.append(attentionstacking(selfattentionblock,head=4,indim=self.latent_size,feeddim=512))
+-            # self.attentionb.append(attentionstacking(selfattentionblock,head=4,indim=self.latent_size,feeddim=512))
+-            self.projection1.append(nn.Linear(patchnum*self.latent_size,self.latent_size))#?这个可能每个实验都要改？怎么用其他变量转化
+-            self.projection2.append(nn.Linear(patchsize*self.latent_size,self.latent_size))
++        # 消融：此处删除 22 行 —— 清掉 MPA 死参数（embedding_inpatch/patchwise + projection1/2）（PRD4text_r2 §3.2）
+-        self.attmamba = nn.ModuleList([ResidualBlock(args) for _ in range(args.n_layer)])
++        self.attmamba = nn.ModuleList([])   # 消融：删除中间块
+-        x_a,pred_result,loss_c = self.pipline(x)
++        x_a,pred_result,loss_c = self.simpip(x)   # 消融：无 MPA 管线
+-            x_a,pred_result,_ = self.pipline(x,'test')
++            x_a,pred_result,_ = self.simpip(x,'test')   # 消融：无 MPA 管线
+```
+

@@ -70,6 +70,29 @@ DELETION_VARIANTS = {
          "            x_a,pred_result,_ = self.simpip(x,'test')   # 消融：无 MPA 管线",
          'reconstructed_probability：pipline → simpip'),
     ],
+    # 同时删掉两个模块 = MPA 的改动 ∪ MSSA 的改动。两者互不重叠：
+    #   MPA  → 切 simpip 管线 + 清掉 4 个模块（都在 __init__ 与两处调用点）
+    #   MSSA → 把 attmamba 换成空 ModuleList
+    # 合起来后模型退化为：simpembdding → project4 → attention_sim → attention_ALL
+    #                     → projection3 → predict（只有 CRR 头和两个 attention 保留）
+    'nompamssa': [
+        ('drop',
+         '        self.embedding_inpatch = nn.ModuleList()',
+         '            self.projection2.append(nn.Linear(patchsize*self.latent_size,self.latent_size))',
+         '清掉 MPA 死参数（embedding_inpatch/patchwise + projection1/2）'),
+        ('replace',
+         '        x_a,pred_result,loss_c = self.pipline(x)',
+         '        x_a,pred_result,loss_c = self.simpip(x)   # 消融：无 MPA 管线',
+         'forward：pipline → simpip'),
+        ('replace',
+         "            x_a,pred_result,_ = self.pipline(x,'test')",
+         "            x_a,pred_result,_ = self.simpip(x,'test')   # 消融：无 MPA 管线",
+         'reconstructed_probability：pipline → simpip'),
+        ('replace',
+         '        self.attmamba = nn.ModuleList([ResidualBlock(args) for _ in range(args.n_layer)])',
+         '        self.attmamba = nn.ModuleList([])   # 消融：删除中间块',
+         '中间块：整段删除'),
+    ],
 }
 
 
@@ -144,6 +167,9 @@ def main():
             'nompa': '删除 MPA（多视图分块 + `loss_c`）。两处改动：清掉 `embedding_inpatch` / '
                      '`embedding_patchwise` / `projection1` / `projection2` 四个不再被调用的模块；'
                      '`pipline` → `simpip`（`simpembdding` 保持论文式 `DataEmbedding` 不变）。',
+            'nompamssa': '同时删除 MPA 与 MSSA（前两者的并集）。剩余的路径：'
+                         '`simpembdding` → `project4` → `attention_sim` → `attention_ALL` '
+                         '→ `projection3` → `predict`。',
         }[name]
         emit(src, name, ops, None, manifest, note)
 

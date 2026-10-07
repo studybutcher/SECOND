@@ -1,0 +1,190 @@
+{
+  "model": "SECOND",
+  "backbone": "nompamssa",
+  "dataset": "MSL",
+  "seed": 7,
+  "config": {
+    "input_dim": 55,
+    "out_dim": 5,
+    "window_length": 70,
+    "latent_size": 256,
+    "batch_size": 60,
+    "n_layer": 8,
+    "epochs": 10,
+    "lr": 0.01,
+    "N": 256,
+    "val": 0.35,
+    "noise": 0
+  },
+  "params": {
+    "n_params": 51236153,
+    "n_params_M": 51.236153,
+    "n_midstack": 0,
+    "n_midstack_M": 0.0,
+    "midstack_share": 0.0
+  },
+  "timing": {
+    "epoch_secs": [
+      79.62923836708069,
+      78.47670722007751,
+      78.80929732322693,
+      78.13695430755615,
+      78.00912141799927,
+      78.50509262084961,
+      78.03995752334595,
+      77.9007306098938,
+      77.73695707321167,
+      77.67902493476868
+    ],
+    "mean_epoch_sec": 78.29230813980102,
+    "n_windows": 58247,
+    "n_steps_per_epoch": 971,
+    "batch_size": 60
+  },
+  "contam": {
+    "dataset": "MSL",
+    "rho": 0.1,
+    "seed": 7,
+    "alpha": 1.5,
+    "n_rows_total": 58317,
+    "n_contaminated": 5832,
+    "rho_win": 0.1119714320050818,
+    "n_segments": 10,
+    "mean_seg_len": 583.2,
+    "lbar_typ": 583.0,
+    "n_min": 3,
+    "window": 70,
+    "injection_space": "model_input_space",
+    "injection_note": "preprocess 已在本脚本内完成；main.py --contam-file 不得再 preprocess",
+    "injection_col": 0,
+    "blocks_injectable": [
+      "C-1",
+      "D-15",
+      "D-16",
+      "F-4",
+      "F-5",
+      "F-7",
+      "F-8",
+      "M-1",
+      "M-2",
+      "M-3",
+      "M-4",
+      "M-5",
+      "M-7",
+      "P-10",
+      "P-11",
+      "P-14",
+      "P-15",
+      "T-12",
+      "T-13",
+      "T-4",
+      "T-8",
+      "T-9"
+    ],
+    "segments": [
+      {
+        "t_start": 43711,
+        "L": 116,
+        "block": "P-14",
+        "block_idx": 18,
+        "type": "amplitude_scaling",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 17096,
+        "L": 351,
+        "block": "F-7",
+        "block_idx": 7,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 10800,
+        "L": 116,
+        "block": "F-4",
+        "block_idx": 5,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 30029,
+        "L": 1167,
+        "block": "M-5",
+        "block_idx": 13,
+        "type": "level_shift",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 387,
+        "L": 1166,
+        "block": "C-1",
+        "block_idx": 0,
+        "type": "level_shift",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 27679,
+        "L": 1144,
+        "block": "M-4",
+        "block_idx": 12,
+        "type": "amplitude_scaling",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 23802,
+        "L": 125,
+        "block": "M-2",
+        "block_idx": 10,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 52858,
+        "L": 1142,
+        "block": "T-4",
+        "block_idx": 23,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 51637,
+        "L": 380,
+        "block": "T-13",
+        "block_idx": 22,
+        "type": "amplitude_scaling",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 10513,
+        "L": 125,
+        "block": "F-4",
+        "block_idx": 5,
+        "type": "perturbation",
+        "alpha": 1.5
+      }
+    ],
+    "nested_key": "MSL_s7_v1",
+    "clean_sha256": "e865adecf57dbea5f309ecc19bb16a1d2e3fb252b8574f39b229bcc81a52e230",
+    "out_sha256": "e223378b308862f200c0a135659f9fc600221514a7a0c0b775d9c000a8ceae23",
+    "gen_script": "bench/gen_contam.py"
+  },
+  "metrics": {
+    "f1": 0.9592258256361511,
+    "precision": 0.9499557116180164,
+    "recall": 0.9686888439429643,
+    "threshold": 99.17000000000316,
+    "TP": 6435,
+    "TN": 40872,
+    "FP": 339,
+    "FN": 208
+  },
+  "ckpt": {
+    "path": "/home/sdb/yrlcd/anamolybench/SECOND/checkpoint/contam_runs/nompamssa_MSL_rho10_seed7/best.pt"
+  },
+  "env": {
+    "gpu": "NVIDIA RTX 5880 Ada Generation",
+    "cuda": "12.6",
+    "torch": "2.14.0+cu126"
+  },
+  "timestamp": "2026-10-07 23:29:38"
+}

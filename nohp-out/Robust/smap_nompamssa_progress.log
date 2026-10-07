@@ -1,0 +1,12 @@
+[15:51:37] SMAP / nompamssa /   GPU=0  开始
+[15:51:37] 启动 nompamssa_SMAP_noise0.05_seed42
+[16:32:02] 完成 nompamssa_SMAP_noise0.05_seed42
+[16:32:02] 启动 nompamssa_SMAP_noise0.10_seed42
+[17:11:53] 完成 nompamssa_SMAP_noise0.10_seed42
+[17:11:53] 启动 nompamssa_SMAP_noise0.15_seed42
+[17:50:19] 完成 nompamssa_SMAP_noise0.15_seed42
+[17:50:19] 启动 nompamssa_SMAP_noise0.2_seed42
+[18:29:19] 完成 nompamssa_SMAP_noise0.2_seed42
+[18:29:19] 启动 nompamssa_SMAP_noise0.5_seed42
+[19:10:27] 完成 nompamssa_SMAP_noise0.5_seed42
+[19:10:27] SMAP / nompamssa /  全部完成

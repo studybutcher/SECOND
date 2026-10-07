@@ -1,0 +1,11 @@
+[13:34:28] MSL / nomssa  GPU=5  开始
+[13:34:28] 跳过 nomssa_MSL_noise0.05_seed42（已有结果）
+[13:34:28] 启动 nomssa_MSL_noise0.10_seed42
+[13:49:32] 完成 nomssa_MSL_noise0.10_seed42
+[13:49:32] 启动 nomssa_MSL_noise0.15_seed42
+[14:04:08] 完成 nomssa_MSL_noise0.15_seed42
+[14:04:08] 启动 nomssa_MSL_noise0.2_seed42
+[14:18:46] 完成 nomssa_MSL_noise0.2_seed42
+[14:18:46] 启动 nomssa_MSL_noise0.5_seed42
+[14:33:24] 完成 nomssa_MSL_noise0.5_seed42
+[14:33:24] MSL / nomssa 全部完成

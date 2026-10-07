@@ -1,0 +1,12 @@
+数据集=MSL  变体=(nompa nomssa)  噪声档=(0.05 0.10 0.15 0.2 0.5)  seed=42
+  0, 25 MiB
+  1, 25 MiB
+  2, 25 MiB
+  3, 25 MiB
+  4, 829 MiB
+  5, 35 MiB
+  6, 9079 MiB
+  7, 30 MiB
+=================== noise=0.05 ===================
+  启动 nompa → GPU 3
+  启动 nomssa → GPU 5

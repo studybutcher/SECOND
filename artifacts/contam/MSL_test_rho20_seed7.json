@@ -1,0 +1,253 @@
+{
+ "dataset": "MSL",
+ "rho": 0.2,
+ "seed": 7,
+ "alpha": 1.5,
+ "n_rows_total": 73729,
+ "n_contaminated": 14746,
+ "rho_win": 0.22361150707992233,
+ "n_segments": 25,
+ "mean_seg_len": 589.84,
+ "lbar_typ": 583.0,
+ "n_min": 3,
+ "window": 70,
+ "split": "test",
+ "injection_space": "model_input_space",
+ "injection_note": "preprocess 已在本脚本内完成；main.py 的 --contam-file/--contam-test-file 不得再 preprocess",
+ "injection_col": 0,
+ "blocks_injectable": [
+  "C-1",
+  "C-2",
+  "D-14",
+  "D-15",
+  "D-16",
+  "F-4",
+  "F-5",
+  "F-7",
+  "F-8",
+  "M-1",
+  "M-2",
+  "M-3",
+  "M-4",
+  "M-5",
+  "M-6",
+  "M-7",
+  "P-10",
+  "P-11",
+  "P-14",
+  "P-15",
+  "S-2",
+  "T-12",
+  "T-13",
+  "T-4",
+  "T-5",
+  "T-8",
+  "T-9"
+ ],
+ "segments": [
+  {
+   "t_start": 58021,
+   "L": 147,
+   "block": "P-15",
+   "block_idx": 19,
+   "type": "amplitude_scaling",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 18145,
+   "L": 443,
+   "block": "F-5",
+   "block_idx": 6,
+   "type": "perturbation",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 9749,
+   "L": 147,
+   "block": "D-16",
+   "block_idx": 4,
+   "type": "perturbation",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 50079,
+   "L": 265,
+   "block": "P-11",
+   "block_idx": 17,
+   "type": "level_shift",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 2962,
+   "L": 265,
+   "block": "C-2",
+   "block_idx": 1,
+   "type": "level_shift",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 23712,
+   "L": 2419,
+   "block": "F-8",
+   "block_idx": 8,
+   "type": "amplitude_scaling",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 2460,
+   "L": 215,
+   "block": "C-2",
+   "block_idx": 1,
+   "type": "perturbation",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 35057,
+   "L": 1960,
+   "block": "M-5",
+   "block_idx": 13,
+   "type": "perturbation",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 71323,
+   "L": 652,
+   "block": "T-8",
+   "block_idx": 25,
+   "type": "amplitude_scaling",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 64818,
+   "L": 215,
+   "block": "T-13",
+   "block_idx": 22,
+   "type": "perturbation",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 7298,
+   "L": 215,
+   "block": "D-15",
+   "block_idx": 3,
+   "type": "perturbation",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 28850,
+   "L": 215,
+   "block": "M-2",
+   "block_idx": 10,
+   "type": "perturbation",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 70526,
+   "L": 215,
+   "block": "T-5",
+   "block_idx": 24,
+   "type": "perturbation",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 62765,
+   "L": 192,
+   "block": "T-12",
+   "block_idx": 21,
+   "type": "perturbation",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 430,
+   "L": 582,
+   "block": "C-1",
+   "block_idx": 0,
+   "type": "perturbation",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 33715,
+   "L": 582,
+   "block": "M-4",
+   "block_idx": 12,
+   "type": "perturbation",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 30952,
+   "L": 1755,
+   "block": "M-3",
+   "block_idx": 11,
+   "type": "level_shift",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 29547,
+   "L": 582,
+   "block": "M-2",
+   "block_idx": 10,
+   "type": "level_shift",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 1532,
+   "L": 582,
+   "block": "C-1",
+   "block_idx": 0,
+   "type": "perturbation",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 60021,
+   "L": 1748,
+   "block": "S-2",
+   "block_idx": 20,
+   "type": "amplitude_scaling",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 67255,
+   "L": 192,
+   "block": "T-4",
+   "block_idx": 23,
+   "type": "perturbation",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 68930,
+   "L": 192,
+   "block": "T-5",
+   "block_idx": 24,
+   "type": "amplitude_scaling",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 72835,
+   "L": 582,
+   "block": "T-9",
+   "block_idx": 26,
+   "type": "perturbation",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 5792,
+   "L": 192,
+   "block": "D-14",
+   "block_idx": 2,
+   "type": "level_shift",
+   "alpha": 1.5
+  },
+  {
+   "t_start": 9365,
+   "L": 192,
+   "block": "D-16",
+   "block_idx": 4,
+   "type": "perturbation",
+   "alpha": 1.5
+  }
+ ],
+ "nested_key": "MSL_s7_v1",
+ "clean_sha256": "5cc4770315defc680b5eb7586de2bbae795e15ae31cbff80e5e7926dc0090024",
+ "out_sha256": "ae9430c4527188118a0959b53db6286071314103b3aebd5abad0faf8ec0454b3",
+ "gen_script": "bench/gen_contam.py"
+}

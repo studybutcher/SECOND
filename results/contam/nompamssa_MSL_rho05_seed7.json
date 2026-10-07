@@ -1,0 +1,150 @@
+{
+  "model": "SECOND",
+  "backbone": "nompamssa",
+  "dataset": "MSL",
+  "seed": 7,
+  "config": {
+    "input_dim": 55,
+    "out_dim": 5,
+    "window_length": 70,
+    "latent_size": 256,
+    "batch_size": 60,
+    "n_layer": 8,
+    "epochs": 10,
+    "lr": 0.01,
+    "N": 256,
+    "val": 0.35,
+    "noise": 0
+  },
+  "params": {
+    "n_params": 51236153,
+    "n_params_M": 51.236153,
+    "n_midstack": 0,
+    "n_midstack_M": 0.0,
+    "midstack_share": 0.0
+  },
+  "timing": {
+    "epoch_secs": [
+      79.27792811393738,
+      79.15737414360046,
+      78.75053381919861,
+      78.190354347229,
+      77.91832256317139,
+      78.53039145469666,
+      78.83315563201904,
+      75.98058104515076,
+      78.24858570098877,
+      75.9278256893158
+    ],
+    "mean_epoch_sec": 78.08150525093079,
+    "n_windows": 58247,
+    "n_steps_per_epoch": 971,
+    "batch_size": 60
+  },
+  "contam": {
+    "dataset": "MSL",
+    "rho": 0.05,
+    "seed": 7,
+    "alpha": 1.5,
+    "n_rows_total": 58317,
+    "n_contaminated": 2916,
+    "rho_win": 0.0559857160025409,
+    "n_segments": 5,
+    "mean_seg_len": 583.2,
+    "lbar_typ": 583.0,
+    "n_min": 3,
+    "window": 70,
+    "injection_space": "model_input_space",
+    "injection_note": "preprocess 已在本脚本内完成；main.py --contam-file 不得再 preprocess",
+    "injection_col": 0,
+    "blocks_injectable": [
+      "C-1",
+      "D-15",
+      "D-16",
+      "F-4",
+      "F-5",
+      "F-7",
+      "F-8",
+      "M-1",
+      "M-2",
+      "M-3",
+      "M-4",
+      "M-5",
+      "M-7",
+      "P-10",
+      "P-11",
+      "P-14",
+      "P-15",
+      "T-12",
+      "T-13",
+      "T-4",
+      "T-8",
+      "T-9"
+    ],
+    "segments": [
+      {
+        "t_start": 43711,
+        "L": 116,
+        "block": "P-14",
+        "block_idx": 18,
+        "type": "amplitude_scaling",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 17096,
+        "L": 351,
+        "block": "F-7",
+        "block_idx": 7,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 10800,
+        "L": 116,
+        "block": "F-4",
+        "block_idx": 5,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 30029,
+        "L": 1167,
+        "block": "M-5",
+        "block_idx": 13,
+        "type": "level_shift",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 387,
+        "L": 1166,
+        "block": "C-1",
+        "block_idx": 0,
+        "type": "level_shift",
+        "alpha": 1.5
+      }
+    ],
+    "nested_key": "MSL_s7_v1",
+    "clean_sha256": "e865adecf57dbea5f309ecc19bb16a1d2e3fb252b8574f39b229bcc81a52e230",
+    "out_sha256": "10ba79804f5e2aca4efa8ee50b5c139c55bcdbdee7c21fc8d3a8522ea6b6eecf",
+    "gen_script": "bench/gen_contam.py"
+  },
+  "metrics": {
+    "f1": 0.9473868524109367,
+    "precision": 0.9341527642169261,
+    "recall": 0.9610115897019245,
+    "threshold": 98.92000000000303,
+    "TP": 6384,
+    "TN": 40761,
+    "FP": 450,
+    "FN": 259
+  },
+  "ckpt": {
+    "path": "/home/sdb/yrlcd/anamolybench/SECOND/checkpoint/contam_runs/nompamssa_MSL_rho05_seed7/best.pt"
+  },
+  "env": {
+    "gpu": "NVIDIA RTX 5880 Ada Generation",
+    "cuda": "12.6",
+    "torch": "2.14.0+cu126"
+  },
+  "timestamp": "2026-10-07 23:29:36"
+}

@@ -6,7 +6,7 @@ export data='MSL'
 export CUDA_VISIBLE_DEVICES=1
 export Name="Robust/${data}"
 # export noise=0.1
-for noise in {0.2,0.5} #0.05,0.10,0.15,
+for noise in {0.05,0.10,0.15,0.2,0.5} 
     # nohup
     do 
     nohup python main.py --dataset $data \

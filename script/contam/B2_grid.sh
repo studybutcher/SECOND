@@ -51,8 +51,12 @@ DATASET=MSL
 W=70
 BS=60
 ALPHA=1.5
-VARIANTS=(mamba nompa nomssa)
-RHOS=(00 01 05 10 20)
+# 变体与 ρ 档可用环境变量覆盖：
+#   variants="nompamssa" rhos="01 05 10 20" bash script/contam/B2_grid.sh
+if [ -n "${variants:-}" ]; then read -ra VARIANTS <<< "$variants"; else
+    VARIANTS=(mamba nompa nomssa nompamssa); fi
+if [ -n "${rhos:-}" ]; then read -ra RHOS <<< "$rhos"; else
+    RHOS=(00 01 05 10 20); fi
 SEEDS=(7)          # 单种子（使用方决定，见文件头「已知局限」）
 
 mkdir -p nohp-out/contam/grid results/contam .locks/contam

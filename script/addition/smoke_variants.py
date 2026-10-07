@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspa
 from utils import get_data_dim                      # noqa: E402
 from model.mamba import ModelArgs                   # noqa: E402
 
-BACKBONES = ['mamba', 'nomssa', 'nompa']
+BACKBONES = ['mamba', 'nomssa', 'nompa', 'nompamssa']
 
 # 与 main.py 的 ExpConfig 保持一致
 DATASET_CFG = {
@@ -40,6 +40,7 @@ def build(dataset, backbone):
         'mamba':  'model.Model',
         'nomssa': 'model.Model_nomssa',
         'nompa':  'model.Model_nompa',
+        'nompamssa': 'model.Model_nompamssa',
     }[backbone])
     model = mod.patchattmamba(input_dim, w_size, LATENT, cfg['batch_size'],
                               cfg['window_length'], OUT_DIM, args=ModelArgs())

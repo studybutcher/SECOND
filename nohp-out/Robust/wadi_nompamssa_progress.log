@@ -1,0 +1,12 @@
+[15:51:37] WADI / nompamssa /   GPU=2  开始
+[15:51:37] 启动 nompamssa_WADI_noise0.05_seed42
+[16:02:19] 完成 nompamssa_WADI_noise0.05_seed42
+[16:02:19] 启动 nompamssa_WADI_noise0.10_seed42
+[16:12:49] 完成 nompamssa_WADI_noise0.10_seed42
+[16:12:49] 启动 nompamssa_WADI_noise0.15_seed42
+[16:23:48] 完成 nompamssa_WADI_noise0.15_seed42
+[16:23:48] 启动 nompamssa_WADI_noise0.2_seed42
+[16:35:16] 完成 nompamssa_WADI_noise0.2_seed42
+[16:35:16] 启动 nompamssa_WADI_noise0.5_seed42
+[16:46:43] 完成 nompamssa_WADI_noise0.5_seed42
+[16:46:43] WADI / nompamssa /  全部完成

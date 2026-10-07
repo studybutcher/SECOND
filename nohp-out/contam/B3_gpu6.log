@@ -1,0 +1,18 @@
+待跑任务 2 个（已跳过 0 个已有结果）
+并发卡池: 6 6
+  启动 nompamssa_MSL_rho01_seed7 → GPU 6
+  启动 nompamssa_MSL_rho05_seed7 → GPU 6
+全部任务已投递，等待收尾...
+=================== 汇总 ===================
+变体             ρ  seed       F1        P        R  文件
+mamba    0%(noise=0.0)    42   0.9568   0.9526   0.9610  mamba_MSL_rho00_seed42.json
+nompa    0%(noise=0.0)    42   0.9407   0.9325   0.9490  nompa_MSL_rho00_seed42.json
+nompamssa     1%     7   0.9506   0.9405   0.9610  nompamssa_MSL_rho01_seed7.json
+nompamssa     5%     7   0.9474   0.9342   0.9610  nompamssa_MSL_rho05_seed7.json
+nompamssa    10%     7   0.9592   0.9500   0.9687  nompamssa_MSL_rho10_seed7.json
+nomssa   0%(noise=0.0)     7   0.9334   0.8896   0.9816  nomssa_MSL_rho00_seed7.json
+nomssa   0%(noise=0.0)    42   0.9624   0.9323   0.9946  nomssa_MSL_rho00_seed42.json
+nomssa       20%     7   0.9490   0.9056   0.9968  nomssa_MSL_rho20_seed7.json
+
+共 8 条
+=================== DONE ===================

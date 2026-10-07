@@ -5,10 +5,10 @@ export LOAD=None
 export data='SWaT'
 export CUDA_VISIBLE_DEVICES=0
 export Name="Robust/${data}"
-export noise=0.5
-# for noise in {0.5}  #0.05,0.10,0.15,0.2,
+# export noise=0.5
+for noise in {0.05,0.10,0.15,0.2,0.5}  #0.05,0.10,0.15,0.2,
     # nohup
-    # do 
+    do 
     nohup python main.py --dataset $data \
                             --name $Name  \
                             --trainmode $MODE \

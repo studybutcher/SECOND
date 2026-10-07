@@ -1,0 +1,64 @@
+{
+  "model": "SECOND",
+  "backbone": "nompa",
+  "dataset": "MSL",
+  "seed": 42,
+  "config": {
+    "input_dim": 55,
+    "out_dim": 5,
+    "window_length": 70,
+    "latent_size": 256,
+    "batch_size": 60,
+    "n_layer": 8,
+    "epochs": 10,
+    "lr": 0.01,
+    "N": 256,
+    "val": 0.35,
+    "noise": 0.05
+  },
+  "params": {
+    "n_params": 199228729,
+    "n_params_M": 199.228729,
+    "n_midstack": 147992576,
+    "n_midstack_M": 147.992576,
+    "midstack_share": 0.7428274864916696
+  },
+  "timing": {
+    "epoch_secs": [
+      361.88400506973267,
+      360.4155869483948,
+      357.5100748538971,
+      357.74373412132263,
+      357.7268054485321,
+      357.82530641555786,
+      358.10806226730347,
+      358.11574602127075,
+      358.0301203727722,
+      361.10550022125244
+    ],
+    "mean_epoch_sec": 358.8464941740036,
+    "n_windows": 58247,
+    "n_steps_per_epoch": 971,
+    "batch_size": 60
+  },
+  "contam": null,
+  "metrics": {
+    "f1": 0.9605028619830697,
+    "precision": 0.9423522581947389,
+    "recall": 0.9793767861216668,
+    "threshold": 99.03000000000308,
+    "TP": 6506,
+    "TN": 40813,
+    "FP": 398,
+    "FN": 137
+  },
+  "ckpt": {
+    "path": "/home/sdb/yrlcd/anamolybench/SECOND/checkpoint/robust/nompa_MSL_noise0.05_seed42/best.pt"
+  },
+  "env": {
+    "gpu": "NVIDIA RTX 5880 Ada Generation",
+    "cuda": "12.6",
+    "torch": "2.14.0+cu126"
+  },
+  "timestamp": "2026-10-07 14:38:23"
+}

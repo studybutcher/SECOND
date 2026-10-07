@@ -45,8 +45,13 @@ DISCRETE_TAG_RE = re.compile(r'_(STATUS|AL)$')
 STACKED_SETS = {'SMAP', 'MSL'}
 
 
-def stacked_blocks(dataset, raw_dir):
-    """SMAP/MSL：按 labeled_anomalies.csv 的通道顺序切出块，统计每块第 0 列。"""
+def stacked_blocks(dataset, raw_dir, split='train'):
+    """SMAP/MSL：按 labeled_anomalies.csv 的通道顺序切出块，统计每块第 0 列。
+
+    `split` 决定**块边界与统计量取自哪个划分**：train 与 test 的每块长度不同
+    （如 MSL 的 C-1 是 train 2158 / test 2264），所以往测试集注入时必须用
+    `split='test'`，否则段会落在错误的块里。
+    """
     import csv
     import ast
     lab_csv = os.path.join(raw_dir, 'labeled_anomalies.csv')
@@ -54,33 +59,33 @@ def stacked_blocks(dataset, raw_dir):
     info = [r for r in rows if r[1] == dataset and r[0] != 'P-2']
 
     K = get_data_dim(dataset)
-    tr = np.load(os.path.join(prefix, dataset, f'{dataset}_train.npy')).reshape(-1, K)
-    te = np.load(os.path.join(prefix, dataset, f'{dataset}_test.npy')).reshape(-1, K)
+    arr = np.load(os.path.join(prefix, dataset, f'{dataset}_{split}.npy')).reshape(-1, K)
     lab = np.load(os.path.join(prefix, dataset, f'{dataset}_test_label.npy')).reshape(-1)
 
     blocks, b, bt = [], 0, 0
     for r in info:
         name = r[0]
-        Ltr = np.load(os.path.join(raw_dir, 'train', name + '.npy')).shape[0]
+        L = np.load(os.path.join(raw_dir, split, name + '.npy')).shape[0]
         Lte = np.load(os.path.join(raw_dir, 'test', name + '.npy')).shape[0]
-        c0 = tr[b:b + Ltr, 0]
+        c0 = arr[b:b + L, 0]
         sd = float(c0.std())
         blocks.append(dict(
-            name=name, t_start=int(b), t_end=int(b + Ltr), length=int(Ltr),
+            name=name, t_start=int(b), t_end=int(b + L), length=int(L),
             col0_mean=float(c0.mean()), col0_std=sd,
             col0_n_unique=int(np.unique(c0).size),
-            n_constant_indicator_cols=int((tr[b:b + Ltr, 1:].std(0) == 0).sum()),
+            n_constant_indicator_cols=int((arr[b:b + L, 1:].std(0) == 0).sum()),
             n_anomaly_intervals=len(ast.literal_eval(r[2])),
             n_anomalous_points=int(lab[bt:bt + Lte].sum()),
             test_length=int(Lte),
             injectable=bool(sd > 0),
         ))
-        b += Ltr
+        b += L
         bt += Lte
 
     inj = [blk['name'] for blk in blocks if blk['injectable']]
-    return dict(dataset=dataset, layout='stacked', n_channels=K,
-                n_timestamps=int(tr.shape[0]), train_npy=os.path.join(prefix, dataset, f'{dataset}_train.npy'),
+    return dict(dataset=dataset, layout='stacked', split=split, n_channels=K,
+                n_timestamps=int(arr.shape[0]),
+                npy=os.path.join(prefix, dataset, f'{dataset}_{split}.npy'),
                 rule=dict(signal_col=0,
                           injectable='该通道块第 0 列的 std > 0',
                           other_cols='二值指示列，不注入'),
