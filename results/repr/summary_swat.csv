@@ -1,0 +1,2 @@
+variant,entity,n_test,n_bank,rate,dim,nn_time_gap,zp_auprc,zp_auroc,zp_dn,zp_da,zp_sep,vt_auprc,vt_auroc,vt_dn,vt_da,vt_sep,mu_auprc,mu_auroc,mu_dn,mu_da,mu_sep,score_auprc,score_auroc
+mamba_SWaT_seed42,all,449884,400,0.124056,197,222357,0.712849,0.814187,1.0808699,41.83663,1.671112,0.149625,0.560122,0.35730022,0.3679777,0.1917484,0.123837,0.498579,0.008653665,0.00856523,-0.005559113,0.129945,0.517958
