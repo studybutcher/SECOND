@@ -1,0 +1,28 @@
+ae | MSL ρ=20% seed=1 | train (45569, 70, 55) val (6849, 70, 55) probe(anom) (9970, 70, 55)
+  参数: total=9.20M  adapter=0.000M  mpa=0.000M  mpa_norm=none
+  [Gate V] 瓶颈 3850 → 256 (15.0×)  → ✅
+    epoch   0  train_MSE 0.00374  (total +0.00374)  val_MSE 0.00352  (2s)
+    epoch   5  train_MSE 0.00210  (total +0.00210)  val_MSE 0.00215  (11s)
+    epoch  10  train_MSE 0.00156  (total +0.00156)  val_MSE 0.00604  (19s)
+    epoch  15  train_MSE 0.00141  (total +0.00141)  val_MSE 0.00143  (28s)
+    epoch  20  train_MSE 0.00126  (total +0.00126)  val_MSE 0.00176  (36s)
+    epoch  25  train_MSE 0.00116  (total +0.00116)  val_MSE 0.00124  (44s)
+    epoch  30  train_MSE 0.00111  (total +0.00111)  val_MSE 0.00160  (53s)
+    epoch  35  train_MSE 0.00105  (total +0.00105)  val_MSE 0.00124  (61s)
+    epoch  40  train_MSE 0.00102  (total +0.00102)  val_MSE 0.00113  (70s)
+    epoch  45  train_MSE 0.00100  (total +0.00100)  val_MSE 0.00101  (79s)
+    epoch  50  train_MSE 0.00097  (total +0.00097)  val_MSE 0.00095  (87s)
+    epoch  55  train_MSE 0.00093  (total +0.00093)  val_MSE 0.00096  (96s)
+    epoch  60  train_MSE 0.00094  (total +0.00094)  val_MSE 0.00089  (104s)
+    epoch  65  train_MSE 0.00090  (total +0.00090)  val_MSE 0.00088  (113s)
+    epoch  70  train_MSE 0.00089  (total +0.00089)  val_MSE 0.00088  (121s)
+    epoch  75  train_MSE 0.00089  (total +0.00089)  val_MSE 0.00083  (129s)
+    epoch  80  train_MSE 0.00086  (total +0.00086)  val_MSE 0.00082  (138s)
+    epoch  85  train_MSE 0.00086  (total +0.00086)  val_MSE 0.00082  (146s)
+    epoch  90  train_MSE 0.00085  (total +0.00085)  val_MSE 0.00081  (155s)
+    epoch  95  train_MSE 0.00085  (total +0.00085)  val_MSE 0.00080  (163s)
+    epoch  99  train_MSE 0.00085  (total +0.00085)  val_MSE 0.00080  (170s)
+  E_N=0.000803  E_N(test normal)=0.001047  E_A(anomaly)=0.007893 (clip 到 [0,1] 后 0.001371)  比值 E_N/E_A_clip=0.585
+  [Gate N] 非常量: ratio=2.058e+00 (tol=0.001) 真实vs全零 max|Δ|=1.392e+00 → ✅
+  [诊断] 喂给 AE encoder 的向量: ratio=2.147e+00  真实vs全零 max|Δ|=1.000e+00
+  saved: results/ae_mpa/ae_MSL_rho20_seed1.json

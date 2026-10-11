@@ -1,0 +1,42 @@
+==============================================================================================
+name: lstmae_robust/MSL
+backbone: lstmae
+seed: 17
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.15
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=0.3325M  中间块=0.0000M (0.00%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 11.1s (steps=971)
+ 10%|█         | 1/10 [00:11<01:40, 11.13s/it][timing] epoch 1: 10.2s (steps=971)
+ 20%|██        | 2/10 [00:21<01:24, 10.57s/it][timing] epoch 2: 11.1s (steps=971)
+ 30%|███       | 3/10 [00:32<01:15, 10.82s/it][timing] epoch 3: 11.2s (steps=971)
+ 40%|████      | 4/10 [00:43<01:05, 10.96s/it][timing] epoch 4: 10.4s (steps=971)
+ 50%|█████     | 5/10 [00:53<00:53, 10.75s/it][timing] epoch 5: 10.7s (steps=971)
+ 60%|██████    | 6/10 [01:04<00:42, 10.75s/it][timing] epoch 6: 10.6s (steps=971)
+ 70%|███████   | 7/10 [01:15<00:32, 10.70s/it][timing] epoch 7: 10.8s (steps=971)
+ 80%|████████  | 8/10 [01:26<00:21, 10.72s/it][timing] epoch 8: 10.6s (steps=971)
+ 90%|█████████ | 9/10 [01:36<00:10, 10.67s/it][timing] epoch 9: 11.0s (steps=971)
+100%|██████████| 10/10 [01:47<00:00, 10.76s/it]100%|██████████| 10/10 [01:47<00:00, 10.76s/it]
+[timing] mean 10.8s/epoch  windows=58247
+*************
+dataset: MSL
+testname: lstmae_robust/MSL
+th: 94.86000000000095
+TP: 4711
+FP: 2293
+FN: 1932
+precision: 0.6726156472406972 recall: 0.7091675437164421 f_score 0.6904031508340609
+[score-dump] results/lstmae_robust/lstmae_MSL_noise0.15_seed17_scores.npz  n=47854  AUPRC(未调整) 待离线算
+metrics saved to: results/lstmae_robust/lstmae_MSL_noise0.15_seed17.json

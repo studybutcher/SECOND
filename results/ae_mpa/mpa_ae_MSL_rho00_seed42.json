@@ -1,0 +1,57 @@
+{
+ "model": "mpa_ae",
+ "dataset": "MSL",
+ "rho": 0.0,
+ "seed": 42,
+ "contam_seed": 42,
+ "window": 70,
+ "n_channel": 55,
+ "latent": 256,
+ "lam": 1.0,
+ "epochs": 1,
+ "batch_size": 128,
+ "lr": 0.001,
+ "n_train_win": 45569,
+ "n_val_win": 6849,
+ "n_probe_normal": 61869,
+ "n_probe_anom": 9970,
+ "params": {
+  "total": 13565716,
+  "total_M": 13.565716,
+  "adapter": 1975050,
+  "mpa": 2387968
+ },
+ "E_N": 0.004972063308814397,
+ "E_N_test_normal": 0.0043958024787040546,
+ "E_A": 0.15377458229497745,
+ "ratio_EN_EA": 0.032333453517544,
+ "curve": [
+  {
+   "epoch": 0,
+   "train_loss": -0.9882921979144232,
+   "val_mse": 0.004972063308814397
+  }
+ ],
+ "gates": {
+  "V": {
+   "in_dim": 3850,
+   "latent": 256,
+   "ratio": 15.0390625,
+   "ok": true
+  },
+  "N": {
+   "recon_abs_mean": 0.009454309940338135,
+   "recon_cross_sample_sd": 1.6216708900174126e-05,
+   "ratio": 0.0017152715536628718,
+   "real_vs_zero_max_abs_diff": 5.6177377700805664e-05,
+   "tol": 0.001,
+   "ok": true
+  }
+ },
+ "contam": {
+  "rho": 0.0,
+  "note": "clean"
+ },
+ "wall_sec": 15.3,
+ "timestamp": "2026-10-10 17:10:29"
+}

@@ -27,6 +27,8 @@ BACKBONE_REGISTRY = {
     'nomssa':      'model.Model_nomssa',     # 删除：整块拿掉 8 层中间块
     'nompa':       'model.Model_nompa',      # 删除：MPA 多视图分块 + loss_c
     'nompamssa':   'model.Model_nompamssa',  # 删除：上面两个都删
+    # PRD5.2：传统 LSTM-AE，只为在 script/robust 那套加噪协议下换模型（不涉及 MPA/MSSA/CRR）
+    'lstmae':      'model.Model_lstmae',
 }
 
 
@@ -81,6 +83,10 @@ class ExpConfig(argparse.ArgumentParser):
         self.add_argument('--contam-test-file', type=str, default=None,
                           help='【路 B】测试侧污染 .npy（已 preprocess，直接替换 test_data；'
                                '训练侧保持干净）。生成：bench/gen_contam.py --split test')
+        self.add_argument('--score-dump', type=str, default=None,
+                          help='把 test/val 的分数与标签落盘成 .npz（PRD5.2）。'
+                               '评测协议本身不变，只是为了事后能算**未调整 AUPRC**——'
+                               'point-adjust F1 已实测无分辨力')
         self.add_argument('--ckpt-dir', type=str, default=None,
                           help='checkpoint 目录；默认 checkpoint/<name>/<dataset>。'
                                '⚠️ 并行的同变体 run（如 mamba 的多个 ρ/seed）必须各给一个，'
@@ -234,6 +240,11 @@ def main():
         te = np.load(config.contam_test_file).astype(np.float32)
         if te.shape != test_data.shape:
             raise SystemExit(f'[FAIL] 测试污染文件形状 {te.shape} != test_data {test_data.shape}')
+        _ndiff = int((te != test_data).any(1).sum())
+        print(f'[dbg] contam_test vs 干净 test_data: 不同行={_ndiff}  '
+              f'te.sum={float(te.sum()):.6f} clean.sum={float(test_data.sum()):.6f}')
+        if _ndiff == 0:
+            raise SystemExit('[FAIL] 污染文件与干净测试集逐位相同 —— 注入没生效')
         test_data = te
         man_path = config.contam_manifest or \
             (os.path.splitext(config.contam_test_file)[0] + '.json')
@@ -364,6 +375,20 @@ def main():
         print("FP:", t[5])
         print("FN:", t[6])
         print("precision:", t[1], "recall:", t[2], "f_score", t[0])
+
+        if config.score_dump:      # PRD5.2：评测协议不变，额外存分数以便事后算未调整 AUPRC
+            _d = os.path.dirname(config.score_dump)
+            if _d:
+                os.makedirs(_d, exist_ok=True)
+            _ts = np.asarray(test_score.detach().cpu().numpy()).ravel()
+            import numpy as _np
+            _np.savez_compressed(
+                config.score_dump,
+                test_score=_ts,
+                test_label=_np.asarray(test_label[-len(_ts):]).ravel(),
+                bf_threshold=float(th), bf_f1=float(t[0]))
+            print(f'[score-dump] {config.score_dump}  n={_ts.size}  '
+                  f'AUPRC(未调整) 待离线算')
 
         #* ---- POT 阈值（标签无关）。threshold-mode='bf' 时这一段完全不执行 ----
         if POT_MODE_MAP[config.threshold_mode]:
