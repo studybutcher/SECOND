@@ -1,0 +1,41 @@
+==============================================================================================
+name: contam/nomssa
+backbone: nomssa
+seed: 42
+batch: 24
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.0
+load data of: WADI
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (20000, 127)
+test set shape:  (17281, 127)
+test set label shape:  (17281,)
+test_data: (11233, 127)
+val_data: (6048, 127)
+params=73.0525M  中间块=0.0000M (0.00%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 67.1s (steps=831)
+ 10%|█         | 1/10 [01:07<10:03, 67.10s/it][timing] epoch 1: 65.9s (steps=831)
+ 20%|██        | 2/10 [02:12<08:50, 66.37s/it][timing] epoch 2: 66.1s (steps=831)
+ 30%|███       | 3/10 [03:19<07:43, 66.26s/it][timing] epoch 3: 66.1s (steps=831)
+ 40%|████      | 4/10 [04:25<06:37, 66.21s/it][timing] epoch 4: 66.3s (steps=831)
+ 50%|█████     | 5/10 [05:31<05:31, 66.26s/it][timing] epoch 5: 66.2s (steps=831)
+ 60%|██████    | 6/10 [06:37<04:24, 66.23s/it][timing] epoch 6: 66.2s (steps=831)
+ 70%|███████   | 7/10 [07:43<03:18, 66.20s/it][timing] epoch 7: 65.9s (steps=831)
+ 80%|████████  | 8/10 [08:49<02:12, 66.11s/it][timing] epoch 8: 65.8s (steps=831)
+ 90%|█████████ | 9/10 [09:55<01:06, 66.02s/it][timing] epoch 9: 67.5s (steps=831)
+100%|██████████| 10/10 [11:03<00:00, 66.49s/it]100%|██████████| 10/10 [11:03<00:00, 66.32s/it]
+[timing] mean 66.3s/epoch  windows=19930
+*************
+dataset: WADI
+testname: contam/nomssa
+th: 99.86000000000351
+TP: 174.98250174982496
+FP: 15.017498250174985
+FN: 0.0
+precision: 0.9209604870537902 recall: 0.9999999428514318 f_score 0.9588491525792574
+metrics saved to: results/ablation/nomssa_WADI_seed42.json

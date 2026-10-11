@@ -1,0 +1,205 @@
+==============================================================================================
+name: Robust/WADI_nompamssa
+backbone: nompamssa
+seed: 42
+batch: 24
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.05
+load data of: WADI
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (20000, 127)
+test set shape:  (17281, 127)
+test set label shape:  (17281,)
+test_data: (11233, 127)
+val_data: (6048, 127)
+params=70.6646M  中间块=0.0000M (0.00%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 60.8s (steps=831)
+ 10%|█         | 1/10 [01:00<09:07, 60.80s/it][timing] epoch 1: 60.8s (steps=831)
+ 20%|██        | 2/10 [02:01<08:06, 60.83s/it][timing] epoch 2: 62.6s (steps=831)
+ 30%|███       | 3/10 [03:04<07:11, 61.61s/it][timing] epoch 3: 61.9s (steps=831)
+ 40%|████      | 4/10 [04:06<06:10, 61.71s/it][timing] epoch 4: 58.3s (steps=831)
+ 50%|█████     | 5/10 [05:04<05:02, 60.48s/it][timing] epoch 5: 63.1s (steps=831)
+ 60%|██████    | 6/10 [06:07<04:05, 61.37s/it][timing] epoch 6: 61.6s (steps=831)
+ 70%|███████   | 7/10 [07:09<03:04, 61.44s/it][timing] epoch 7: 61.6s (steps=831)
+ 80%|████████  | 8/10 [08:10<02:02, 61.50s/it][timing] epoch 8: 59.0s (steps=831)
+ 90%|█████████ | 9/10 [09:09<01:00, 60.71s/it][timing] epoch 9: 58.4s (steps=831)
+100%|██████████| 10/10 [10:08<00:00, 59.99s/it]100%|██████████| 10/10 [10:08<00:00, 60.80s/it]
+[timing] mean 60.8s/epoch  windows=19930
+*************
+dataset: WADI
+testname: Robust/WADI_nompamssa
+th: 98.37000000000275
+TP: 174.98250174982496
+FP: 181.01749825017498
+FN: 0.0
+precision: 0.49152386751288296 recall: 0.9999999428514318 f_score 0.6590850787391008
+metrics saved to: results/robust/nompamssa_WADI_noise0.05_seed42.json
+==============================================================================================
+name: Robust/WADI_nompamssa
+backbone: nompamssa
+seed: 42
+batch: 24
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.1
+load data of: WADI
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (20000, 127)
+test set shape:  (17281, 127)
+test set label shape:  (17281,)
+test_data: (11233, 127)
+val_data: (6048, 127)
+params=70.6646M  中间块=0.0000M (0.00%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 56.9s (steps=831)
+ 10%|█         | 1/10 [00:56<08:31, 56.86s/it][timing] epoch 1: 59.5s (steps=831)
+ 20%|██        | 2/10 [01:56<07:47, 58.43s/it][timing] epoch 2: 60.8s (steps=831)
+ 30%|███       | 3/10 [02:57<06:56, 59.50s/it][timing] epoch 3: 60.9s (steps=831)
+ 40%|████      | 4/10 [03:58<06:00, 60.06s/it][timing] epoch 4: 61.6s (steps=831)
+ 50%|█████     | 5/10 [04:59<05:03, 60.61s/it][timing] epoch 5: 56.6s (steps=831)
+ 60%|██████    | 6/10 [05:56<03:56, 59.24s/it][timing] epoch 6: 59.3s (steps=831)
+ 70%|███████   | 7/10 [06:55<02:57, 59.28s/it][timing] epoch 7: 59.5s (steps=831)
+ 80%|████████  | 8/10 [07:55<01:58, 59.33s/it][timing] epoch 8: 61.0s (steps=831)
+ 90%|█████████ | 9/10 [08:56<00:59, 59.86s/it][timing] epoch 9: 60.1s (steps=831)
+100%|██████████| 10/10 [09:56<00:00, 59.94s/it]100%|██████████| 10/10 [09:56<00:00, 59.62s/it]
+[timing] mean 59.6s/epoch  windows=19930
+*************
+dataset: WADI
+testname: Robust/WADI_nompamssa
+th: 98.85000000000299
+TP: 174.98250174982496
+FP: 128.01749825017498
+FN: 0.0
+precision: 0.5774999867155945 recall: 0.9999999428514318 f_score 0.7321664895900863
+metrics saved to: results/robust/nompamssa_WADI_noise0.10_seed42.json
+==============================================================================================
+name: Robust/WADI_nompamssa
+backbone: nompamssa
+seed: 42
+batch: 24
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.15
+load data of: WADI
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (20000, 127)
+test set shape:  (17281, 127)
+test set label shape:  (17281,)
+test_data: (11233, 127)
+val_data: (6048, 127)
+params=70.6646M  中间块=0.0000M (0.00%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 63.8s (steps=831)
+ 10%|█         | 1/10 [01:03<09:33, 63.76s/it][timing] epoch 1: 65.0s (steps=831)
+ 20%|██        | 2/10 [02:08<08:35, 64.48s/it][timing] epoch 2: 62.4s (steps=831)
+ 30%|███       | 3/10 [03:11<07:24, 63.52s/it][timing] epoch 3: 61.2s (steps=831)
+ 40%|████      | 4/10 [04:12<06:15, 62.59s/it][timing] epoch 4: 61.0s (steps=831)
+ 50%|█████     | 5/10 [05:13<05:10, 62.01s/it][timing] epoch 5: 62.9s (steps=831)
+ 60%|██████    | 6/10 [06:16<04:09, 62.32s/it][timing] epoch 6: 61.7s (steps=831)
+ 70%|███████   | 7/10 [07:17<03:06, 62.12s/it][timing] epoch 7: 63.1s (steps=831)
+ 80%|████████  | 8/10 [08:21<02:04, 62.45s/it][timing] epoch 8: 61.6s (steps=831)
+ 90%|█████████ | 9/10 [09:22<01:02, 62.17s/it][timing] epoch 9: 62.8s (steps=831)
+100%|██████████| 10/10 [10:25<00:00, 62.37s/it]100%|██████████| 10/10 [10:25<00:00, 62.54s/it]
+[timing] mean 62.5s/epoch  windows=19930
+*************
+dataset: WADI
+testname: Robust/WADI_nompamssa
+th: 99.99000000000358
+TP: 174.98250174982496
+FP: 1.0174982501749854
+FN: 0.0
+precision: 0.9942187034524885 recall: 0.9999999428514318 f_score 0.9970959433132065
+metrics saved to: results/robust/nompamssa_WADI_noise0.15_seed42.json
+==============================================================================================
+name: Robust/WADI_nompamssa
+backbone: nompamssa
+seed: 42
+batch: 24
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.2
+load data of: WADI
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (20000, 127)
+test set shape:  (17281, 127)
+test set label shape:  (17281,)
+test_data: (11233, 127)
+val_data: (6048, 127)
+params=70.6646M  中间块=0.0000M (0.00%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 66.7s (steps=831)
+ 10%|█         | 1/10 [01:06<09:59, 66.67s/it][timing] epoch 1: 66.4s (steps=831)
+ 20%|██        | 2/10 [02:13<08:52, 66.53s/it][timing] epoch 2: 65.2s (steps=831)
+ 30%|███       | 3/10 [03:18<07:41, 65.92s/it][timing] epoch 3: 65.0s (steps=831)
+ 40%|████      | 4/10 [04:23<06:33, 65.57s/it][timing] epoch 4: 64.7s (steps=831)
+ 50%|█████     | 5/10 [05:28<05:26, 65.27s/it][timing] epoch 5: 65.0s (steps=831)
+ 60%|██████    | 6/10 [06:33<04:20, 65.18s/it][timing] epoch 6: 65.1s (steps=831)
+ 70%|███████   | 7/10 [07:38<03:15, 65.16s/it][timing] epoch 7: 66.2s (steps=831)
+ 80%|████████  | 8/10 [08:44<02:10, 65.48s/it][timing] epoch 8: 64.9s (steps=831)
+ 90%|█████████ | 9/10 [09:49<01:05, 65.32s/it][timing] epoch 9: 65.0s (steps=831)
+100%|██████████| 10/10 [10:54<00:00, 65.21s/it]100%|██████████| 10/10 [10:54<00:00, 65.43s/it]
+[timing] mean 65.4s/epoch  windows=19930
+*************
+dataset: WADI
+testname: Robust/WADI_nompamssa
+th: 99.99000000000358
+TP: 174.98250174982496
+FP: 1.0174982501749854
+FN: 0.0
+precision: 0.9942187034524885 recall: 0.9999999428514318 f_score 0.9970959433132065
+metrics saved to: results/robust/nompamssa_WADI_noise0.2_seed42.json
+==============================================================================================
+name: Robust/WADI_nompamssa
+backbone: nompamssa
+seed: 42
+batch: 24
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.5
+load data of: WADI
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (20000, 127)
+test set shape:  (17281, 127)
+test set label shape:  (17281,)
+test_data: (11233, 127)
+val_data: (6048, 127)
+params=70.6646M  中间块=0.0000M (0.00%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 67.1s (steps=831)
+ 10%|█         | 1/10 [01:07<10:03, 67.06s/it][timing] epoch 1: 66.5s (steps=831)
+ 20%|██        | 2/10 [02:13<08:53, 66.75s/it][timing] epoch 2: 65.2s (steps=831)
+ 30%|███       | 3/10 [03:18<07:42, 66.05s/it][timing] epoch 3: 65.0s (steps=831)
+ 40%|████      | 4/10 [04:23<06:33, 65.63s/it][timing] epoch 4: 64.9s (steps=831)
+ 50%|█████     | 5/10 [05:28<05:26, 65.37s/it][timing] epoch 5: 64.9s (steps=831)
+ 60%|██████    | 6/10 [06:33<04:20, 65.21s/it][timing] epoch 6: 64.9s (steps=831)
+ 70%|███████   | 7/10 [07:38<03:15, 65.12s/it][timing] epoch 7: 64.9s (steps=831)
+ 80%|████████  | 8/10 [08:43<02:10, 65.06s/it][timing] epoch 8: 64.8s (steps=831)
+ 90%|█████████ | 9/10 [09:48<01:04, 64.98s/it][timing] epoch 9: 65.0s (steps=831)
+100%|██████████| 10/10 [10:53<00:00, 64.98s/it]100%|██████████| 10/10 [10:53<00:00, 65.33s/it]
+[timing] mean 65.3s/epoch  windows=19930
+*************
+dataset: WADI
+testname: Robust/WADI_nompamssa
+th: 99.86000000000351
+TP: 174.98250174982496
+FP: 15.017498250174985
+FN: 0.0
+precision: 0.9209604870537902 recall: 0.9999999428514318 f_score 0.9588491525792574
+metrics saved to: results/robust/nompamssa_WADI_noise0.5_seed42.json

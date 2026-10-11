@@ -1,0 +1,70 @@
+==============================================================================================
+name: casestudy
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+  0%|          | 0/10 [00:00<?, ?it/s]==============================================================================================
+name: casestudy
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+  0%|          | 0/10 [00:00<?, ?it/s]  0%|          | 0/10 [00:04<?, ?it/s]
+Traceback (most recent call last):
+  File "main.py", line 183, in <module>
+    main()
+  File "main.py", line 120, in main
+    loss = model(inputs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 131, in forward
+    x_a,pred_result,loss_c = self.pipline(x)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 227, in pipline
+    x_combined = layer(x_combined)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 177, in forward
+    output = self.mixer(self.norm(x)) + x
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 409, in forward
+    y = self.ssm(x)#*状态仍然在时序隐变量d_in范围内。
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 450, in ssm
+    y = self.selective_scan(x, delta, A, B, C, D)  # This is similar to run_SSM(A, B, C, u) in The Annotated S4 [2]
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 507, in selective_scan
+    hs = pscan(deltaA, deltaB_u)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/pscan.py", line 173, in forward
+    A = pad_npo2(A_in) # (B, npo2(L), D, N)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/pscan.py", line 33, in pad_npo2
+    return F.pad(X, pad_tuple, "constant", 0)
+RuntimeError: CUDA out of memory. Tried to allocate 240.00 MiB (GPU 0; 23.70 GiB total capacity; 6.46 GiB already allocated; 241.56 MiB free; 6.51 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+ 10%|█         | 1/10 [08:10<1:13:34, 490.49s/it] 20%|██        | 2/10 [16:06<1:04:16, 482.11s/it] 30%|███       | 3/10 [23:57<55:38, 476.90s/it]   40%|████      | 4/10 [31:41<47:11, 471.86s/it] 50%|█████     | 5/10 [39:26<39:06, 469.25s/it] 60%|██████    | 6/10 [47:10<31:10, 467.71s/it] 70%|███████   | 7/10 [54:57<23:21, 467.33s/it] 80%|████████  | 8/10 [1:02:42<15:33, 466.62s/it] 90%|█████████ | 9/10 [1:10:37<07:49, 469.34s/it]100%|██████████| 10/10 [1:18:22<00:00, 467.91s/it]100%|██████████| 10/10 [1:18:22<00:00, 470.26s/it]
+*************
+dataset: MSL
+testname: casestudy
+th: 98.76000000000295
+TP: 6532
+FP: 502
+FN: 111
+precision: 0.9286323558023424 recall: 0.9832906804406283 f_score 0.9551752322982812

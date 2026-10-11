@@ -1,0 +1,132 @@
+==============================================================================================
+name: Hyperpara/mamba潜在层数
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+mamba的潜在层数 256
+  0%|          | 0/10 [00:00<?, ?it/s]  0%|          | 0/10 [00:03<?, ?it/s]
+Traceback (most recent call last):
+  File "main.py", line 183, in <module>
+    main()
+  File "main.py", line 120, in main
+    loss = model(inputs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 128, in forward
+    x_a,pred_result,loss_c = self.pipline(x)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 224, in pipline
+    x_combined = layer(x_combined)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 177, in forward
+    output = self.mixer(self.norm(x)) + x
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 525, in forward
+    output = x * torch.rsqrt(x.pow(2).mean(-1, keepdim=True) + self.eps) * self.weight
+RuntimeError: The size of tensor a (512) must match the size of tensor b (256) at non-singleton dimension 2
+==============================================================================================
+name: Hyperpara/mamba潜在层数
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+mamba的潜在层数 256
+  0%|          | 0/10 [00:00<?, ?it/s]  0%|          | 0/10 [00:03<?, ?it/s]
+Traceback (most recent call last):
+  File "main.py", line 183, in <module>
+    main()
+  File "main.py", line 120, in main
+    loss = model(inputs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 128, in forward
+    x_a,pred_result,loss_c = self.pipline(x)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 224, in pipline
+    x_combined = layer(x_combined)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 177, in forward
+    output = self.mixer(self.norm(x)) + x
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 525, in forward
+    output = x * torch.rsqrt(x.pow(2).mean(-1, keepdim=True) + self.eps) * self.weight
+RuntimeError: The size of tensor a (512) must match the size of tensor b (256) at non-singleton dimension 2
+==============================================================================================
+name: Hyperpara/mamba潜在层数
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+mamba的潜在层数 256
+  0%|          | 0/10 [00:00<?, ?it/s]  0%|          | 0/10 [00:03<?, ?it/s]
+Traceback (most recent call last):
+  File "main.py", line 183, in <module>
+    main()
+  File "main.py", line 120, in main
+    loss = model(inputs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 128, in forward
+    x_a,pred_result,loss_c = self.pipline(x)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 224, in pipline
+    x_combined = layer(x_combined)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 177, in forward
+    output = self.mixer(self.norm(x)) + x
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 525, in forward
+    output = x * torch.rsqrt(x.pow(2).mean(-1, keepdim=True) + self.eps) * self.weight
+RuntimeError: The size of tensor a (512) must match the size of tensor b (256) at non-singleton dimension 2
+==============================================================================================
+name: Hyperpara/mamba潜在层数
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+mamba的潜在层数 512
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [07:53<1:11:02, 473.57s/it]

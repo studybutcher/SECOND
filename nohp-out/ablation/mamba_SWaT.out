@@ -1,0 +1,21 @@
+==============================================================================================
+name: ablation/mamba
+backbone: mamba
+seed: 42
+batch: 60
+window_length 35
+latent_size 256
+trian or test: train-test
+noise: 0
+load data of: SWaT
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (495000, 51)
+test set shape:  (449919, 51)
+test set label shape:  (449919,)
+test_data: (292448, 51)
+val_data: (157471, 51)
+params=199.6879M  中间块=147.9926M (74.11%)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [58:46<8:48:56, 3526.30s/it] 20%|██        | 2/10 [1:48:21<7:06:59, 3202.38s/it] 30%|███       | 3/10 [2:36:15<5:56:04, 3052.09s/it] 40%|████      | 4/10 [3:23:35<4:56:51, 2968.52s/it] 50%|█████     | 5/10 [4:10:59<4:03:38, 2923.73s/it] 60%|██████    | 6/10 [4:58:23<3:13:05, 2896.33s/it] 70%|███████   | 7/10 [5:45:48<2:23:58, 2879.59s/it]

@@ -1,0 +1,21 @@
+==============================================================================================
+name: contam/nompa
+backbone: nompa
+seed: 7
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.0
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=199.2287M  中间块=147.9926M (74.28%)
+  0%|          | 0/10 [00:00<?, ?it/s]

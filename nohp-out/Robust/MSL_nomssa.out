@@ -1,0 +1,205 @@
+==============================================================================================
+name: Robust/MSL_nomssa
+backbone: nomssa
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.05
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=53.6241M  中间块=0.0000M (0.00%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 87.3s (steps=971)
+ 10%|█         | 1/10 [01:27<13:05, 87.30s/it][timing] epoch 1: 86.4s (steps=971)
+ 20%|██        | 2/10 [02:53<11:34, 86.79s/it][timing] epoch 2: 84.7s (steps=971)
+ 30%|███       | 3/10 [04:18<10:00, 85.85s/it][timing] epoch 3: 85.8s (steps=971)
+ 40%|████      | 4/10 [05:44<08:35, 85.84s/it][timing] epoch 4: 84.8s (steps=971)
+ 50%|█████     | 5/10 [07:09<07:07, 85.48s/it][timing] epoch 5: 85.6s (steps=971)
+ 60%|██████    | 6/10 [08:34<05:42, 85.53s/it][timing] epoch 6: 85.3s (steps=971)
+ 70%|███████   | 7/10 [10:00<04:16, 85.45s/it][timing] epoch 7: 83.1s (steps=971)
+ 80%|████████  | 8/10 [11:23<02:49, 84.71s/it][timing] epoch 8: 83.9s (steps=971)
+ 90%|█████████ | 9/10 [12:47<01:24, 84.45s/it][timing] epoch 9: 84.7s (steps=971)
+100%|██████████| 10/10 [14:11<00:00, 84.53s/it]100%|██████████| 10/10 [14:11<00:00, 85.17s/it]
+[timing] mean 85.2s/epoch  windows=58247
+*************
+dataset: MSL
+testname: Robust/MSL_nomssa
+th: 98.35000000000274
+TP: 6643
+FP: 695
+FN: 0
+precision: 0.9052875430562993 recall: 0.999999998494656 f_score 0.9502846898722239
+metrics saved to: results/robust/nomssa_MSL_noise0.05_seed42.json
+==============================================================================================
+name: Robust/MSL_nomssa
+backbone: nomssa
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.1
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=53.6241M  中间块=0.0000M (0.00%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 85.9s (steps=971)
+ 10%|█         | 1/10 [01:25<12:53, 85.90s/it][timing] epoch 1: 86.2s (steps=971)
+ 20%|██        | 2/10 [02:52<11:28, 86.08s/it][timing] epoch 2: 84.4s (steps=971)
+ 30%|███       | 3/10 [04:16<09:57, 85.29s/it][timing] epoch 3: 85.6s (steps=971)
+ 40%|████      | 4/10 [05:42<08:32, 85.41s/it][timing] epoch 4: 84.1s (steps=971)
+ 50%|█████     | 5/10 [07:06<07:04, 84.93s/it][timing] epoch 5: 84.4s (steps=971)
+ 60%|██████    | 6/10 [08:30<05:39, 84.75s/it][timing] epoch 6: 84.2s (steps=971)
+ 70%|███████   | 7/10 [09:54<04:13, 84.58s/it][timing] epoch 7: 84.5s (steps=971)
+ 80%|████████  | 8/10 [11:19<02:49, 84.56s/it][timing] epoch 8: 84.8s (steps=971)
+ 90%|█████████ | 9/10 [12:44<01:24, 84.63s/it][timing] epoch 9: 85.3s (steps=971)
+100%|██████████| 10/10 [14:09<00:00, 84.83s/it]100%|██████████| 10/10 [14:09<00:00, 84.93s/it]
+[timing] mean 84.9s/epoch  windows=58247
+*************
+dataset: MSL
+testname: Robust/MSL_nomssa
+th: 99.18000000000316
+TP: 6414
+FP: 342
+FN: 229
+precision: 0.9493783289677645 recall: 0.9655276216084185 f_score 0.9573798784213033
+metrics saved to: results/robust/nomssa_MSL_noise0.10_seed42.json
+==============================================================================================
+name: Robust/MSL_nomssa
+backbone: nomssa
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.15
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=53.6241M  中间块=0.0000M (0.00%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 83.8s (steps=971)
+ 10%|█         | 1/10 [01:23<12:34, 83.83s/it][timing] epoch 1: 83.1s (steps=971)
+ 20%|██        | 2/10 [02:46<11:07, 83.40s/it][timing] epoch 2: 82.0s (steps=971)
+ 30%|███       | 3/10 [04:08<09:39, 82.77s/it][timing] epoch 3: 83.1s (steps=971)
+ 40%|████      | 4/10 [05:32<08:17, 82.90s/it][timing] epoch 4: 82.1s (steps=971)
+ 50%|█████     | 5/10 [06:54<06:53, 82.63s/it][timing] epoch 5: 81.8s (steps=971)
+ 60%|██████    | 6/10 [08:16<05:29, 82.36s/it][timing] epoch 6: 81.8s (steps=971)
+ 70%|███████   | 7/10 [09:37<04:06, 82.19s/it][timing] epoch 7: 81.5s (steps=971)
+ 80%|████████  | 8/10 [10:59<02:43, 81.98s/it][timing] epoch 8: 81.7s (steps=971)
+ 90%|█████████ | 9/10 [12:21<01:21, 81.90s/it][timing] epoch 9: 82.1s (steps=971)
+100%|██████████| 10/10 [13:43<00:00, 81.95s/it]100%|██████████| 10/10 [13:43<00:00, 82.32s/it]
+[timing] mean 82.3s/epoch  windows=58247
+*************
+dataset: MSL
+testname: Robust/MSL_nomssa
+th: 98.75000000000294
+TP: 6334
+FP: 523
+FN: 309
+precision: 0.9237275763107371 recall: 0.9534848698577678 f_score 0.9383653702632265
+metrics saved to: results/robust/nomssa_MSL_noise0.15_seed42.json
+==============================================================================================
+name: Robust/MSL_nomssa
+backbone: nomssa
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.2
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=53.6241M  中间块=0.0000M (0.00%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 83.8s (steps=971)
+ 10%|█         | 1/10 [01:23<12:34, 83.81s/it][timing] epoch 1: 83.7s (steps=971)
+ 20%|██        | 2/10 [02:47<11:09, 83.72s/it][timing] epoch 2: 82.4s (steps=971)
+ 30%|███       | 3/10 [04:09<09:41, 83.11s/it][timing] epoch 3: 82.1s (steps=971)
+ 40%|████      | 4/10 [05:31<08:16, 82.69s/it][timing] epoch 4: 81.8s (steps=971)
+ 50%|█████     | 5/10 [06:53<06:51, 82.39s/it][timing] epoch 5: 82.2s (steps=971)
+ 60%|██████    | 6/10 [08:15<05:29, 82.31s/it][timing] epoch 6: 82.0s (steps=971)
+ 70%|███████   | 7/10 [09:37<04:06, 82.21s/it][timing] epoch 7: 83.1s (steps=971)
+ 80%|████████  | 8/10 [11:00<02:44, 82.49s/it][timing] epoch 8: 81.9s (steps=971)
+ 90%|█████████ | 9/10 [12:22<01:22, 82.32s/it][timing] epoch 9: 82.4s (steps=971)
+100%|██████████| 10/10 [13:45<00:00, 82.34s/it]100%|██████████| 10/10 [13:45<00:00, 82.53s/it]
+[timing] mean 82.5s/epoch  windows=58247
+*************
+dataset: MSL
+testname: Robust/MSL_nomssa
+th: 99.01000000000307
+TP: 6313
+FP: 423
+FN: 330
+precision: 0.937203086494651 recall: 0.950323647523222 f_score 0.9437127655065651
+metrics saved to: results/robust/nomssa_MSL_noise0.2_seed42.json
+==============================================================================================
+name: Robust/MSL_nomssa
+backbone: nomssa
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.5
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=53.6241M  中间块=0.0000M (0.00%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 83.7s (steps=971)
+ 10%|█         | 1/10 [01:23<12:33, 83.72s/it][timing] epoch 1: 82.2s (steps=971)
+ 20%|██        | 2/10 [02:45<11:02, 82.81s/it][timing] epoch 2: 82.2s (steps=971)
+ 30%|███       | 3/10 [04:08<09:37, 82.52s/it][timing] epoch 3: 83.3s (steps=971)
+ 40%|████      | 4/10 [05:31<08:16, 82.82s/it][timing] epoch 4: 82.4s (steps=971)
+ 50%|█████     | 5/10 [06:53<06:53, 82.67s/it][timing] epoch 5: 82.2s (steps=971)
+ 60%|██████    | 6/10 [08:15<05:29, 82.49s/it][timing] epoch 6: 81.8s (steps=971)
+ 70%|███████   | 7/10 [09:37<04:06, 82.26s/it][timing] epoch 7: 83.2s (steps=971)
+ 80%|████████  | 8/10 [11:00<02:45, 82.56s/it][timing] epoch 8: 81.9s (steps=971)
+ 90%|█████████ | 9/10 [12:22<01:22, 82.36s/it][timing] epoch 9: 82.1s (steps=971)
+100%|██████████| 10/10 [13:44<00:00, 82.29s/it]100%|██████████| 10/10 [13:44<00:00, 82.49s/it]
+[timing] mean 82.5s/epoch  windows=58247
+*************
+dataset: MSL
+testname: Robust/MSL_nomssa
+th: 98.80000000000297
+TP: 6394
+FP: 500
+FN: 249
+precision: 0.9274731637257425 recall: 0.9625169336707559 f_score 0.9446651636060074
+metrics saved to: results/robust/nomssa_MSL_noise0.5_seed42.json

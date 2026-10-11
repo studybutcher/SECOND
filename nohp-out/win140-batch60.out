@@ -1,0 +1,72 @@
+name: win140-batch60
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+275
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [05:20<48:00, 320.10s/it] 20%|██        | 2/10 [10:29<41:51, 313.95s/it] 30%|███       | 3/10 [15:39<36:25, 312.17s/it] 40%|████      | 4/10 [20:59<31:31, 315.18s/it] 50%|█████     | 5/10 [26:06<26:00, 312.16s/it] 60%|██████    | 6/10 [31:18<20:49, 312.26s/it] 70%|███████   | 7/10 [36:26<15:31, 310.62s/it] 80%|████████  | 8/10 [41:27<10:15, 307.79s/it] 90%|█████████ | 9/10 [46:48<05:11, 311.83s/it]100%|██████████| 10/10 [51:11<00:00, 296.64s/it]100%|██████████| 10/10 [51:11<00:00, 307.12s/it]checkpoint/win140-batch60/MSL/best.pt
+
+*****************************************************
+dataset: MSL
+testname: win140-batch60
+th: 98.15000000000263
+TP: 6622
+FP: 765
+FN: 21
+precision: 0.8964396901361315 recall: 0.9968387761601103 f_score 0.9439722044731749
+==============================================
+name: win140-batch60
+batch: 60
+window_length 140
+trian or test: train-test
+load data of: SMAP
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (135183, 25)
+test set shape:  (427617, 25)
+test set label shape:  (427617,)
+test_data: (277952, 25)
+val_data: (149665, 25)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [06:48<1:01:14, 408.31s/it] 20%|██        | 2/10 [13:28<53:47, 403.40s/it]   30%|███       | 3/10 [20:04<46:40, 400.00s/it] 40%|████      | 4/10 [26:39<39:49, 398.22s/it] 50%|█████     | 5/10 [33:14<33:05, 397.12s/it] 60%|██████    | 6/10 [39:49<26:25, 396.41s/it] 70%|███████   | 7/10 [46:24<19:47, 395.95s/it] 80%|████████  | 8/10 [53:01<13:12, 396.04s/it] 90%|█████████ | 9/10 [59:37<06:35, 396.00s/it]100%|██████████| 10/10 [1:06:11<00:00, 395.54s/it]100%|██████████| 10/10 [1:06:11<00:00, 397.16s/it]checkpoint/win140-batch60/SMAP/best.pt
+
+*****************************************************
+dataset: SMAP
+testname: win140-batch60
+th: 99.62000000000339
+TP: 41008
+FP: 913
+FN: 1410
+precision: 0.9782209391526392 recall: 0.9667593943687209 f_score 0.9724513961792614
+==============================================
+name: win140-batch60
+batch: 60
+window_length 140
+trian or test: train-test
+load data of: SWaT
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (495000, 51)
+test set shape:  (449919, 51)
+test set label shape:  (449919,)
+test_data: (292448, 51)
+val_data: (157471, 51)
+Traceback (most recent call last):
+  File "main.py", line 146, in <module>
+    main()
+  File "main.py", line 77, in main
+    train_loader = get_loader(train_data, batch_size=config.batch_size,
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/utils.py", line 131, in get_loader
+    values = np.concatenate((values, a), axis=0)
+  File "<__array_function__ internals>", line 180, in concatenate
+numpy.core._exceptions.MemoryError: Unable to allocate 13.2 GiB for an array with shape (494862, 140, 51) and data type float32

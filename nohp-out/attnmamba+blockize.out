@@ -1,0 +1,219 @@
+==============================================================================================
+name: attnmamba+blockize
+batch: 60
+window_length 140
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+
+  0%|          | 0/10 [00:00<?, ?it/s]
+ 10%|█         | 1/10 [07:45<1:09:50, 465.60s/it]
+ 20%|██        | 2/10 [18:04<1:14:08, 556.05s/it]
+ 30%|███       | 3/10 [28:23<1:08:12, 584.63s/it]
+ 40%|████      | 4/10 [38:28<59:14, 592.47s/it]  
+ 50%|█████     | 5/10 [48:20<49:21, 592.32s/it]
+ 60%|██████    | 6/10 [57:56<39:07, 586.87s/it]
+ 70%|███████   | 7/10 [1:08:10<29:47, 595.70s/it]
+ 80%|████████  | 8/10 [1:18:12<19:55, 597.65s/it]
+ 90%|█████████ | 9/10 [1:28:01<09:55, 595.18s/it]
+100%|██████████| 10/10 [1:37:37<00:00, 589.03s/it]
+100%|██████████| 10/10 [1:37:37<00:00, 585.71s/it]checkpoint/attnmamba+blockize/MSL/best.pt
+
+*****************************************************
+dataset: MSL
+testname: attnmamba+blockize
+th: 98.93000000000303
+TP: 6515
+FP: 448
+FN: 128
+precision: 0.935659915358811 recall: 0.980731595693615 f_score 0.9576607370889264
+==============================================================================================
+name: attnmamba+blockize
+batch: 60
+window_length 140
+trian or test: train-test
+load data of: SMAP
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (135183, 25)
+test set shape:  (427617, 25)
+test set label shape:  (427617,)
+test_data: (277952, 25)
+val_data: (149665, 25)
+
+  0%|          | 0/10 [00:00<?, ?it/s]
+ 10%|█         | 1/10 [18:37<2:47:39, 1117.74s/it]
+ 20%|██        | 2/10 [37:26<2:29:55, 1124.43s/it]
+ 30%|███       | 3/10 [56:05<2:10:52, 1121.82s/it]
+ 40%|████      | 4/10 [1:15:43<1:54:22, 1143.78s/it]
+ 50%|█████     | 5/10 [1:34:24<1:34:39, 1135.91s/it]
+ 60%|██████    | 6/10 [1:53:25<1:15:50, 1137.57s/it]
+ 70%|███████   | 7/10 [2:11:12<55:43, 1114.45s/it]  
+ 80%|████████  | 8/10 [2:23:57<33:26, 1003.02s/it]
+ 90%|█████████ | 9/10 [2:34:29<14:47, 887.18s/it] 
+100%|██████████| 10/10 [2:45:04<00:00, 809.19s/it]
+100%|██████████| 10/10 [2:45:04<00:00, 990.41s/it]checkpoint/attnmamba+blockize/SMAP/best.pt
+
+*****************************************************
+dataset: SMAP
+testname: attnmamba+blockize
+th: 99.43000000000329
+TP: 41859
+FP: 1346
+FN: 559
+precision: 0.9688461981324276 recall: 0.9868216320932571 f_score 0.9777463053595675
+==============================================================================================
+name: attnmamba+blockize
+batch: 60
+window_length 140
+trian or test: train-test
+load data of: WADI
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (20000, 127)
+test set shape:  (17281, 127)
+test set label shape:  (17281,)
+test_data: (11233, 127)
+val_data: (6048, 127)
+
+  0%|          | 0/10 [00:00<?, ?it/s]
+  0%|          | 0/10 [00:06<?, ?it/s]
+Traceback (most recent call last):
+  File "main.py", line 146, in <module>
+    main()
+  File "main.py", line 108, in main
+    loss.backward()
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/_tensor.py", line 396, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/autograd/__init__.py", line 173, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/autograd/function.py", line 253, in apply
+    return user_fn(self, *args)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/pscan.py", line 221, in backward
+    Q = torch.zeros_like(X)
+RuntimeError: CUDA out of memory. Tried to allocate 480.00 MiB (GPU 0; 23.70 GiB total capacity; 21.43 GiB already allocated; 280.56 MiB free; 21.82 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+==============================================================================================
+name: attnmamba+blockize
+batch: 60
+window_length 35
+trian or test: train-test
+load data of: SWaT
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (495000, 51)
+test set shape:  (449919, 51)
+test set label shape:  (449919,)
+test_data: (292448, 51)
+val_data: (157471, 51)
+
+  0%|          | 0/10 [00:00<?, ?it/s]
+ 10%|█         | 1/10 [1:01:20<9:12:02, 3680.26s/it]
+ 20%|██        | 2/10 [2:14:17<9:05:20, 4090.07s/it]
+ 30%|███       | 3/10 [3:25:25<8:06:40, 4171.53s/it]
+ 40%|████      | 4/10 [4:37:57<7:04:16, 4242.80s/it]
+ 50%|█████     | 5/10 [5:51:06<5:57:57, 4295.44s/it]
+ 60%|██████    | 6/10 [7:03:28<4:47:24, 4311.15s/it]
+ 70%|███████   | 7/10 [8:15:46<3:36:00, 4320.07s/it]
+ 80%|████████  | 8/10 [9:27:59<2:24:08, 4324.16s/it]
+ 90%|█████████ | 9/10 [10:40:18<1:12:08, 4328.72s/it]
+100%|██████████| 10/10 [11:51:48<00:00, 4316.80s/it] 
+100%|██████████| 10/10 [11:51:48<00:00, 4270.84s/it]checkpoint/attnmamba+blockize/SWaT/best.pt
+
+*****************************************************
+dataset: SWaT
+testname: attnmamba+blockize
+th: 99.56000000000336
+TP: 48632.0
+FP: 1042.0
+FN: 317.0
+precision: 0.9790232312720893 recall: 0.9935238715819477 f_score 0.9862152529777388
+
+
+==============================================================================================
+name: attnmamba+blockize
+batch: 32
+window_length 70
+trian or test: train-test
+load data of: WADI
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (20000, 127)
+test set shape:  (17281, 127)
+test set label shape:  (17281,)
+test_data: (11233, 127)
+val_data: (6048, 127)
+
+  0%|          | 0/10 [00:00<?, ?it/s]
+ 10%|█         | 1/10 [06:14<56:13, 374.86s/it]
+ 20%|██        | 2/10 [12:38<50:41, 380.23s/it]
+ 30%|███       | 3/10 [19:18<45:24, 389.27s/it]
+ 40%|████      | 4/10 [25:43<38:43, 387.27s/it]
+ 50%|█████     | 5/10 [32:22<32:38, 391.65s/it]
+ 60%|██████    | 6/10 [38:51<26:03, 390.77s/it]
+ 70%|███████   | 7/10 [45:24<19:34, 391.59s/it]
+ 80%|████████  | 8/10 [51:59<13:05, 392.58s/it]
+ 90%|█████████ | 9/10 [58:18<06:28, 388.42s/it]
+100%|██████████| 10/10 [1:04:54<00:00, 390.77s/it]
+100%|██████████| 10/10 [1:04:54<00:00, 389.48s/it]checkpoint/attnmamba+blockize/WADI/best.pt
+
+*****************************************************
+dataset: WADI
+testname: attnmamba+blockize
+th: 98.870000000003
+TP: 174.98250174982496
+FP: 126.01749825017498
+FN: 0.0
+precision: 0.5813371958021696 recall: 0.9999999428514318 f_score 0.7352429436518868
+==============================================================================================
+name: attnmamba+blockize
+batch: 32
+window_length 140
+trian or test: train-test
+load data of: WADI
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (20000, 127)
+test set shape:  (17281, 127)
+test set label shape:  (17281,)
+test_data: (11233, 127)
+val_data: (6048, 127)
+
+  0%|          | 0/10 [00:00<?, ?it/s]
+ 10%|█         | 1/10 [06:45<1:00:51, 405.69s/it]
+ 20%|██        | 2/10 [13:37<54:35, 409.40s/it]  
+ 30%|███       | 3/10 [20:24<47:38, 408.30s/it]
+ 40%|████      | 4/10 [27:00<40:21, 403.56s/it]
+ 50%|█████     | 5/10 [33:33<33:18, 399.72s/it]
+ 60%|██████    | 6/10 [39:47<26:03, 390.76s/it]
+ 70%|███████   | 7/10 [46:16<19:31, 390.41s/it]
+ 80%|████████  | 8/10 [52:38<12:55, 387.73s/it]
+ 90%|█████████ | 9/10 [59:40<06:38, 398.32s/it]
+100%|██████████| 10/10 [1:06:51<00:00, 408.51s/it]
+100%|██████████| 10/10 [1:06:51<00:00, 401.19s/it]checkpoint/attnmamba+blockize/WADI/best.pt
+
+*****************************************************
+dataset: WADI
+testname: attnmamba+blockize
+th: 99.94000000000355
+TP: 174.98250174982496
+FP: 6.017498250174985
+FN: 0.0
+precision: 0.9667540999021216 recall: 0.9999999428514318 f_score 0.983091030381064

@@ -1,0 +1,134 @@
+==========================================================================================
+name: attnmamba
+batch: 60
+window_length 140
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [06:34<59:10, 394.47s/it] 20%|██        | 2/10 [12:58<51:46, 388.34s/it] 30%|███       | 3/10 [19:14<44:38, 382.67s/it] 40%|████      | 4/10 [25:46<38:38, 386.39s/it] 50%|█████     | 5/10 [31:53<31:36, 379.34s/it] 60%|██████    | 6/10 [38:31<25:42, 385.64s/it] 70%|███████   | 7/10 [44:30<18:51, 377.02s/it] 80%|████████  | 8/10 [51:24<12:57, 388.73s/it] 90%|█████████ | 9/10 [57:02<06:12, 372.95s/it]100%|██████████| 10/10 [1:03:17<00:00, 373.56s/it]100%|██████████| 10/10 [1:03:17<00:00, 379.75s/it]checkpoint/attnmamba/MSL/best.pt
+
+*****************************************************
+dataset: MSL
+testname: attnmamba
+th: 99.36000000000325
+TP: 6274
+FP: 252
+FN: 369
+precision: 0.9613852268443377 recall: 0.9444528060447798 f_score 0.9528387988067446
+==========================================================================================
+name: attnmamba
+batch: 60
+window_length 140
+trian or test: train-test
+load data of: SMAP
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (135183, 25)
+test set shape:  (427617, 25)
+test set label shape:  (427617,)
+test_data: (277952, 25)
+val_data: (149665, 25)
+  0%|          | 0/10 [00:00<?, ?it/s]  0%|          | 0/10 [05:12<?, ?it/s]
+Traceback (most recent call last):
+  File "main.py", line 146, in <module>
+    main()
+  File "main.py", line 107, in main
+    loss = model(inputs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 166, in forward
+    x_a,pred_result,loss_c = self.pipline(x)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 161, in pipline
+    pred_result = self.predict(x_a)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 193, in predict
+    dist = Normal(latent_mu, latent_sigma)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/distributions/normal.py", line 54, in __init__
+    super(Normal, self).__init__(batch_shape, validate_args=validate_args)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/distributions/distribution.py", line 55, in __init__
+    raise ValueError(
+ValueError: Expected parameter loc (Tensor of shape (60, 100)) of distribution Normal(loc: torch.Size([60, 100]), scale: torch.Size([60, 100])) to satisfy the constraint Real(), but found invalid values:
+tensor([[nan, nan, nan,  ..., nan, nan, nan],
+        [nan, nan, nan,  ..., nan, nan, nan],
+        [nan, nan, nan,  ..., nan, nan, nan],
+        ...,
+        [nan, nan, nan,  ..., nan, nan, nan],
+        [nan, nan, nan,  ..., nan, nan, nan],
+        [nan, nan, nan,  ..., nan, nan, nan]], device='cuda:0',
+       grad_fn=<SplitBackward0>)
+==============================================================================================
+name: attnmamba
+batch: 60
+window_length 140
+trian or test: train-test
+load data of: WADI
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (20000, 127)
+test set shape:  (17281, 127)
+test set label shape:  (17281,)
+test_data: (11233, 127)
+val_data: (6048, 127)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [03:11<28:42, 191.42s/it] 20%|██        | 2/10 [06:20<25:19, 189.98s/it] 30%|███       | 3/10 [09:27<22:01, 188.77s/it] 40%|████      | 4/10 [12:57<19:43, 197.26s/it] 50%|█████     | 5/10 [16:35<17:03, 204.70s/it] 60%|██████    | 6/10 [20:07<13:48, 207.15s/it] 70%|███████   | 7/10 [23:42<10:29, 209.74s/it] 80%|████████  | 8/10 [27:24<07:07, 213.60s/it] 90%|█████████ | 9/10 [30:44<03:29, 209.31s/it]100%|██████████| 10/10 [33:51<00:00, 202.47s/it]100%|██████████| 10/10 [33:51<00:00, 203.17s/it]checkpoint/attnmamba/WADI/best.pt
+
+*****************************************************
+dataset: WADI
+testname: attnmamba
+th: 99.09000000000312
+TP: 174.98250174982496
+FP: 100.01749825017498
+FN: 0.0
+precision: 0.6362999832248188 recall: 0.9999999428514318 f_score 0.7777254622991694
+==============================================================================================
+name: attnmamba
+batch: 60
+window_length 35
+trian or test: train-test
+load data of: SWaT
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (495000, 51)
+test set shape:  (449919, 51)
+test set label shape:  (449919,)
+test_data: (292448, 51)
+val_data: (157471, 51)
+  0%|          | 0/10 [00:00<?, ?it/s]  0%|          | 0/10 [06:06<?, ?it/s]
+Traceback (most recent call last):
+  File "main.py", line 146, in <module>
+    main()
+  File "main.py", line 107, in main
+    loss = model(inputs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 166, in forward
+    x_a,pred_result,loss_c = self.pipline(x)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 161, in pipline
+    pred_result = self.predict(x_a)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 193, in predict
+    dist = Normal(latent_mu, latent_sigma)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/distributions/normal.py", line 54, in __init__
+    super(Normal, self).__init__(batch_shape, validate_args=validate_args)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/distributions/distribution.py", line 55, in __init__
+    raise ValueError(
+ValueError: Expected parameter loc (Tensor of shape (60, 100)) of distribution Normal(loc: torch.Size([60, 100]), scale: torch.Size([60, 100])) to satisfy the constraint Real(), but found invalid values:
+tensor([[nan, nan, nan,  ..., nan, nan, nan],
+        [nan, nan, nan,  ..., nan, nan, nan],
+        [nan, nan, nan,  ..., nan, nan, nan],
+        ...,
+        [nan, nan, nan,  ..., nan, nan, nan],
+        [nan, nan, nan,  ..., nan, nan, nan],
+        [nan, nan, nan,  ..., nan, nan, nan]], device='cuda:0',
+       grad_fn=<SplitBackward0>)

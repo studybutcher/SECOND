@@ -1,0 +1,30 @@
+==============================================================================================
+name: ablation/transformer
+backbone: transformer
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0
+load data of: SMAP
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (135183, 25)
+test set shape:  (427617, 25)
+test set label shape:  (427617,)
+test_data: (277952, 25)
+val_data: (149665, 25)
+params=62.3553M  中间块=16.8264M (26.98%)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [04:48<43:15, 288.41s/it] 20%|██        | 2/10 [09:37<38:29, 288.73s/it] 30%|███       | 3/10 [14:23<33:33, 287.66s/it] 40%|████      | 4/10 [19:10<28:43, 287.24s/it] 50%|█████     | 5/10 [23:56<23:53, 286.71s/it] 60%|██████    | 6/10 [28:42<19:06, 286.68s/it] 70%|███████   | 7/10 [33:26<14:16, 285.62s/it] 80%|████████  | 8/10 [38:12<09:31, 285.90s/it] 90%|█████████ | 9/10 [42:59<04:46, 286.20s/it]100%|██████████| 10/10 [47:45<00:00, 286.10s/it]100%|██████████| 10/10 [47:45<00:00, 286.54s/it]
+*************
+dataset: SMAP
+testname: ablation/transformer
+th: 99.4500000000033
+TP: 41328
+FP: 1283
+FN: 1090
+precision: 0.9698904036587054 recall: 0.9743033615506852 f_score 0.9720868743597508
+metrics saved to: results/ablation/transformer_SMAP_seed42.json

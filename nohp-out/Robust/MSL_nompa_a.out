@@ -1,0 +1,123 @@
+==============================================================================================
+name: Robust/MSL_nompa
+backbone: nompa
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.05
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=199.2287M  中间块=147.9926M (74.28%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 361.9s (steps=971)
+ 10%|█         | 1/10 [06:01<54:16, 361.88s/it][timing] epoch 1: 360.4s (steps=971)
+ 20%|██        | 2/10 [12:02<48:08, 361.02s/it][timing] epoch 2: 357.5s (steps=971)
+ 30%|███       | 3/10 [17:59<41:55, 359.42s/it][timing] epoch 3: 357.7s (steps=971)
+ 40%|████      | 4/10 [23:57<35:52, 358.76s/it][timing] epoch 4: 357.7s (steps=971)
+ 50%|█████     | 5/10 [29:55<29:51, 358.39s/it][timing] epoch 5: 357.8s (steps=971)
+ 60%|██████    | 6/10 [35:53<23:52, 358.20s/it][timing] epoch 6: 358.1s (steps=971)
+ 70%|███████   | 7/10 [41:51<17:54, 358.17s/it][timing] epoch 7: 358.1s (steps=971)
+ 80%|████████  | 8/10 [47:49<11:56, 358.15s/it][timing] epoch 8: 358.0s (steps=971)
+ 90%|█████████ | 9/10 [53:47<05:58, 358.11s/it][timing] epoch 9: 361.1s (steps=971)
+100%|██████████| 10/10 [59:48<00:00, 359.04s/it]100%|██████████| 10/10 [59:48<00:00, 358.85s/it]
+[timing] mean 358.8s/epoch  windows=58247
+*************
+dataset: MSL
+testname: Robust/MSL_nompa
+th: 99.03000000000308
+TP: 6506
+FP: 398
+FN: 137
+precision: 0.9423522581947389 recall: 0.9793767861216668 f_score 0.9605028619830697
+metrics saved to: results/robust/nompa_MSL_noise0.05_seed42.json
+==============================================================================================
+name: Robust/MSL_nompa
+backbone: nompa
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.1
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=199.2287M  中间块=147.9926M (74.28%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 360.8s (steps=971)
+ 10%|█         | 1/10 [06:00<54:07, 360.82s/it][timing] epoch 1: 361.2s (steps=971)
+ 20%|██        | 2/10 [12:01<48:08, 361.03s/it][timing] epoch 2: 357.6s (steps=971)
+ 30%|███       | 3/10 [17:59<41:56, 359.47s/it][timing] epoch 3: 361.4s (steps=971)
+ 40%|████      | 4/10 [24:01<36:01, 360.23s/it][timing] epoch 4: 358.0s (steps=971)
+ 50%|█████     | 5/10 [29:59<29:57, 359.43s/it][timing] epoch 5: 361.4s (steps=971)
+ 60%|██████    | 6/10 [36:00<24:00, 360.10s/it][timing] epoch 6: 361.3s (steps=971)
+ 70%|███████   | 7/10 [42:01<18:01, 360.50s/it][timing] epoch 7: 357.9s (steps=971)
+ 80%|████████  | 8/10 [47:59<11:59, 359.67s/it][timing] epoch 8: 357.9s (steps=971)
+ 90%|█████████ | 9/10 [53:57<05:59, 359.13s/it][timing] epoch 9: 358.0s (steps=971)
+100%|██████████| 10/10 [59:55<00:00, 358.78s/it]100%|██████████| 10/10 [59:55<00:00, 359.56s/it]
+[timing] mean 359.6s/epoch  windows=58247
+*************
+dataset: MSL
+testname: Robust/MSL_nompa
+th: 99.09000000000312
+TP: 6486
+FP: 372
+FN: 157
+precision: 0.9457567790233935 recall: 0.9763660981840041 f_score 0.9608127170767985
+metrics saved to: results/robust/nompa_MSL_noise0.10_seed42.json
+==============================================================================================
+name: Robust/MSL_nompa
+backbone: nompa
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.15
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=199.2287M  中间块=147.9926M (74.28%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 360.9s (steps=971)
+ 10%|█         | 1/10 [06:00<54:07, 360.88s/it][timing] epoch 1: 358.1s (steps=971)
+ 20%|██        | 2/10 [11:58<47:53, 359.23s/it][timing] epoch 2: 358.3s (steps=971)
+ 30%|███       | 3/10 [17:57<41:51, 358.78s/it][timing] epoch 3: 361.6s (steps=971)
+ 40%|████      | 4/10 [23:58<35:59, 359.89s/it][timing] epoch 4: 358.3s (steps=971)
+ 50%|█████     | 5/10 [29:57<29:56, 359.30s/it][timing] epoch 5: 358.2s (steps=971)
+ 60%|██████    | 6/10 [35:55<23:55, 358.92s/it][timing] epoch 6: 358.2s (steps=971)
+ 70%|███████   | 7/10 [41:53<17:56, 358.68s/it][timing] epoch 7: 358.2s (steps=971)
+ 80%|████████  | 8/10 [47:51<11:57, 358.53s/it][timing] epoch 8: 361.8s (steps=971)
+ 90%|█████████ | 9/10 [53:53<05:59, 359.54s/it][timing] epoch 9: 361.8s (steps=971)
+100%|██████████| 10/10 [59:55<00:00, 360.24s/it]100%|██████████| 10/10 [59:55<00:00, 359.52s/it]
+[timing] mean 359.5s/epoch  windows=58247
+*************
+dataset: MSL
+testname: Robust/MSL_nompa
+th: 98.83000000000298
+TP: 6461
+FP: 485
+FN: 182
+precision: 0.93017563931734 recall: 0.9726027382619258 f_score 0.9509111833188029
+metrics saved to: results/robust/nompa_MSL_noise0.15_seed42.json

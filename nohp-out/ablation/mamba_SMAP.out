@@ -1,0 +1,30 @@
+==============================================================================================
+name: ablation/mamba
+backbone: mamba
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0
+load data of: SMAP
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (135183, 25)
+test set shape:  (427617, 25)
+test set label shape:  (427617,)
+test_data: (277952, 25)
+val_data: (149665, 25)
+params=193.5215M  中间块=147.9926M (76.47%)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [09:19<1:23:55, 559.47s/it] 20%|██        | 2/10 [18:32<1:14:03, 555.50s/it] 30%|███       | 3/10 [27:44<1:04:38, 554.06s/it] 40%|████      | 4/10 [36:56<55:19, 553.18s/it]   50%|█████     | 5/10 [46:09<46:05, 553.04s/it] 60%|██████    | 6/10 [55:22<36:52, 553.03s/it] 70%|███████   | 7/10 [1:04:37<27:41, 553.78s/it] 80%|████████  | 8/10 [1:13:51<18:27, 553.70s/it] 90%|█████████ | 9/10 [1:23:05<09:14, 554.10s/it]100%|██████████| 10/10 [1:32:17<00:00, 553.16s/it]100%|██████████| 10/10 [1:32:17<00:00, 553.70s/it]
+*************
+dataset: SMAP
+testname: ablation/mamba
+th: 99.50000000000333
+TP: 41091
+FP: 1189
+FN: 1327
+precision: 0.9718779562507384 recall: 0.9687161108565429 f_score 0.9702894577664241
+metrics saved to: results/ablation/mamba_SMAP_seed42.json

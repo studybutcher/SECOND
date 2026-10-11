@@ -1,0 +1,34 @@
+==============================================================================================
+name: contam/nompa
+backbone: nompa
+seed: 7
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+contam: rho=0.2  rho_win=0.2239  n_contaminated=11663  n_segments=20  alpha=1.5
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=199.2287M  中间块=147.9926M (74.28%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 364.5s (steps=971)
+ 10%|█         | 1/10 [06:04<54:40, 364.45s/it][timing] epoch 1: 362.7s (steps=971)
+ 20%|██        | 2/10 [12:07<48:27, 363.40s/it] 20%|██        | 2/10 [17:19<1:09:19, 519.96s/it]
+Traceback (most recent call last):
+  File "/home/sdb/yrlcd/anamolybench/SECOND/main.py", line 453, in <module>
+    main()
+  File "/home/sdb/yrlcd/anamolybench/SECOND/main.py", line 295, in main
+    model.load_state_dict(torch.load(save_path))
+  File "/home/yiruolei/anaconda3/envs/anomaly/lib/python3.10/site-packages/torch/serialization.py", line 1572, in load
+    with _open_zipfile_reader(opened_file) as opened_zipfile:
+  File "/home/yiruolei/anaconda3/envs/anomaly/lib/python3.10/site-packages/torch/serialization.py", line 807, in __init__
+    super().__init__(torch._C.PyTorchFileReader(name_or_buffer))
+RuntimeError: PytorchStreamReader failed reading zip archive: failed finding central directory. This is an internal miniz error. If you are seeing this error, there is a high likelihood that your checkpoint file is corrupted. This can happen if the checkpoint was not saved properly, was transferred incorrectly, or the file was modified after saving.

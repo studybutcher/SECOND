@@ -1,0 +1,9 @@
+ae | MSL ρ=10% seed=42 | train (45569, 70, 55) val (6849, 70, 55) probe(anom) (9970, 70, 55)
+  参数: total=9.20M  adapter=0.000M  mpa=0.000M  mpa_norm=none
+  [Gate V] 瓶颈 3850 → 256 (15.0×)  → ✅
+    epoch   0  train_MSE 0.00375  (total +0.00375)  val_MSE 0.00345  (2s)
+    epoch   5  train_MSE 0.00215  (total +0.00215)  val_MSE 0.00218  (11s)
+    epoch  10  train_MSE 0.00172  (total +0.00172)  val_MSE 0.00197  (20s)
+    epoch  15  train_MSE 0.00166  (total +0.00166)  val_MSE 0.00156  (28s)
+    epoch  20  train_MSE 0.00133  (total +0.00133)  val_MSE 0.00131  (37s)
+    epoch  25  train_MSE 0.00120  (total +0.00120)  val_MSE 0.00142  (46s)

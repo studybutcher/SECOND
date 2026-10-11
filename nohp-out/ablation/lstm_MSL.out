@@ -1,0 +1,30 @@
+==============================================================================================
+name: ablation/lstm
+backbone: lstm
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=91.4466M  中间块=37.8225M (41.36%)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [02:04<18:43, 124.78s/it] 20%|██        | 2/10 [04:12<16:52, 126.57s/it] 30%|███       | 3/10 [06:20<14:49, 127.09s/it] 40%|████      | 4/10 [08:28<12:44, 127.41s/it] 50%|█████     | 5/10 [10:35<10:37, 127.46s/it] 60%|██████    | 6/10 [12:45<08:32, 128.16s/it] 70%|███████   | 7/10 [14:55<06:26, 128.90s/it] 80%|████████  | 8/10 [17:03<04:16, 128.50s/it] 90%|█████████ | 9/10 [19:10<02:08, 128.12s/it]100%|██████████| 10/10 [21:17<00:00, 127.88s/it]100%|██████████| 10/10 [21:17<00:00, 127.80s/it]
+*************
+dataset: MSL
+testname: ablation/lstm
+th: 98.63000000000288
+TP: 6485
+FP: 568
+FN: 158
+precision: 0.9194668922168342 recall: 0.9762155637871209 f_score 0.9469868255541298
+metrics saved to: results/ablation/lstm_MSL_seed42.json

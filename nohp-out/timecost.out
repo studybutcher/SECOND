@@ -1,0 +1,58 @@
+==============================================================================================
+name: timecost
+batch: 24
+window_length 140
+latent_size 256
+trian or test: train-test
+load data of: WADI
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (20000, 127)
+test set shape:  (17281, 127)
+test set label shape:  (17281,)
+test_data: (11233, 127)
+val_data: (6048, 127)
+  0%|          | 0/10 [00:00<?, ?it/s]  0%|          | 0/10 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "main.py", line 187, in <module>
+    main()
+  File "main.py", line 125, in main
+    loss = model(inputs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 131, in forward
+    x_a,pred_result,loss_c = self.pipline(x)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 199, in pipline
+    time0=time.time()
+NameError: name 'time' is not defined
+==============================================================================================
+name: timecost
+batch: 24
+window_length 140
+latent_size 256
+trian or test: train-test
+load data of: WADI
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (20000, 127)
+test set shape:  (17281, 127)
+test set label shape:  (17281,)
+test_data: (11233, 127)
+val_data: (6048, 127)
+  0%|          | 0/10 [00:00<?, ?it/s]  0%|          | 0/10 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "main.py", line 187, in <module>
+    main()
+  File "main.py", line 125, in main
+    loss = model(inputs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 131, in forward
+    x_a,pred_result,loss_c = self.pipline(x)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 199, in pipline
+    time0=time.time()
+NameError: name 'time' is not defined

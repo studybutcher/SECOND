@@ -1,0 +1,30 @@
+==============================================================================================
+name: ablation/lstm
+backbone: lstm
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0
+load data of: SMAP
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (135183, 25)
+test set shape:  (427617, 25)
+test set label shape:  (427617,)
+test_data: (277952, 25)
+val_data: (149665, 25)
+params=83.3514M  中间块=37.8225M (45.38%)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [05:15<47:19, 315.52s/it] 20%|██        | 2/10 [10:29<41:54, 314.35s/it] 30%|███       | 3/10 [15:44<36:44, 314.93s/it] 40%|████      | 4/10 [21:00<31:32, 315.42s/it] 50%|█████     | 5/10 [26:16<26:16, 315.33s/it] 60%|██████    | 6/10 [31:31<21:01, 315.50s/it] 70%|███████   | 7/10 [36:45<15:44, 314.90s/it] 80%|████████  | 8/10 [41:59<10:29, 314.63s/it] 90%|█████████ | 9/10 [47:13<05:14, 314.44s/it]100%|██████████| 10/10 [52:27<00:00, 314.31s/it]100%|██████████| 10/10 [52:27<00:00, 314.76s/it]
+*************
+dataset: SMAP
+testname: ablation/lstm
+th: 99.8300000000035
+TP: 40751
+FP: 396
+FN: 1667
+precision: 0.990375968845754 recall: 0.9607006457257058 f_score 0.9753076318350087
+metrics saved to: results/ablation/lstm_SMAP_seed42.json

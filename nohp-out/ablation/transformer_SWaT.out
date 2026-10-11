@@ -1,0 +1,30 @@
+==============================================================================================
+name: ablation/transformer
+backbone: transformer
+seed: 42
+batch: 60
+window_length 35
+latent_size 256
+trian or test: train-test
+noise: 0
+load data of: SWaT
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (495000, 51)
+test set shape:  (449919, 51)
+test set label shape:  (449919,)
+test_data: (292448, 51)
+val_data: (157471, 51)
+params=68.5217M  中间块=16.8264M (24.56%)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [14:18<2:08:48, 858.76s/it] 20%|██        | 2/10 [28:41<1:54:48, 861.03s/it] 30%|███       | 3/10 [42:56<1:40:07, 858.18s/it] 40%|████      | 4/10 [57:28<1:26:23, 863.94s/it] 50%|█████     | 5/10 [1:11:57<1:12:07, 865.53s/it] 60%|██████    | 6/10 [1:26:10<57:25, 861.40s/it]   70%|███████   | 7/10 [1:40:23<42:55, 858.55s/it] 80%|████████  | 8/10 [1:54:36<28:33, 856.76s/it] 90%|█████████ | 9/10 [2:08:50<14:15, 855.94s/it]100%|██████████| 10/10 [2:22:55<00:00, 852.60s/it]100%|██████████| 10/10 [2:22:55<00:00, 857.55s/it]
+*************
+dataset: SWaT
+testname: ablation/transformer
+th: 99.75000000000345
+TP: 47567.0
+FP: 616.0
+FN: 1382.0
+precision: 0.9872154077190678 recall: 0.971766532314906 f_score 0.9794250540820163
+metrics saved to: results/ablation/transformer_SWaT_seed42.json

@@ -1,0 +1,14 @@
+lstmae | MSL ρ=10% seed=7 | train (3148, 70, 55) val (6851, 70, 55) test(eval) (71864, 70, 55) 异常率 0.1177
+  参数 0.33M  [Gate V] 瓶颈 3850→256 (15.0×)
+    ep   0  train 0.004893  val_MSE 0.004937  (1s)
+    ep  10  train 0.003637  val_MSE 0.004357  (6s)
+    ep  20  train 0.003598  val_MSE 0.004123  (11s)
+    ep  30  train 0.003586  val_MSE 0.004071  (16s)
+    ep  40  train 0.003582  val_MSE 0.004042  (21s)
+    ep  50  train 0.003556  val_MSE 0.004054  (26s)
+    ep  60  train 0.003521  val_MSE 0.004045  (31s)
+    ep  70  train 0.003494  val_MSE 0.004051  (36s)
+    ep  80  train 0.003488  val_MSE 0.004050  (41s)
+    ep  90  train 0.003480  val_MSE 0.004048  (46s)
+    ep  99  train 0.003478  val_MSE 0.004050  (51s)
+  [阶段] 训练结束，开始评估...

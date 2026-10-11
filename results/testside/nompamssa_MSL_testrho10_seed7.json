@@ -1,0 +1,204 @@
+{
+  "model": "SECOND",
+  "backbone": "nompamssa",
+  "dataset": "MSL",
+  "seed": 7,
+  "config": {
+    "input_dim": 55,
+    "out_dim": 5,
+    "window_length": 70,
+    "latent_size": 256,
+    "batch_size": 60,
+    "n_layer": 8,
+    "epochs": 10,
+    "lr": 0.01,
+    "N": 256,
+    "val": 0.35,
+    "noise": 0
+  },
+  "params": {
+    "n_params": 51236153,
+    "n_params_M": 51.236153,
+    "n_midstack": 0,
+    "n_midstack_M": 0.0,
+    "midstack_share": 0.0
+  },
+  "timing": null,
+  "contam": null,
+  "contam_test": {
+    "dataset": "MSL",
+    "rho": 0.1,
+    "seed": 7,
+    "alpha": 1.5,
+    "n_rows_total": 73729,
+    "n_contaminated": 7373,
+    "rho_win": 0.11227412807667767,
+    "n_segments": 13,
+    "mean_seg_len": 567.1538461538462,
+    "lbar_typ": 583.0,
+    "n_min": 3,
+    "window": 70,
+    "split": "test",
+    "injection_space": "model_input_space",
+    "injection_note": "preprocess 已在本脚本内完成；main.py 的 --contam-file/--contam-test-file 不得再 preprocess",
+    "injection_col": 0,
+    "blocks_injectable": [
+      "C-1",
+      "C-2",
+      "D-14",
+      "D-15",
+      "D-16",
+      "F-4",
+      "F-5",
+      "F-7",
+      "F-8",
+      "M-1",
+      "M-2",
+      "M-3",
+      "M-4",
+      "M-5",
+      "M-6",
+      "M-7",
+      "P-10",
+      "P-11",
+      "P-14",
+      "P-15",
+      "S-2",
+      "T-12",
+      "T-13",
+      "T-4",
+      "T-5",
+      "T-8",
+      "T-9"
+    ],
+    "segments": [
+      {
+        "t_start": 58021,
+        "L": 147,
+        "block": "P-15",
+        "block_idx": 19,
+        "type": "amplitude_scaling",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 18145,
+        "L": 443,
+        "block": "F-5",
+        "block_idx": 6,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 9749,
+        "L": 147,
+        "block": "D-16",
+        "block_idx": 4,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 50079,
+        "L": 265,
+        "block": "P-11",
+        "block_idx": 17,
+        "type": "level_shift",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 2962,
+        "L": 265,
+        "block": "C-2",
+        "block_idx": 1,
+        "type": "level_shift",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 23712,
+        "L": 2419,
+        "block": "F-8",
+        "block_idx": 8,
+        "type": "amplitude_scaling",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 2460,
+        "L": 215,
+        "block": "C-2",
+        "block_idx": 1,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 35057,
+        "L": 1960,
+        "block": "M-5",
+        "block_idx": 13,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 71323,
+        "L": 652,
+        "block": "T-8",
+        "block_idx": 25,
+        "type": "amplitude_scaling",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 64818,
+        "L": 215,
+        "block": "T-13",
+        "block_idx": 22,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 7298,
+        "L": 215,
+        "block": "D-15",
+        "block_idx": 3,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 28850,
+        "L": 215,
+        "block": "M-2",
+        "block_idx": 10,
+        "type": "perturbation",
+        "alpha": 1.5
+      },
+      {
+        "t_start": 70526,
+        "L": 215,
+        "block": "T-5",
+        "block_idx": 24,
+        "type": "perturbation",
+        "alpha": 1.5
+      }
+    ],
+    "nested_key": "MSL_s7_v1",
+    "clean_sha256": "5cc4770315defc680b5eb7586de2bbae795e15ae31cbff80e5e7926dc0090024",
+    "out_sha256": "5408284bed0952fa47262d2cdb079013895edcea780fcb961d18d45e81fbd1fd",
+    "gen_script": "bench/gen_contam.py"
+  },
+  "metrics": {
+    "f1": 0.9546366678655208,
+    "precision": 0.9588458603510314,
+    "recall": 0.9504741819201051,
+    "threshold": 99.32000000000323,
+    "TP": 6314,
+    "TN": 40940,
+    "FP": 271,
+    "FN": 329
+  },
+  "ckpt": {
+    "path": "/home/sdb/yrlcd/anamolybench/SECOND/checkpoint/contam_runs/nompamssa_MSL_clean_seed7/best.pt"
+  },
+  "env": {
+    "gpu": "NVIDIA RTX 5880 Ada Generation",
+    "cuda": "12.6",
+    "torch": "2.14.0+cu126"
+  },
+  "timestamp": "2026-10-07 23:54:57"
+}

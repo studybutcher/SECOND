@@ -1,0 +1,30 @@
+==============================================================================================
+name: ablation/transformer
+backbone: transformer
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=70.4505M  中间块=16.8264M (23.88%)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [01:56<17:25, 116.17s/it] 20%|██        | 2/10 [03:48<15:10, 113.85s/it] 30%|███       | 3/10 [05:40<13:12, 113.28s/it] 40%|████      | 4/10 [07:37<11:26, 114.46s/it] 50%|█████     | 5/10 [09:31<09:32, 114.52s/it] 60%|██████    | 6/10 [11:26<07:38, 114.58s/it] 70%|███████   | 7/10 [13:21<05:44, 114.68s/it] 80%|████████  | 8/10 [15:16<03:49, 114.68s/it] 90%|█████████ | 9/10 [17:10<01:54, 114.60s/it]100%|██████████| 10/10 [19:05<00:00, 114.67s/it]100%|██████████| 10/10 [19:05<00:00, 114.54s/it]
+*************
+dataset: MSL
+testname: ablation/transformer
+th: 97.86000000000249
+TP: 6607
+FP: 884
+FN: 36
+precision: 0.8819917222240132 recall: 0.9945807602068633 f_score 0.9349037474221776
+metrics saved to: results/ablation/transformer_MSL_seed42.json

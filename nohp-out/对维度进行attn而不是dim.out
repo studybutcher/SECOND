@@ -1,0 +1,200 @@
+==============================================================================================
+name: 对维度进行attn而不是dim
+batch: 60
+window_length 140
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+  0%|          | 0/10 [00:00<?, ?it/s]  0%|          | 0/10 [00:10<?, ?it/s]
+Traceback (most recent call last):
+  File "main.py", line 148, in <module>
+    main()
+  File "main.py", line 109, in main
+    loss = model(inputs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 168, in forward
+    x_a,pred_result,loss_c = self.pipline(x)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 149, in pipline
+    x_combined = layer(x_combined)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 177, in forward
+    output = self.mixer(self.norm(x)) + x
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 401, in forward
+    x = self.selfattn(x)#不改变前后
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/attn/attentionblock.py", line 56, in forward
+    x = self.ln1(x+self.layer1(x,x,x)[0])#*少了一个droupout
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/attn/layers.py", line 124, in forward
+    query, key, value = [l(x).view(batch_size, -1, self.h, self.d_k).transpose(1, 2)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/attn/layers.py", line 124, in <listcomp>
+    query, key, value = [l(x).view(batch_size, -1, self.h, self.d_k).transpose(1, 2)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/linear.py", line 114, in forward
+    return F.linear(input, self.weight, self.bias)
+RuntimeError: mat1 and mat2 shapes cannot be multiplied (61440x55 and 1024x1024)
+==============================================================================================
+name: 对维度进行attn而不是dim
+batch: 60
+window_length 140
+trian or test: train-test
+load data of: SMAP
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (135183, 25)
+test set shape:  (427617, 25)
+test set label shape:  (427617,)
+test_data: (277952, 25)
+val_data: (149665, 25)
+  0%|          | 0/10 [00:00<?, ?it/s]  0%|          | 0/10 [00:10<?, ?it/s]
+Traceback (most recent call last):
+  File "main.py", line 148, in <module>
+    main()
+  File "main.py", line 109, in main
+    loss = model(inputs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 168, in forward
+    x_a,pred_result,loss_c = self.pipline(x)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 149, in pipline
+    x_combined = layer(x_combined)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 177, in forward
+    output = self.mixer(self.norm(x)) + x
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 401, in forward
+    x = self.selfattn(x)#不改变前后
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/attn/attentionblock.py", line 56, in forward
+    x = self.ln1(x+self.layer1(x,x,x)[0])#*少了一个droupout
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/attn/layers.py", line 124, in forward
+    query, key, value = [l(x).view(batch_size, -1, self.h, self.d_k).transpose(1, 2)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/attn/layers.py", line 124, in <listcomp>
+    query, key, value = [l(x).view(batch_size, -1, self.h, self.d_k).transpose(1, 2)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/linear.py", line 114, in forward
+    return F.linear(input, self.weight, self.bias)
+RuntimeError: mat1 and mat2 shapes cannot be multiplied (61440x25 and 1024x1024)
+==============================================================================================
+name: 对维度进行attn而不是dim
+batch: 32
+window_length 140
+trian or test: train-test
+load data of: WADI
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (20000, 127)
+test set shape:  (17281, 127)
+test set label shape:  (17281,)
+test_data: (11233, 127)
+val_data: (6048, 127)
+  0%|          | 0/10 [00:00<?, ?it/s]  0%|          | 0/10 [00:15<?, ?it/s]
+Traceback (most recent call last):
+  File "main.py", line 148, in <module>
+    main()
+  File "main.py", line 109, in main
+    loss = model(inputs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 168, in forward
+    x_a,pred_result,loss_c = self.pipline(x)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 149, in pipline
+    x_combined = layer(x_combined)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 177, in forward
+    output = self.mixer(self.norm(x)) + x
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 401, in forward
+    x = self.selfattn(x)#不改变前后
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/attn/attentionblock.py", line 56, in forward
+    x = self.ln1(x+self.layer1(x,x,x)[0])#*少了一个droupout
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/attn/layers.py", line 124, in forward
+    query, key, value = [l(x).view(batch_size, -1, self.h, self.d_k).transpose(1, 2)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/attn/layers.py", line 124, in <listcomp>
+    query, key, value = [l(x).view(batch_size, -1, self.h, self.d_k).transpose(1, 2)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/linear.py", line 114, in forward
+    return F.linear(input, self.weight, self.bias)
+RuntimeError: mat1 and mat2 shapes cannot be multiplied (32768x127 and 1024x1024)
+==============================================================================================
+name: 对维度进行attn而不是dim
+batch: 60
+window_length 35
+trian or test: train-test
+load data of: SWaT
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (495000, 51)
+test set shape:  (449919, 51)
+test set label shape:  (449919,)
+test_data: (292448, 51)
+val_data: (157471, 51)
+  0%|          | 0/10 [00:00<?, ?it/s]  0%|          | 0/10 [00:14<?, ?it/s]
+Traceback (most recent call last):
+  File "main.py", line 148, in <module>
+    main()
+  File "main.py", line 109, in main
+    loss = model(inputs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 168, in forward
+    x_a,pred_result,loss_c = self.pipline(x)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 149, in pipline
+    x_combined = layer(x_combined)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 177, in forward
+    output = self.mixer(self.norm(x)) + x
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 401, in forward
+    x = self.selfattn(x)#不改变前后
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/attn/attentionblock.py", line 56, in forward
+    x = self.ln1(x+self.layer1(x,x,x)[0])#*少了一个droupout
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/attn/layers.py", line 124, in forward
+    query, key, value = [l(x).view(batch_size, -1, self.h, self.d_k).transpose(1, 2)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/attn/layers.py", line 124, in <listcomp>
+    query, key, value = [l(x).view(batch_size, -1, self.h, self.d_k).transpose(1, 2)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/linear.py", line 114, in forward
+    return F.linear(input, self.weight, self.bias)
+RuntimeError: mat1 and mat2 shapes cannot be multiplied (61440x51 and 1024x1024)

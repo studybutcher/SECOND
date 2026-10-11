@@ -1,0 +1,82 @@
+==============================================================================================
+name: Robust/SWaT_nompamssa
+backbone: nompamssa
+seed: 42
+batch: 60
+window_length 35
+latent_size 256
+trian or test: train-test
+noise: 0.2
+load data of: SWaT
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (495000, 51)
+test set shape:  (449919, 51)
+test set label shape:  (449919,)
+test_data: (292448, 51)
+val_data: (157471, 51)
+params=50.1030M  中间块=0.0000M (0.00%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 617.1s (steps=8250)
+ 10%|█         | 1/10 [10:17<1:32:34, 617.13s/it][timing] epoch 1: 619.2s (steps=8250)
+ 20%|██        | 2/10 [20:36<1:22:26, 618.37s/it][timing] epoch 2: 613.3s (steps=8250)
+ 30%|███       | 3/10 [30:49<1:11:52, 616.05s/it][timing] epoch 3: 622.1s (steps=8250)
+ 40%|████      | 4/10 [41:11<1:01:50, 618.42s/it][timing] epoch 4: 616.1s (steps=8250)
+ 50%|█████     | 5/10 [51:27<51:27, 617.60s/it]  [timing] epoch 5: 613.3s (steps=8250)
+ 60%|██████    | 6/10 [1:01:41<41:04, 616.13s/it][timing] epoch 6: 616.3s (steps=8250)
+ 70%|███████   | 7/10 [1:11:57<30:48, 616.19s/it][timing] epoch 7: 617.1s (steps=8250)
+ 80%|████████  | 8/10 [1:22:14<20:32, 616.49s/it][timing] epoch 8: 615.7s (steps=8250)
+ 90%|█████████ | 9/10 [1:32:30<10:16, 616.23s/it][timing] epoch 9: 606.4s (steps=8250)
+100%|██████████| 10/10 [1:42:36<00:00, 613.20s/it]100%|██████████| 10/10 [1:42:36<00:00, 615.66s/it]
+[timing] mean 615.7s/epoch  windows=494965
+*************
+dataset: SWaT
+testname: Robust/SWaT_nompamssa
+th: 99.43000000000329
+TP: 48690.0
+FP: 1386.0
+FN: 259.0
+precision: 0.9723220702587422 recall: 0.9947087783213735 f_score 0.983383033799351
+metrics saved to: results/robust/nompamssa_SWaT_noise0.2_seed42.json
+==============================================================================================
+name: Robust/SWaT_nompamssa
+backbone: nompamssa
+seed: 42
+batch: 60
+window_length 35
+latent_size 256
+trian or test: train-test
+noise: 0.5
+load data of: SWaT
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (495000, 51)
+test set shape:  (449919, 51)
+test set label shape:  (449919,)
+test_data: (292448, 51)
+val_data: (157471, 51)
+params=50.1030M  中间块=0.0000M (0.00%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 656.8s (steps=8250)
+ 10%|█         | 1/10 [10:56<1:38:31, 656.81s/it][timing] epoch 1: 638.4s (steps=8250)
+ 20%|██        | 2/10 [21:35<1:26:07, 645.98s/it][timing] epoch 2: 656.8s (steps=8250)
+ 30%|███       | 3/10 [32:32<1:15:56, 650.93s/it][timing] epoch 3: 645.8s (steps=8250)
+ 40%|████      | 4/10 [43:17<1:04:53, 648.89s/it][timing] epoch 4: 658.5s (steps=8250)
+ 50%|█████     | 5/10 [54:16<54:21, 652.36s/it]  [timing] epoch 5: 657.0s (steps=8250)
+ 60%|██████    | 6/10 [1:05:13<43:35, 653.93s/it][timing] epoch 6: 655.5s (steps=8250)
+ 70%|███████   | 7/10 [1:16:08<32:43, 654.44s/it][timing] epoch 7: 651.6s (steps=8250)
+ 80%|████████  | 8/10 [1:27:00<21:47, 653.52s/it][timing] epoch 8: 640.0s (steps=8250)
+ 90%|█████████ | 9/10 [1:37:40<10:49, 649.31s/it][timing] epoch 9: 640.0s (steps=8250)
+100%|██████████| 10/10 [1:48:20<00:00, 646.42s/it]100%|██████████| 10/10 [1:48:20<00:00, 650.03s/it]
+[timing] mean 650.0s/epoch  windows=494965
+*************
+dataset: SWaT
+testname: Robust/SWaT_nompamssa
+th: 99.43000000000329
+TP: 48057.0
+FP: 1390.0
+FN: 892.0
+precision: 0.9718890931761504 recall: 0.9817769513203993 f_score 0.97680300028034
+metrics saved to: results/robust/nompamssa_SWaT_noise0.5_seed42.json

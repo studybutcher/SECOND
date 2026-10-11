@@ -1,0 +1,21 @@
+lstmae | SWaT ρ=0% seed=42 | train (4965, 35, 51) val (4965, 35, 51) test(eval) (448433, 35, 51) 异常率 0.1212
+  参数 0.33M  [Gate V] 瓶颈 1785→256 (7.0×)
+    ep   0  train 0.093215  val_MSE 435.053284  (1s)
+    ep  10  train 0.002243  val_MSE 435.140381  (5s)
+    ep  20  train 0.001525  val_MSE 435.173309  (9s)
+    ep  29  train 0.001423  val_MSE 435.176239  (13s)
+  [阶段] 训练结束，开始评估...
+lstmae | SWaT ρ=0% seed=42 | train (4965, 35, 51) val (4965, 35, 51) test(eval) (448433, 35, 51) 异常率 0.1212
+  参数 0.33M  [Gate V] 瓶颈 1785→256 (7.0×)
+    ep   0  train 0.093215  val_MSE 435.053284  (1s)
+    ep  10  train 0.002243  val_MSE 435.140381  (5s)
+    ep  20  train 0.001525  val_MSE 435.173309  (9s)
+    ep  29  train 0.001423  val_MSE 435.176239  (13s)
+  [阶段] 训练结束，开始评估...
+lstmae | SWaT ρ=0% seed=42 | train (4965, 35, 51) val (4965, 35, 51) test(eval) (448433, 35, 51) 异常率 0.1212
+  参数 0.33M  [Gate V] 瓶颈 1785→256 (7.0×)
+    ep   0  train 0.093215  val_MSE 435.053284  (1s)
+    ep  10  train 0.002243  val_MSE 435.140381  (5s)
+    ep  20  train 0.001525  val_MSE 435.173309  (9s)
+    ep  29  train 0.001423  val_MSE 435.176239  (13s)
+  [阶段] 训练结束，开始评估...

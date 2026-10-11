@@ -1,0 +1,308 @@
+==============================================================================================
+name: Hyperpara/
+batch: 20
+window_length 70
+latent_size 256
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [09:55<1:29:23, 595.91s/it] 20%|██        | 2/10 [19:59<1:20:02, 600.32s/it] 30%|███       | 3/10 [30:02<1:10:10, 601.46s/it] 40%|████      | 4/10 [39:55<59:49, 598.33s/it]   50%|█████     | 5/10 [49:49<49:43, 596.68s/it] 60%|██████    | 6/10 [59:42<39:41, 595.44s/it] 70%|███████   | 7/10 [1:09:43<29:51, 597.30s/it] 80%|████████  | 8/10 [1:19:37<19:52, 596.17s/it] 90%|█████████ | 9/10 [1:29:31<09:55, 595.50s/it]100%|██████████| 10/10 [1:39:24<00:00, 594.81s/it]100%|██████████| 10/10 [1:39:24<00:00, 596.46s/it]
+*************
+dataset: MSL
+testname: Hyperpara/
+th: 99.20000000000317
+TP: 6414
+FP: 330
+FN: 229
+precision: 0.9510676142481204 recall: 0.9655276216084185 f_score 0.9582380705157538
+==============================================================================================
+name: Hyperpara/
+batch: 128
+window_length 70
+latent_size 256
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+  0%|          | 0/10 [00:00<?, ?it/s]  0%|          | 0/10 [00:04<?, ?it/s]
+Traceback (most recent call last):
+  File "main.py", line 182, in <module>
+    main()
+  File "main.py", line 120, in main
+    loss.backward()
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/_tensor.py", line 396, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/autograd/__init__.py", line 173, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+RuntimeError: CUDA out of memory. Tried to allocate 440.00 MiB (GPU 0; 23.70 GiB total capacity; 21.32 GiB already allocated; 184.56 MiB free; 21.99 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+==============================================================================================
+name: Hyperpara/
+batch: 256
+window_length 70
+latent_size 256
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+  0%|          | 0/10 [00:00<?, ?it/s]  0%|          | 0/10 [00:03<?, ?it/s]
+Traceback (most recent call last):
+  File "main.py", line 182, in <module>
+    main()
+  File "main.py", line 119, in main
+    loss = model(inputs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 128, in forward
+    x_a,pred_result,loss_c = self.pipline(x)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 224, in pipline
+    x_combined = layer(x_combined)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 177, in forward
+    output = self.mixer(self.norm(x)) + x
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 409, in forward
+    y = self.ssm(x)#*状态仍然在时序隐变量d_in范围内。
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 450, in ssm
+    y = self.selective_scan(x, delta, A, B, C, D)  # This is similar to run_SSM(A, B, C, u) in The Annotated S4 [2]
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 507, in selective_scan
+    hs = pscan(deltaA, deltaB_u)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/pscan.py", line 181, in forward
+    PScan.pscan(A, X)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/pscan.py", line 59, in pscan
+    Xa[:, :, :, 1].add_(Aa[:, :, :, 1].mul(Xa[:, :, :, 0]))
+RuntimeError: CUDA out of memory. Tried to allocate 512.00 MiB (GPU 0; 23.70 GiB total capacity; 21.90 GiB already allocated; 224.56 MiB free; 21.96 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+==============================================================================================
+name: Hyperpara/
+batch: 512
+window_length 70
+latent_size 256
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+  0%|          | 0/10 [00:00<?, ?it/s]  0%|          | 0/10 [00:03<?, ?it/s]
+Traceback (most recent call last):
+  File "main.py", line 182, in <module>
+    main()
+  File "main.py", line 119, in main
+    loss = model(inputs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 128, in forward
+    x_a,pred_result,loss_c = self.pipline(x)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 224, in pipline
+    x_combined = layer(x_combined)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 177, in forward
+    output = self.mixer(self.norm(x)) + x
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 409, in forward
+    y = self.ssm(x)#*状态仍然在时序隐变量d_in范围内。
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 450, in ssm
+    y = self.selective_scan(x, delta, A, B, C, D)  # This is similar to run_SSM(A, B, C, u) in The Annotated S4 [2]
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/mamba.py", line 507, in selective_scan
+    hs = pscan(deltaA, deltaB_u)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/pscan.py", line 174, in forward
+    X = pad_npo2(X_in) # (B, npo2(L), D, N)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/pscan.py", line 33, in pad_npo2
+    return F.pad(X, pad_tuple, "constant", 0)
+RuntimeError: CUDA out of memory. Tried to allocate 2.00 GiB (GPU 0; 23.70 GiB total capacity; 20.37 GiB already allocated; 1.66 GiB free; 20.52 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+==============================================================================================
+name: Hyperpara/
+batch: 40
+window_length 70
+latent_size 256
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [08:23<1:15:32, 503.64s/it] 20%|██        | 2/10 [16:38<1:06:26, 498.36s/it] 30%|███       | 3/10 [25:04<58:32, 501.77s/it]   40%|████      | 4/10 [33:18<49:52, 498.83s/it] 50%|█████     | 5/10 [41:32<41:26, 497.21s/it] 60%|██████    | 6/10 [49:47<33:05, 496.41s/it] 70%|███████   | 7/10 [58:02<24:47, 495.74s/it] 80%|████████  | 8/10 [1:06:16<16:30, 495.29s/it] 90%|█████████ | 9/10 [1:14:30<08:14, 494.99s/it]100%|██████████| 10/10 [1:22:45<00:00, 494.91s/it]100%|██████████| 10/10 [1:22:45<00:00, 496.54s/it]
+*************
+dataset: MSL
+testname: Hyperpara/
+th: 98.62000000000288
+TP: 6622
+FP: 572
+FN: 21
+precision: 0.920489295356562 recall: 0.9968387761601103 f_score 0.9571388961424884
+==============================================================================================
+name: Hyperpara/
+batch: 80
+window_length 70
+latent_size 256
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [07:32<1:07:56, 452.94s/it] 20%|██        | 2/10 [15:04<1:00:15, 451.98s/it] 30%|███       | 3/10 [22:36<52:43, 451.92s/it]   40%|████      | 4/10 [30:06<45:09, 451.51s/it] 50%|█████     | 5/10 [37:36<37:34, 450.88s/it] 60%|██████    | 6/10 [44:59<29:52, 448.18s/it] 70%|███████   | 7/10 [52:30<22:27, 449.03s/it] 80%|████████  | 8/10 [59:53<14:54, 447.20s/it] 90%|█████████ | 9/10 [1:07:17<07:26, 446.04s/it]100%|██████████| 10/10 [1:14:40<00:00, 445.29s/it]100%|██████████| 10/10 [1:14:40<00:00, 448.09s/it]
+*************
+dataset: MSL
+testname: Hyperpara/
+th: 99.19000000000317
+TP: 6384
+FP: 333
+FN: 259
+precision: 0.9504242951460112 recall: 0.9610115897019245 f_score 0.9556836215033752
+==============================================================================================
+name: Hyperpara/
+batch: 1
+window_length 70
+latent_size 256
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+  0%|          | 0/10 [00:00<?, ?it/s]  0%|          | 0/10 [45:13<?, ?it/s]
+Traceback (most recent call last):
+  File "main.py", line 182, in <module>
+    if __name__ == '__main__':
+  File "main.py", line 119, in main
+    inputs = inputs.cuda()
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 128, in forward
+    def forward(self, x):
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 237, in pipline
+    # print(x_a.shape)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 280, in predict
+    latent_sigma = softplus(latent_sigma) + 1e-4
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/distributions/normal.py", line 54, in __init__
+    super(Normal, self).__init__(batch_shape, validate_args=validate_args)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/distributions/distribution.py", line 55, in __init__
+    raise ValueError(
+ValueError: Expected parameter loc (Tensor of shape (1, 256)) of distribution Normal(loc: torch.Size([1, 256]), scale: torch.Size([1, 256])) to satisfy the constraint Real(), but found invalid values:
+tensor([[nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan,
+         nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan,
+         nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan,
+         nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan,
+         nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan,
+         nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan,
+         nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan,
+         nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan,
+         nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan,
+         nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan,
+         nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]],
+       device='cuda:0', grad_fn=<SplitBackward0>)
+usage: main.py [-h] [--name NAME] [--trainmode TRAINMODE] [--dataset DATASET]
+               [--loadpath LOADPATH] [--window_length WINDOW_LENGTH]
+               [--batch_size BATCH_SIZE] [--latent_size LATENT_SIZE]
+main.py: error: argument --latent_size: expected one argument
+==============================================================================================
+name: Hyperpara/batchsize
+batch: 4
+window_length 70
+latent_size 256
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [38:41<5:48:15, 2321.71s/it] 20%|██        | 2/10 [1:17:16<5:09:02, 2317.82s/it] 30%|███       | 3/10 [1:56:03<4:30:53, 2321.96s/it] 40%|████      | 4/10 [2:34:46<3:52:13, 2322.27s/it] 50%|█████     | 5/10 [3:13:23<3:13:22, 2320.53s/it] 50%|█████     | 5/10 [3:41:49<3:41:49, 2661.98s/it]
+Traceback (most recent call last):
+  File "main.py", line 183, in <module>
+    main()
+  File "main.py", line 120, in main
+    loss = model(inputs)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 131, in forward
+    x_a,pred_result,loss_c = self.pipline(x)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 240, in pipline
+    pred_result = self.predict(x_a)
+  File "/home/yiruolei/project/anomaly-detection/SecondTask/model/Model.py", line 283, in predict
+    dist = Normal(latent_mu, latent_sigma)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/distributions/normal.py", line 54, in __init__
+    super(Normal, self).__init__(batch_shape, validate_args=validate_args)
+  File "/home/yiruolei/anaconda3/envs/loranomaly/lib/python3.8/site-packages/torch/distributions/distribution.py", line 55, in __init__
+    raise ValueError(
+ValueError: Expected parameter loc (Tensor of shape (4, 256)) of distribution Normal(loc: torch.Size([4, 256]), scale: torch.Size([4, 256])) to satisfy the constraint Real(), but found invalid values:
+tensor([[nan, nan, nan,  ..., nan, nan, nan],
+        [nan, nan, nan,  ..., nan, nan, nan],
+        [nan, nan, nan,  ..., nan, nan, nan],
+        [nan, nan, nan,  ..., nan, nan, nan]], device='cuda:0',
+       grad_fn=<SplitBackward0>)
+==============================================================================================
+name: Hyperpara/batchsize
+batch: 10
+window_length 70
+latent_size 256
+trian or test: train-test
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [16:30<2:28:35, 990.63s/it] 20%|██        | 2/10 [32:57<2:11:45, 988.23s/it] 30%|███       | 3/10 [49:31<1:55:35, 990.81s/it] 40%|████      | 4/10 [1:05:56<1:38:52, 988.74s/it] 50%|█████     | 5/10 [1:22:28<1:22:29, 989.88s/it] 60%|██████    | 6/10 [1:38:54<1:05:54, 988.68s/it] 70%|███████   | 7/10 [1:55:22<49:24, 988.24s/it]   80%|████████  | 8/10 [2:11:47<32:54, 987.27s/it] 90%|█████████ | 9/10 [2:29:20<16:47, 1007.95s/it]100%|██████████| 10/10 [2:46:00<00:00, 1005.37s/it]100%|██████████| 10/10 [2:46:00<00:00, 996.04s/it] 
+*************
+dataset: MSL
+testname: Hyperpara/batchsize
+th: 98.64000000000289
+TP: 6431
+FP: 562
+FN: 212
+precision: 0.9196339183188419 recall: 0.9680867063554318 f_score 0.9432334882967169

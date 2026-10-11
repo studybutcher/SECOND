@@ -1,0 +1,29 @@
+usage: main.py [-h] [--name NAME] [--trainmode TRAINMODE] [--dataset DATASET]
+               [--loadpath LOADPATH] [--window_length WINDOW_LENGTH]
+               [--batch_size BATCH_SIZE] [--latent_size LATENT_SIZE]
+main.py: error: argument --loadpath: expected one argument
+==============================================================================================
+name: casestudy补充
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+load data of: SMAP
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (135183, 25)
+test set shape:  (427617, 25)
+test set label shape:  (427617,)
+test_data: (277952, 25)
+val_data: (149665, 25)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [12:06<1:49:01, 726.84s/it] 20%|██        | 2/10 [24:08<1:36:32, 724.05s/it] 30%|███       | 3/10 [36:12<1:24:25, 723.64s/it] 40%|████      | 4/10 [48:23<1:12:40, 726.83s/it] 50%|█████     | 5/10 [1:00:26<1:00:27, 725.51s/it] 60%|██████    | 6/10 [1:12:30<48:18, 724.69s/it]   70%|███████   | 7/10 [1:24:33<36:12, 724.14s/it] 80%|████████  | 8/10 [1:36:36<24:07, 723.79s/it] 90%|█████████ | 9/10 [1:48:41<12:04, 724.42s/it]100%|██████████| 10/10 [2:00:48<00:00, 724.99s/it]100%|██████████| 10/10 [2:00:48<00:00, 724.82s/it]
+*************
+dataset: SMAP
+testname: casestudy补充
+th: 99.4600000000033
+TP: 41575
+FP: 1279
+FN: 843
+precision: 0.9701544777686669 recall: 0.9801263612192638 f_score 0.9751099262809623

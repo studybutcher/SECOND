@@ -1,0 +1,41 @@
+==============================================================================================
+name: contam/nomssa
+backbone: nomssa
+seed: 7
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.0
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=53.6241M  中间块=0.0000M (0.00%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 83.5s (steps=971)
+ 10%|█         | 1/10 [01:23<12:31, 83.54s/it][timing] epoch 1: 81.9s (steps=971)
+ 20%|██        | 2/10 [02:45<11:00, 82.55s/it][timing] epoch 2: 81.5s (steps=971)
+ 30%|███       | 3/10 [04:06<09:34, 82.07s/it][timing] epoch 3: 82.7s (steps=971)
+ 40%|████      | 4/10 [05:29<08:13, 82.31s/it][timing] epoch 4: 82.3s (steps=971)
+ 50%|█████     | 5/10 [06:51<06:51, 82.31s/it][timing] epoch 5: 81.6s (steps=971)
+ 60%|██████    | 6/10 [08:13<05:28, 82.06s/it][timing] epoch 6: 81.6s (steps=971)
+ 70%|███████   | 7/10 [09:35<04:05, 81.90s/it][timing] epoch 7: 81.5s (steps=971)
+ 80%|████████  | 8/10 [10:56<02:43, 81.78s/it][timing] epoch 8: 81.6s (steps=971)
+ 90%|█████████ | 9/10 [12:18<01:21, 81.72s/it][timing] epoch 9: 82.9s (steps=971)
+100%|██████████| 10/10 [13:41<00:00, 82.08s/it]100%|██████████| 10/10 [13:41<00:00, 82.10s/it]
+[timing] mean 82.1s/epoch  windows=58247
+*************
+dataset: MSL
+testname: contam/nomssa
+th: 98.06000000000259
+TP: 6521
+FP: 809
+FN: 122
+precision: 0.8896316495366553 recall: 0.9816348020749138 f_score 0.9333665129600721
+metrics saved to: results/contam/nomssa_MSL_rho00_seed7.json

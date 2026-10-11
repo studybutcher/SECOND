@@ -1,0 +1,20 @@
+ae | MSL ρ=20% seed=7 | train (3148, 70, 55) val (6851, 70, 55) test(eval) (71864, 70, 55) 异常率 0.1177
+  参数 9.20M  [Gate V] 瓶颈 3850→256 (15.0×)
+    ep   0  train 0.004496  val_MSE 0.004632  (1s)
+    ep  10  train 0.003200  val_MSE 0.003887  (4s)
+    ep  20  train 0.002242  val_MSE 0.003638  (8s)
+    ep  30  train 0.001603  val_MSE 0.003609  (12s)
+    ep  40  train 0.001255  val_MSE 0.003684  (16s)
+    ep  50  train 0.001052  val_MSE 0.003818  (20s)
+    ep  60  train 0.000933  val_MSE 0.003928  (24s)
+    ep  70  train 0.000864  val_MSE 0.003992  (28s)
+    ep  80  train 0.000828  val_MSE 0.004032  (32s)
+    ep  90  train 0.000810  val_MSE 0.004050  (36s)
+    ep  99  train 0.000805  val_MSE 0.004056  (39s)
+  [阶段] 训练结束，开始评估...
+  [clip] 测试值域 [-0.0368, 48.1272] 越界 ⇒ 已另跑一次 clip 前向
+  [阶段] bf_search 开始（本 run 主要耗时）...
+  E_N=0.004056  E_N(test)=0.003757  E_A=0.016278  E_A/E_N=4.014  E_A_clip/E_N=1.028
+  F1=0.2030 (P=0.2463 R=0.1727 @pct=93.24)  未调整 F1=0.0586  AUPRC=0.1647 AUROC=0.6047  (base=0.1177)
+  [Gate N] 真实vs全零 max|Δ|/scale=2.363e+02 (tol=0.001) → ✅   [收敛] 末10轮极差比=1.00
+  saved: results/recon/ae_MSL_rho20_seed7.json

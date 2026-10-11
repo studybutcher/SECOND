@@ -1,0 +1,30 @@
+==============================================================================================
+name: ablation/lstm
+backbone: lstm
+seed: 42
+batch: 24
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0
+load data of: WADI
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (20000, 127)
+test set shape:  (17281, 127)
+test set label shape:  (17281,)
+test_data: (11233, 127)
+val_data: (6048, 127)
+params=110.8750M  中间块=37.8225M (34.11%)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [02:08<19:18, 128.71s/it] 20%|██        | 2/10 [04:14<16:56, 127.08s/it] 30%|███       | 3/10 [06:22<14:52, 127.48s/it] 40%|████      | 4/10 [08:28<12:42, 127.02s/it] 50%|█████     | 5/10 [10:35<10:33, 126.74s/it] 60%|██████    | 6/10 [12:41<08:26, 126.59s/it] 70%|███████   | 7/10 [14:49<06:21, 127.07s/it] 80%|████████  | 8/10 [16:56<04:13, 126.92s/it] 90%|█████████ | 9/10 [19:01<02:06, 126.52s/it]100%|██████████| 10/10 [21:07<00:00, 126.21s/it]100%|██████████| 10/10 [21:07<00:00, 126.73s/it]
+*************
+dataset: WADI
+testname: ablation/lstm
+th: 99.4600000000033
+TP: 174.98250174982496
+FP: 60.01749825017498
+FN: 0.0
+precision: 0.7446063587394103 recall: 0.9999999428514318 f_score 0.8536046757183775
+metrics saved to: results/ablation/lstm_WADI_seed42.json
