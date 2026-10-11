@@ -36,7 +36,9 @@ RHOS=(00 01 05 10 20)
 
 TAG="${BB}_${DATASET}_testrho"
 CKPT_DIR="checkpoint/contam_runs/${BB}_${DATASET}_clean_seed${SEED}"
-CKPT="${CKPT_DIR}/${DATASET}/best.pt"
+# ⚠️ --ckpt-dir 是**整体替换** checkpoint 目录（不是在其下再套一层 <dataset>），
+#    所以 best.pt 就在 $CKPT_DIR/best.pt。曾因此误判"训练未产出 ckpt"而没启动评测。
+CKPT="${CKPT_DIR}/best.pt"
 mkdir -p nohp-out/testside results/testside artifacts/contam
 
 echo "GPU: ${GPUS[*]}"

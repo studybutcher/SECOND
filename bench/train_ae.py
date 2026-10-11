@@ -69,6 +69,8 @@ def main():
     ap.add_argument('--mpa-pool', default='mean', choices=['mean','concat'], help='MPA 输出怎么进 AE')
     ap.add_argument('--out-dir', default=OUT_DIR)
     ap.add_argument('--tag', default=None)
+    ap.add_argument('--no-save-ckpt', action='store_true',
+                    help='默认存 ckpt（分析"局部损害"要逐窗重建误差，必须能重载模型）')
     a = ap.parse_args()
     cs = a.contam_seed if a.contam_seed is not None else a.seed
     dev = 'cuda'
@@ -180,6 +182,12 @@ def main():
                                             'mean_seg_len', 'alpha')} if a.rho > 0 else man),
                wall_sec=round(time.time() - t0, 1),
                timestamp=time.strftime('%Y-%m-%d %H:%M:%S'))
+    if not a.no_save_ckpt:
+        ck = f'checkpoint/ae_mpa/{tag}.pt'
+        os.makedirs(os.path.dirname(ck), exist_ok=True)
+        torch.save(model.state_dict(), ck)
+        rec['ckpt'] = os.path.abspath(ck)
+        print(f'  ckpt: {ck}')
     with open(f'{a.out_dir}/{tag}.json', 'w') as f:
         json.dump(rec, f, indent=1, ensure_ascii=False)
     print(f'  saved: {a.out_dir}/{tag}.json')

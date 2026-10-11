@@ -3,26 +3,8 @@ ae | MSL ρ=5% seed=42 | train (45569, 70, 55) val (6849, 70, 55) probe(anom) (9
   [Gate V] 瓶颈 3850 → 256 (15.0×)  → ✅
     epoch   0  train_MSE 0.00373  (total +0.00373)  val_MSE 0.00344  (2s)
     epoch   5  train_MSE 0.00206  (total +0.00206)  val_MSE 0.00213  (11s)
-    epoch  10  train_MSE 0.00155  (total +0.00155)  val_MSE 0.00171  (20s)
-    epoch  15  train_MSE 0.00211  (total +0.00211)  val_MSE 0.00164  (28s)
-    epoch  20  train_MSE 0.00129  (total +0.00129)  val_MSE 0.00129  (37s)
-    epoch  25  train_MSE 0.00118  (total +0.00118)  val_MSE 0.00135  (46s)
-    epoch  30  train_MSE 0.00114  (total +0.00114)  val_MSE 0.00122  (56s)
-    epoch  35  train_MSE 0.00112  (total +0.00112)  val_MSE 0.00114  (64s)
-    epoch  40  train_MSE 0.00117  (total +0.00117)  val_MSE 0.00116  (73s)
-    epoch  45  train_MSE 0.00108  (total +0.00108)  val_MSE 0.00196  (83s)
-    epoch  50  train_MSE 0.00103  (total +0.00103)  val_MSE 0.00105  (91s)
-    epoch  55  train_MSE 0.00101  (total +0.00101)  val_MSE 0.00103  (100s)
-    epoch  60  train_MSE 0.00098  (total +0.00098)  val_MSE 0.00098  (109s)
-    epoch  65  train_MSE 0.00096  (total +0.00096)  val_MSE 0.00094  (118s)
-    epoch  70  train_MSE 0.00095  (total +0.00095)  val_MSE 0.00101  (127s)
-    epoch  75  train_MSE 0.00094  (total +0.00094)  val_MSE 0.00091  (136s)
-    epoch  80  train_MSE 0.00093  (total +0.00093)  val_MSE 0.00093  (145s)
-    epoch  85  train_MSE 0.00092  (total +0.00092)  val_MSE 0.00089  (154s)
-    epoch  90  train_MSE 0.00091  (total +0.00091)  val_MSE 0.00089  (163s)
-    epoch  95  train_MSE 0.00091  (total +0.00091)  val_MSE 0.00088  (172s)
-    epoch  99  train_MSE 0.00091  (total +0.00091)  val_MSE 0.00088  (179s)
-  E_N=0.000882  E_N(test normal)=0.001141  E_A(anomaly)=0.016224 (clip 到 [0,1] 后 0.001473)  比值 E_N/E_A_clip=0.599
-  [Gate N] 非常量: ratio=2.109e+00 (tol=0.001) 真实vs全零 max|Δ|=1.406e+00 → ✅
-  [诊断] 喂给 AE encoder 的向量: ratio=2.145e+00  真实vs全零 max|Δ|=1.000e+00
-  saved: results/ae_mpa/ae_MSL_rho05_seed42.json
+    epoch  10  train_MSE 0.00155  (total +0.00155)  val_MSE 0.00171  (19s)
+    epoch  15  train_MSE 0.00211  (total +0.00211)  val_MSE 0.00164  (27s)
+    epoch  20  train_MSE 0.00129  (total +0.00129)  val_MSE 0.00129  (36s)
+    epoch  25  train_MSE 0.00118  (total +0.00118)  val_MSE 0.00135  (44s)
+    epoch  30  train_MSE 0.00114  (total +0.00114)  val_MSE 0.00122  (53s)

@@ -2,27 +2,3 @@ ae | MSL ρ=20% seed=7 | train (45569, 70, 55) val (6849, 70, 55) probe(anom) (9
   参数: total=9.20M  adapter=0.000M  mpa=0.000M  mpa_norm=none
   [Gate V] 瓶颈 3850 → 256 (15.0×)  → ✅
     epoch   0  train_MSE 0.00379  (total +0.00379)  val_MSE 0.00347  (2s)
-    epoch   5  train_MSE 0.00203  (total +0.00203)  val_MSE 0.00244  (10s)
-    epoch  10  train_MSE 0.00156  (total +0.00156)  val_MSE 0.00301  (19s)
-    epoch  15  train_MSE 0.00207  (total +0.00207)  val_MSE 0.00174  (28s)
-    epoch  20  train_MSE 0.00130  (total +0.00130)  val_MSE 0.00137  (37s)
-    epoch  25  train_MSE 0.00123  (total +0.00123)  val_MSE 0.00130  (45s)
-    epoch  30  train_MSE 0.00119  (total +0.00119)  val_MSE 0.00145  (54s)
-    epoch  35  train_MSE 0.00115  (total +0.00115)  val_MSE 0.00113  (62s)
-    epoch  40  train_MSE 0.00110  (total +0.00110)  val_MSE 0.00109  (71s)
-    epoch  45  train_MSE 0.00109  (total +0.00109)  val_MSE 0.00106  (79s)
-    epoch  50  train_MSE 0.00106  (total +0.00106)  val_MSE 0.00115  (88s)
-    epoch  55  train_MSE 0.00107  (total +0.00107)  val_MSE 0.00106  (96s)
-    epoch  60  train_MSE 0.00101  (total +0.00101)  val_MSE 0.00097  (104s)
-    epoch  65  train_MSE 0.00101  (total +0.00101)  val_MSE 0.00096  (113s)
-    epoch  70  train_MSE 0.00098  (total +0.00098)  val_MSE 0.00094  (121s)
-    epoch  75  train_MSE 0.00096  (total +0.00096)  val_MSE 0.00092  (130s)
-    epoch  80  train_MSE 0.00095  (total +0.00095)  val_MSE 0.00094  (138s)
-    epoch  85  train_MSE 0.00095  (total +0.00095)  val_MSE 0.00091  (143s)
-    epoch  90  train_MSE 0.00094  (total +0.00094)  val_MSE 0.00090  (149s)
-    epoch  95  train_MSE 0.00094  (total +0.00094)  val_MSE 0.00090  (158s)
-    epoch  99  train_MSE 0.00093  (total +0.00093)  val_MSE 0.00090  (164s)
-  E_N=0.000896  E_N(test normal)=0.001158  E_A(anomaly)=0.018989 (clip 到 [0,1] 后 0.001492)  比值 E_N/E_A_clip=0.600
-  [Gate N] 非常量: ratio=2.205e+00 (tol=0.001) 真实vs全零 max|Δ|=1.489e+00 → ✅
-  [诊断] 喂给 AE encoder 的向量: ratio=2.146e+00  真实vs全零 max|Δ|=1.000e+00
-  saved: results/ae_mpa/ae_MSL_rho20_seed7.json

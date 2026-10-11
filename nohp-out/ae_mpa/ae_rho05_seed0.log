@@ -2,27 +2,4 @@ ae | MSL ρ=5% seed=0 | train (45569, 70, 55) val (6849, 70, 55) probe(anom) (99
   参数: total=9.20M  adapter=0.000M  mpa=0.000M  mpa_norm=none
   [Gate V] 瓶颈 3850 → 256 (15.0×)  → ✅
     epoch   0  train_MSE 0.00369  (total +0.00369)  val_MSE 0.00340  (2s)
-    epoch   5  train_MSE 0.00201  (total +0.00201)  val_MSE 0.00267  (11s)
-    epoch  10  train_MSE 0.00159  (total +0.00159)  val_MSE 0.00166  (19s)
-    epoch  15  train_MSE 0.00144  (total +0.00144)  val_MSE 0.00143  (28s)
-    epoch  20  train_MSE 0.00124  (total +0.00124)  val_MSE 0.00273  (36s)
-    epoch  25  train_MSE 0.00115  (total +0.00115)  val_MSE 0.00153  (45s)
-    epoch  30  train_MSE 0.00110  (total +0.00110)  val_MSE 0.00130  (53s)
-    epoch  35  train_MSE 0.00107  (total +0.00107)  val_MSE 0.00113  (62s)
-    epoch  40  train_MSE 0.00103  (total +0.00103)  val_MSE 0.00114  (70s)
-    epoch  45  train_MSE 0.00099  (total +0.00099)  val_MSE 0.00178  (79s)
-    epoch  50  train_MSE 0.00096  (total +0.00096)  val_MSE 0.00113  (87s)
-    epoch  55  train_MSE 0.00095  (total +0.00095)  val_MSE 0.00106  (96s)
-    epoch  60  train_MSE 0.00094  (total +0.00094)  val_MSE 0.00103  (104s)
-    epoch  65  train_MSE 0.00091  (total +0.00091)  val_MSE 0.00091  (113s)
-    epoch  70  train_MSE 0.00090  (total +0.00090)  val_MSE 0.00090  (122s)
-    epoch  75  train_MSE 0.00089  (total +0.00089)  val_MSE 0.00092  (130s)
-    epoch  80  train_MSE 0.00088  (total +0.00088)  val_MSE 0.00087  (139s)
-    epoch  85  train_MSE 0.00087  (total +0.00087)  val_MSE 0.00087  (145s)
-    epoch  90  train_MSE 0.00087  (total +0.00087)  val_MSE 0.00086  (153s)
-    epoch  95  train_MSE 0.00086  (total +0.00086)  val_MSE 0.00085  (161s)
-    epoch  99  train_MSE 0.00086  (total +0.00086)  val_MSE 0.00085  (167s)
-  E_N=0.000852  E_N(test normal)=0.001107  E_A(anomaly)=0.012067 (clip 到 [0,1] 后 0.001447)  比值 E_N/E_A_clip=0.589
-  [Gate N] 非常量: ratio=2.107e+00 (tol=0.001) 真实vs全零 max|Δ|=1.357e+00 → ✅
-  [诊断] 喂给 AE encoder 的向量: ratio=2.146e+00  真实vs全零 max|Δ|=1.000e+00
-  saved: results/ae_mpa/ae_MSL_rho05_seed0.json
+    epoch   5  train_MSE 0.00201  (total +0.00201)  val_MSE 0.00267  (9s)
