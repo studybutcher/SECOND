@@ -1,0 +1,41 @@
+==============================================================================================
+name: robust_ms/MSL
+backbone: mamba
+seed: 17
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.0
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=201.6167M  中间块=147.9926M (73.40%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 383.5s (steps=971)
+ 10%|█         | 1/10 [06:23<57:31, 383.55s/it][timing] epoch 1: 379.1s (steps=971)
+ 20%|██        | 2/10 [12:42<50:47, 380.93s/it][timing] epoch 2: 385.8s (steps=971)
+ 30%|███       | 3/10 [19:08<44:42, 383.16s/it][timing] epoch 3: 385.3s (steps=971)
+ 40%|████      | 4/10 [25:33<38:24, 384.00s/it][timing] epoch 4: 384.0s (steps=971)
+ 50%|█████     | 5/10 [31:57<32:00, 384.01s/it][timing] epoch 5: 382.1s (steps=971)
+ 60%|██████    | 6/10 [38:19<25:33, 383.36s/it][timing] epoch 6: 383.8s (steps=971)
+ 70%|███████   | 7/10 [44:43<19:10, 383.49s/it][timing] epoch 7: 381.5s (steps=971)
+ 80%|████████  | 8/10 [51:05<12:45, 382.86s/it][timing] epoch 8: 380.9s (steps=971)
+ 90%|█████████ | 9/10 [57:26<06:22, 382.24s/it][timing] epoch 9: 381.0s (steps=971)
+100%|██████████| 10/10 [1:03:47<00:00, 381.87s/it]100%|██████████| 10/10 [1:03:47<00:00, 382.71s/it]
+[timing] mean 382.7s/epoch  windows=58247
+*************
+dataset: MSL
+testname: robust_ms/MSL
+th: 98.11000000000261
+TP: 6485
+FP: 803
+FN: 158
+precision: 0.8898188791303254 recall: 0.9762155637871209 f_score 0.9310121653914584
+metrics saved to: results/robust_ms/pesr_MSL_gauss_noise0_seed17.json

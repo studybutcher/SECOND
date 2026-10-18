@@ -1,0 +1,21 @@
+==============================================================================================
+name: robust_ms/SWaT
+backbone: mamba
+seed: 7
+batch: 60
+window_length 35
+latent_size 256
+trian or test: train-test
+noise: 0.0
+load data of: SWaT
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (495000, 51)
+test set shape:  (449919, 51)
+test set label shape:  (449919,)
+test_data: (292448, 51)
+val_data: (157471, 51)
+params=199.6879M  中间块=147.9926M (74.11%)
+  0%|          | 0/10 [00:00<?, ?it/s]

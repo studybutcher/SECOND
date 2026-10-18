@@ -66,6 +66,10 @@ class ExpConfig(argparse.ArgumentParser):
         self.add_argument('--latent_size', type=int,default=256)
         self.add_argument('--max_train_size', type=float,default=None)
         self.add_argument('--noise', type=float,default=0)
+        self.add_argument('--noise-kind', type=str, default='mixed',
+                          choices=['mixed', 'gauss'],
+                          help='mixed=现有混合噪声（默认，保持旧结果可复现）；'
+                               'gauss=基础版整行替换为 N(0,1)')
         self.add_argument('--backbone', type=str, default='mamba',
                           choices=list(BACKBONE_REGISTRY), help='中间块消融变体')
         self.add_argument('--seed', type=int, default=42, help='随机种子')
@@ -121,13 +125,18 @@ class ExpConfig(argparse.ArgumentParser):
         #*下面是为了超参来设置的
         
 
-def add_noise(data, noise_ratio):
+def add_noise(data, noise_ratio, kind='mixed'):
     # 计算要替换的噪声数量
     num_samples = int(data.shape[0] * noise_ratio)
+    if num_samples <= 0:
+        return data
     # 随机选择要替换的索引
     indices = np.random.choice(data.shape[0], num_samples, replace=False)
     # 生成随机噪声
-    # noise = np.random.normal(0, 1, data[indices].shape)
+    # 基础版：整行替换为标准正态 N(0,1)
+    if kind == 'gauss':
+        data[indices] = np.random.normal(0, 1, data[indices].shape)
+        return data
     # 生成混合噪声
     noise = np.zeros(data[indices].shape)
     for i in range(len(indices)):
@@ -228,7 +237,7 @@ def main():
             print(f'[warn] 找不到 manifest {man_path}，contam 字段留空')
     else:
         # 在加载数据后添加噪声（旧路径，保留不动）
-        train_data = add_noise(train_data, config.noise)
+        train_data = add_noise(train_data, config.noise, config.noise_kind)
 
     # ── 路 B：测试侧扰动（干净训练 → 含异常检测）─────────────────────────
     # 训练侧不动，把物化的污染数组替换 test_data；test_label 保持不变（标签仍是真的）。
@@ -461,7 +470,8 @@ def main():
                        'window_length': config.window_length, 'latent_size': config.latent_size,
                        'batch_size': config.batch_size, 'n_layer': argsa.n_layer,
                        'epochs': 10, 'lr': 0.01, 'N': config.N, 'val': config.val,
-                       'noise': config.noise},
+                       'noise': config.noise,
+                       'noise_kind': config.noise_kind},
             'params': {'n_params': n_params, 'n_params_M': n_params / 1e6,
                        'n_midstack': n_midstack, 'n_midstack_M': n_midstack / 1e6,
                        'midstack_share': n_midstack / n_params},
