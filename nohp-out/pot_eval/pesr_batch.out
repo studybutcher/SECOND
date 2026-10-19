@@ -1,0 +1,11 @@
+PRD6.1 PESR POT re-eval: 18 runs  GPUs=4 7
+  [GPU7] pesr_MSL_noise0_seed7  2026-10-19 13:25:36
+  [GPU4] pesr_MSL_noise0_seed42  2026-10-19 13:25:36
+  [done rc=0] pesr_MSL_noise0_seed7  2026-10-19 13:29:54
+  [GPU7] pesr_MSL_noise0.05_seed42  2026-10-19 13:29:54
+  [done rc=0] pesr_MSL_noise0_seed42  2026-10-19 13:31:26
+  [GPU4] pesr_MSL_noise0_seed17  2026-10-19 13:31:26
+  [done rc=0] pesr_MSL_noise0.05_seed42  2026-10-19 13:33:52
+  [GPU7] pesr_MSL_noise0.05_seed17  2026-10-19 13:33:52
+  [done rc=0] pesr_MSL_noise0_seed17  2026-10-19 13:36:48
+  [GPU4] pesr_MSL_noise0.05_seed7  2026-10-19 13:36:48

@@ -1,0 +1,45 @@
+==============================================================================================
+name: lstmae_robust_gauss/MSL
+backbone: lstmae
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.05
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=0.3325M  中间块=0.0000M (0.00%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 10.9s (steps=971)
+ 10%|█         | 1/10 [00:10<01:37, 10.86s/it][timing] epoch 1: 10.7s (steps=971)
+ 20%|██        | 2/10 [00:21<01:26, 10.79s/it][timing] epoch 2: 10.7s (steps=971)
+ 30%|███       | 3/10 [00:32<01:15, 10.73s/it][timing] epoch 3: 10.4s (steps=971)
+ 40%|████      | 4/10 [00:42<01:03, 10.59s/it][timing] epoch 4: 12.2s (steps=971)
+ 50%|█████     | 5/10 [00:54<00:55, 11.16s/it][timing] epoch 5: 11.2s (steps=971)
+ 60%|██████    | 6/10 [01:05<00:44, 11.16s/it][timing] epoch 6: 11.8s (steps=971)
+ 70%|███████   | 7/10 [01:17<00:34, 11.37s/it][timing] epoch 7: 10.5s (steps=971)
+ 80%|████████  | 8/10 [01:28<00:22, 11.10s/it][timing] epoch 8: 10.7s (steps=971)
+ 90%|█████████ | 9/10 [01:38<00:10, 10.96s/it][timing] epoch 9: 10.6s (steps=971)
+100%|██████████| 10/10 [01:49<00:00, 10.86s/it]100%|██████████| 10/10 [01:49<00:00, 10.96s/it]
+[timing] mean 11.0s/epoch  windows=58247
+*************
+dataset: MSL
+testname: lstmae_robust_gauss/MSL
+th: 96.920000000002
+TP: 3755
+FP: 1327
+FN: 2888
+precision: 0.7388823283375003 recall: 0.5652566602961664 f_score 0.6405068146477402
+--- POT (paramset=fixed, q=0.001, level=0.98, scale=1.0) ---
+  init_score n=58247  fit_ok=True  init_threshold=464.259033203125  真EVT=589.8757277959864
+  pot_dtaad    th=589.875728  F1=0.0000  P=0.0000  R=0.0000
+POT saved to: results/threshold_ms/SECOND_MSL_fixed_lstmae_MSL_noise0.05_seed42.json
+metrics saved to: results/lstmae_robust_gauss/lstmae_MSL_gauss_noise0.05_seed42.json

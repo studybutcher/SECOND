@@ -73,6 +73,11 @@ class ExpConfig(argparse.ArgumentParser):
         self.add_argument('--backbone', type=str, default='mamba',
                           choices=list(BACKBONE_REGISTRY), help='中间块消融变体')
         self.add_argument('--seed', type=int, default=42, help='随机种子')
+        # 2026-10-19 诊断用：默认值与改动前完全一致（10 epoch、每 256 步更新一次）
+        self.add_argument('--epochs', type=int, default=10,
+                          help='训练 epoch 数（默认 10，与改动前一致）')
+        self.add_argument('--N', type=int, default=256,
+                          help='每多少个 batch 执行一次 optimizer.step（默认 256）')
         self.add_argument('--result-dir', type=str, default=os.path.join('results', 'ablation'),
                           help='结果 JSON 落盘目录（污染实验传 results/contam，'
                                '避免覆盖 PRD1 中间块消融的结果）')
@@ -111,6 +116,13 @@ class ExpConfig(argparse.ArgumentParser):
                                '与 DTAAD 的 pot_eval(lossTfinal, ...)（全程训练集）一致')
         self.add_argument('--pot-fixed', action='store_true',
                           help='用全数据集固定参数 (q=1e-3, level=0.98, scale=1) 作为对照列')
+        # PRD6.1：对多个已训 ckpt 复评时，默认文件名会互相覆盖，故允许单独指定
+        self.add_argument('--pot-dir', type=str,
+                          default=os.path.join('results', 'threshold'),
+                          help='POT 结果 JSON 落盘目录（默认 results/threshold，与改动前一致）')
+        self.add_argument('--pot-result-name', type=str, default=None,
+                          help='POT 结果 JSON 的文件名后缀；默认 SECOND_<dataset>_<paramset>.json。'
+                               '批量复评必须显式给出，否则各 run 互相覆盖')
         self.parse_args(namespace=self)
         # 各数据集的默认值：只在命令行**没有**显式给出时才套用
         if self.window_length is None:
@@ -326,7 +338,7 @@ def main():
         flag = 0
         f1 = -1
         epoch_secs = []
-        for epoch in tqdm(range(10)):
+        for epoch in tqdm(range(config.epochs)):
             t_epoch = time.time()
             l = 0
             i = 0
@@ -423,9 +435,11 @@ def main():
                 print(f"  {m:12s} th={r['threshold']:.6f}  F1={mt[0]:.4f}  "
                       f"P={mt[1]:.4f}  R={mt[2]:.4f}")
 
-            out_dir2 = os.path.join('results', 'threshold')
+            out_dir2 = config.pot_dir
             os.makedirs(out_dir2, exist_ok=True)
-            out_json2 = os.path.join(out_dir2, f"SECOND_{config.dataset}_{paramset}.json")
+            _pot_suffix = f"_{config.pot_result_name}" if config.pot_result_name else ''
+            out_json2 = os.path.join(
+                out_dir2, f"SECOND_{config.dataset}_{paramset}{_pot_suffix}.json")
             with open(out_json2, 'w') as f:
                 json.dump({
                     'model': 'SECOND', 'dataset': config.dataset,

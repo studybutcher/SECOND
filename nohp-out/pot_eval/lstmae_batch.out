@@ -1,0 +1,10 @@
+PRD6.1 LSTM-AE gauss retrain: 18 runs  GPUs=1
+  [GPU1] lstmae_MSL_gauss_noise0_seed42  2026-10-19 13:25:35
+  [done rc=0] lstmae_MSL_gauss_noise0_seed42  2026-10-19 13:29:04
+  [GPU1] lstmae_MSL_gauss_noise0_seed7  2026-10-19 13:29:04
+  [done rc=0] lstmae_MSL_gauss_noise0_seed7  2026-10-19 13:32:06
+  [GPU1] lstmae_MSL_gauss_noise0_seed17  2026-10-19 13:32:06
+  [done rc=0] lstmae_MSL_gauss_noise0_seed17  2026-10-19 13:34:32
+  [GPU1] lstmae_MSL_gauss_noise0.05_seed42  2026-10-19 13:34:32
+  [done rc=0] lstmae_MSL_gauss_noise0.05_seed42  2026-10-19 13:36:52
+  [GPU1] lstmae_MSL_gauss_noise0.05_seed7  2026-10-19 13:36:52
