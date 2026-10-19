@@ -1,0 +1,41 @@
+==============================================================================================
+name: robust_ms/SWaT
+backbone: mamba
+seed: 7
+batch: 60
+window_length 35
+latent_size 256
+trian or test: train-test
+noise: 0.15
+load data of: SWaT
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (495000, 51)
+test set shape:  (449919, 51)
+test set label shape:  (449919,)
+test_data: (292448, 51)
+val_data: (157471, 51)
+params=199.6879M  中间块=147.9926M (74.11%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 3010.8s (steps=8250)
+ 10%|█         | 1/10 [50:10<7:31:37, 3010.84s/it][timing] epoch 1: 3000.0s (steps=8250)
+ 20%|██        | 2/10 [1:40:10<6:40:35, 3004.46s/it][timing] epoch 2: 3014.2s (steps=8250)
+ 30%|███       | 3/10 [2:30:25<5:51:02, 3008.92s/it][timing] epoch 3: 3014.0s (steps=8250)
+ 40%|████      | 4/10 [3:20:39<5:01:05, 3010.91s/it][timing] epoch 4: 2946.4s (steps=8250)
+ 50%|█████     | 5/10 [4:09:45<4:08:58, 2987.66s/it][timing] epoch 5: 2940.7s (steps=8250)
+ 60%|██████    | 6/10 [4:58:46<3:18:06, 2971.70s/it][timing] epoch 6: 2942.2s (steps=8250)
+ 70%|███████   | 7/10 [5:47:48<2:28:06, 2962.07s/it][timing] epoch 7: 2952.8s (steps=8250)
+ 80%|████████  | 8/10 [6:37:01<1:38:38, 2959.12s/it][timing] epoch 8: 2946.5s (steps=8250)
+ 90%|█████████ | 9/10 [7:26:07<49:15, 2955.17s/it]  [timing] epoch 9: 2951.7s (steps=8250)
+100%|██████████| 10/10 [8:15:19<00:00, 2954.11s/it]100%|██████████| 10/10 [8:15:19<00:00, 2971.94s/it]
+[timing] mean 2971.9s/epoch  windows=494965
+*************
+dataset: SWaT
+testname: robust_ms/SWaT
+th: 99.4400000000033
+TP: 48295.0
+FP: 1372.0
+FN: 654.0
+precision: 0.9723760241262053 recall: 0.9866391548373533 f_score 0.9794506665152274
+metrics saved to: results/robust_ms/pesr_SWaT_gauss_noise0.15_seed7.json

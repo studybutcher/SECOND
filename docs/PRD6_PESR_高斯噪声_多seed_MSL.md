@@ -136,6 +136,12 @@ DATASETS="SWaT SMAP WADI" GPUS="1 2 4 5 6 7" \
 
 队列按 SWaT → SMAP → WADI 排序、轮转分配,长任务先起跑。
 
+**2026-10-19 调整(用户要求复用卡)**:SWaT 接近完成后,停掉旧队列的后续排程
+(保留正在跑的 Python 进程),改为 **SMAP 与 WADI 两个队列并行**、
+共用 `GPUS="0 1 2 4 5 6 7"`(GPU 3 被他人占用 84%,不用)。
+脚本增加了 pgrep 防重入:`--result-name` 已在跑则跳过,避免两个进程写同一个 `best.pt`。
+实测显存:SMAP ≈8.3 GB、SWaT ≈14.2 GB,48 GB 卡上叠放安全。
+
 显存实测约 13.6 GB/run(48 GB 卡),每卡放 1 个 run 最稳。
 
 ---

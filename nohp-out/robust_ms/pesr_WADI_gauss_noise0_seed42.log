@@ -1,0 +1,41 @@
+==============================================================================================
+name: robust_ms/WADI
+backbone: mamba
+seed: 42
+batch: 24
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.0
+load data of: WADI
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (20000, 127)
+test set shape:  (17281, 127)
+test set label shape:  (17281,)
+test_data: (11233, 127)
+val_data: (6048, 127)
+params=221.0451M  中间块=147.9926M (66.95%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 466.6s (steps=831)
+ 10%|█         | 1/10 [07:46<1:09:59, 466.56s/it][timing] epoch 1: 519.2s (steps=831)
+ 20%|██        | 2/10 [16:25<1:06:20, 497.54s/it][timing] epoch 2: 519.3s (steps=831)
+ 30%|███       | 3/10 [25:05<59:12, 507.50s/it]  [timing] epoch 3: 568.3s (steps=831)
+ 40%|████      | 4/10 [34:33<53:08, 531.50s/it][timing] epoch 4: 650.5s (steps=831)
+ 50%|█████     | 5/10 [45:23<47:52, 574.41s/it][timing] epoch 5: 640.7s (steps=831)
+ 60%|██████    | 6/10 [56:04<39:47, 596.96s/it][timing] epoch 6: 688.9s (steps=831)
+ 70%|███████   | 7/10 [1:07:33<31:21, 627.03s/it][timing] epoch 7: 865.5s (steps=831)
+ 80%|████████  | 8/10 [1:21:59<23:25, 702.95s/it][timing] epoch 8: 707.7s (steps=831)
+ 90%|█████████ | 9/10 [1:33:46<11:44, 704.44s/it][timing] epoch 9: 672.6s (steps=831)
+100%|██████████| 10/10 [1:44:59<00:00, 694.63s/it]100%|██████████| 10/10 [1:44:59<00:00, 629.95s/it]
+[timing] mean 629.9s/epoch  windows=19930
+*************
+dataset: WADI
+testname: robust_ms/WADI
+th: 98.34000000000273
+TP: 174.98250174982496
+FP: 185.01749825017498
+FN: 0.0
+precision: 0.4860624913588891 recall: 0.9999999428514318 f_score 0.6541571627218841
+metrics saved to: results/robust_ms/pesr_WADI_gauss_noise0_seed42.json

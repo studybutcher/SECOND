@@ -1,0 +1,41 @@
+==============================================================================================
+name: robust_ms/SMAP
+backbone: mamba
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.2
+load data of: SMAP
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (135183, 25)
+test set shape:  (427617, 25)
+test set label shape:  (427617,)
+test_data: (277952, 25)
+val_data: (149665, 25)
+params=193.5215M  中间块=147.9926M (76.47%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 1457.1s (steps=2252)
+ 10%|█         | 1/10 [24:17<3:38:33, 1457.09s/it][timing] epoch 1: 1421.8s (steps=2252)
+ 20%|██        | 2/10 [47:58<3:11:30, 1436.30s/it][timing] epoch 2: 1443.8s (steps=2252)
+ 30%|███       | 3/10 [1:12:02<2:47:58, 1439.73s/it][timing] epoch 3: 1441.2s (steps=2252)
+ 40%|████      | 4/10 [1:36:03<2:24:01, 1440.32s/it][timing] epoch 4: 1422.8s (steps=2252)
+ 50%|█████     | 5/10 [1:59:46<1:59:29, 1434.00s/it][timing] epoch 5: 1287.9s (steps=2252)
+ 60%|██████    | 6/10 [2:21:14<1:32:17, 1384.33s/it][timing] epoch 6: 1007.2s (steps=2252)
+ 70%|███████   | 7/10 [2:38:01<1:03:03, 1261.04s/it][timing] epoch 7: 1005.6s (steps=2252)
+ 80%|████████  | 8/10 [2:54:47<39:19, 1179.72s/it]  [timing] epoch 8: 1006.7s (steps=2252)
+ 90%|█████████ | 9/10 [3:11:34<18:45, 1125.63s/it][timing] epoch 9: 937.1s (steps=2252)
+100%|██████████| 10/10 [3:27:11<00:00, 1067.42s/it]100%|██████████| 10/10 [3:27:11<00:00, 1243.12s/it]
+[timing] mean 1243.1s/epoch  windows=135113
+*************
+dataset: SMAP
+testname: robust_ms/SMAP
+th: 99.87000000000351
+TP: 40047
+FP: 303
+FN: 2371
+precision: 0.9924907060737321 recall: 0.9441039179253845 f_score 0.9676878310594894
+metrics saved to: results/robust_ms/pesr_SMAP_gauss_noise0.2_seed42.json

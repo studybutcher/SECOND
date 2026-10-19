@@ -57,6 +57,12 @@ for gi in "${!GPUS[@]}"; do
         echo "[skip] $t"
         continue
       fi
+      # 同一 run 可能由另一个队列实例启动（多数据集并行 / 卡复用）：
+      # 已在跑就跳过，避免两个进程写同一个 best.pt。
+      if pgrep -f -- "--result-name ${t}( |$)" >/dev/null 2>&1; then
+        echo "[running] $t"
+        continue
+      fi
       echo "[GPU ${GPUS[$gi]}] $t"
       CUDA_VISIBLE_DEVICES=${GPUS[$gi]} "$PY" -u main.py \
         --dataset "$ds" --name "robust_ms/${ds}" --trainmode train-test \

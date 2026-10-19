@@ -1,0 +1,22 @@
+\begin{table*}[!h]
+\caption{Model Evaluation with Replace Noise on Four Datasets (mean\,$\pm$\,std over 3 seeds; MSL only in this round)}
+\label{robust}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{lllllllllllll}
+\toprule
+\multicolumn{1}{c}{\multirow{2}{*}{$\varepsilon$\%}} & \multicolumn{3}{c}{MSL}
+& \multicolumn{3}{c}{SMAP} & \multicolumn{3}{c}{SWaT} & \multicolumn{3}{c}{WADI} \\
+\cmidrule(r){2-4} \cmidrule(r){5-7} \cmidrule(r){8-10} \cmidrule(r){11-13}
+\multicolumn{1}{c}{} & Precision & Recall & F1-score
+& Precision & Recall & F1-score & Precision & Recall & F1-score
+& Precision & Recall & F1-score \\
+\midrule
+- & $0.9753 \pm 0.0035$ & $0.9882 \pm 0.0107$ & $0.9817 \pm 0.0044$ & — & — & — & — & — & — & — & — & — \\
+5\% & $0.9818 \pm 0.0017$ & $0.9797 \pm 0.0066$ & $0.9807 \pm 0.0030$ & — & — & — & — & — & — & — & — & — \\
+10\% & $0.9712 \pm 0.0060$ & $0.9949 \pm 0.0068$ & $0.9829 \pm 0.0012$ & — & — & — & — & — & — & — & — & — \\
+15\% & $0.9762 \pm 0.0046$ & $0.9879 \pm 0.0011$ & $0.9820 \pm 0.0026$ & — & — & — & — & — & — & — & — & — \\
+20\% & $0.9796 \pm 0.0045$ & $0.9814 \pm 0.0108$ & $0.9805 \pm 0.0033$ & — & — & — & — & — & — & — & — & — \\
+50\% & $0.9761 \pm 0.0023$ & $0.9941 \pm 0.0070$ & $0.9850 \pm 0.0023$ & — & — & — & — & — & — & — & — & — \\
+\bottomrule
+\end{tabular}}
+\end{table*}
