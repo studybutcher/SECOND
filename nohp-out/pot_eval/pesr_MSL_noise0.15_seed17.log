@@ -1,0 +1,33 @@
+==============================================================================================
+name: pot_eval/MSL
+backbone: mamba
+seed: 17
+batch: 60
+window_length 70
+latent_size 256
+trian or test: test
+noise: 0.15
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=201.6167M  中间块=147.9926M (73.40%)
+*************
+dataset: MSL
+testname: pot_eval/MSL
+th: 98.02000000000257
+TP: 6622
+FP: 830
+FN: 21
+precision: 0.8886205033700745 recall: 0.9968387761601103 f_score 0.9396189952995998
+--- POT (paramset=fixed, q=0.001, level=0.98, scale=1.0) ---
+  init_score n=58247  fit_ok=True  init_threshold=33.77616500854492  真EVT=38.553476293973404
+  pot_dtaad    th=33.784451  F1=0.9250  P=0.8869  R=0.9666
+POT saved to: results/threshold_ms/SECOND_MSL_fixed_pesr_MSL_noise0.15_seed17.json
+metrics saved to: results/threshold_ms/pesr_MSL_noise0.15_seed17.json

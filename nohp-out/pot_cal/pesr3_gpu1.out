@@ -1,0 +1,7 @@
+[pesr] shard 0/3: 6 runs
+[skip] pesr eta=0.0 seed=42
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model pesr --noise 0.05 --seed 42 --out-dir results/threshold_pesr_potcal
+[ok] pesr eta=0.05 seed=42
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model pesr --noise 0.1 --seed 42 --out-dir results/threshold_pesr_potcal
+[FAIL] pesr eta=0.1 seed=42 rc=-15 log=/home/sdb/yrlcd/anamolybench/SECOND/nohp-out/pot_cal/pesr_noise0.10_seed42.log
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model pesr --noise 0.15 --seed 42 --out-dir results/threshold_pesr_potcal

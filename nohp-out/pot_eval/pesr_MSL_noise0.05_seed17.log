@@ -27,3 +27,7 @@ FP: 421
 FN: 330
 precision: 0.9374814360892761 recall: 0.950323647523222 f_score 0.9438538610729119
 --- POT (paramset=fixed, q=0.001, level=0.98, scale=1.0) ---
+  init_score n=58247  fit_ok=True  init_threshold=32.504150390625  真EVT=37.44617021686062
+  pot_dtaad    th=32.513135  F1=0.9293  P=0.8957  R=0.9655
+POT saved to: results/threshold_ms/SECOND_MSL_fixed_pesr_MSL_noise0.05_seed17.json
+metrics saved to: results/threshold_ms/pesr_MSL_noise0.05_seed17.json

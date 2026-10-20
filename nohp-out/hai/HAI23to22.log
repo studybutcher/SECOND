@@ -1,0 +1,36 @@
+==============================================================================================
+name: hai/HAI23to22
+backbone: mamba
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: test
+noise: 0
+load data of: HAI23
+train:  0 None
+test:  0 None
+Hai MinMax from: HAI23/scale.json  degenerate=20
+train set shape:  None
+test set shape:  (284400, 78)
+test set label shape:  (284400,)
+load data of: HAI22
+train:  0 None
+test:  0 None
+Hai MinMax from: HAI23/scale.json  degenerate=20
+train set shape:  None
+test set shape:  (361200, 78)
+test set label shape:  (361200,)
+[cross] test/label = HAI22, normalized by HAI23/scale.json
+test_data: (234781, 78)
+val_data: (126419, 78)
+params=207.8230M  中间块=147.9926M (71.21%)
+*************
+dataset: HAI23
+testname: hai/HAI23to22
+th: 98.83000000000298
+TP: 7005
+FP: 2650
+FN: 641
+precision: 0.725530812298777 recall: 0.9161653139992607 f_score 0.809774848029258
+metrics saved to: results/hai/HAI23to22.json

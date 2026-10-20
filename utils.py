@@ -1,4 +1,5 @@
 import os
+import json
 import pickle
 import torch
 import torch.nn.functional as F
@@ -8,6 +9,10 @@ from torch.utils.data import DataLoader
 from sklearn.preprocessing import MinMaxScaler
 
 prefix = "/data/sdc/yrlbkp/anomaly"
+
+# PRD7: HAI 22.04 / 23.05。npy 存清洗后的原始值，归一化在加载时用 scale.json。
+HAI_DATASETS = {'HAI22', 'HAI23'}
+HAI_DIM = 78
 
 def get_data_dim(dataset):
     if dataset == 'SMAP':
@@ -20,19 +25,60 @@ def get_data_dim(dataset):
         return 51
     elif dataset == 'WADI':
         return 127
+    elif dataset in HAI_DATASETS:
+        return HAI_DIM
     else:
         raise ValueError('unknown dataset '+str(dataset))
 
 
+def load_hai_scale(dataset):
+    """读 scale.json，返回与 78 列同序的 (min, max, degenerate) 数组。"""
+    path = os.path.join(prefix, dataset, 'scale.json')
+    with open(path) as f:
+        meta = json.load(f)
+    stats = meta['stats']
+    mn = np.array([s['min'] for s in stats], dtype=np.float32)
+    mx = np.array([s['max'] for s in stats], dtype=np.float32)
+    dg = np.array([bool(s['degenerate']) for s in stats])
+    return mn, mx, dg
+
+
+def apply_minmax(X, mn, mx, dg):
+    """源域 MinMax + 零范围保护（PRD7 §2.6）。
+
+    源域 train 上 max==min 的列，在所有 split、所有域里一律输出 0。
+    """
+    if X is None:
+        return None
+    X = np.asarray(X, dtype=np.float32)
+    if X.shape[1] != len(mn):
+        raise ValueError(f'列数 {X.shape[1]} != scale.json 的 {len(mn)}')
+    den = np.where(dg, 1.0, mx - mn).astype(np.float32)
+    Y = (X - mn) / den
+    if dg.any():
+        Y[:, dg] = 0.0
+    return Y
+
+
 def get_data(dataset, max_train_size=None, max_test_size=None, print_log=True, do_preprocess=True, train_start=0,
-             test_start=0):
+             test_start=0, minmax_from=None, load_train=True):
     """
     get data from pkl files
+
+    minmax_from : PRD7 交叉评测用。HAI 数据集加载时用 `minmax_from or dataset`
+                  的 scale.json 做源域 MinMax；目标域 test 必须传源域名。
+    load_train  : False 时跳过 train npy 的读取，返回 (None, None)。
+                  test-only 交叉评测不需要源域 train（HAI22 有 100 万行，
+                  窗口化后会占 20+ GB）。
 
     return shape: (([train_size, x_dim], [train_size] or None), ([test_size, x_dim], [test_size]))
     """
     if max_train_size is None:
         train_end = None
+    elif dataset in HAI_DATASETS:
+        # PRD7: HAI 的 --max_train_size 解释为**绝对行数**（便于子集冒烟）。
+        # 旧的 ×58317 是 MSL 专用缩放，对 HAI 无意义。
+        train_end = train_start + int(max_train_size)
     else:
         max_train_size = int(max_train_size*58317)
         train_end = train_start + max_train_size
@@ -44,10 +90,12 @@ def get_data(dataset, max_train_size=None, max_test_size=None, print_log=True, d
     print("train: ", train_start, train_end)
     print("test: ", test_start, test_end)
     x_dim = get_data_dim(dataset)
-    # print(os.path.join(prefix,f'{dataset}/{dataset}_train.npy'))
-    f = open(os.path.join(prefix,str(dataset)+'/'+str(dataset)+'_train.npy'), "rb")
-    train_data = np.load(f).reshape((-1, x_dim))[train_start:train_end, :]
-    f.close()
+    if load_train:
+        f = open(os.path.join(prefix,str(dataset)+'/'+str(dataset)+'_train.npy'), "rb")
+        train_data = np.load(f).reshape((-1, x_dim))[train_start:train_end, :]
+        f.close()
+    else:
+        train_data = None
     try:
         f = open(os.path.join(prefix, f'{dataset}/{dataset}_test.npy'), "rb")
         test_data = np.load(f).reshape((-1, x_dim))[test_start:test_end, :]
@@ -60,11 +108,20 @@ def get_data(dataset, max_train_size=None, max_test_size=None, print_log=True, d
         f.close()
     except (KeyError, FileNotFoundError):
         test_label = None
-    if do_preprocess:
+    if dataset in HAI_DATASETS:
+        # PRD7：npy 是原始值，用**源域** train 的 scale.json 归一化。
+        # 交叉评测（--test-dataset）时 minmax_from 指向源域，
+        # 目标域 test 因此与源域 train/test 共用同一套 min/max。
+        src = minmax_from or dataset
+        mn, mx, dg = load_hai_scale(src)
+        train_data = apply_minmax(train_data, mn, mx, dg)
+        test_data = apply_minmax(test_data, mn, mx, dg)
+        print(f'Hai MinMax from: {src}/scale.json  degenerate={int(dg.sum())}')
+    elif do_preprocess:
         train_data = preprocess(train_data)
         test_data = preprocess(test_data)
 
-    print("train set shape: ", train_data.shape)
+    print("train set shape: ", None if train_data is None else train_data.shape)
     print("test set shape: ", test_data.shape)
     print("test set label shape: ", test_label.shape)
 

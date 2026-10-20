@@ -1,0 +1,58 @@
+{
+  "model": "SECOND",
+  "dataset": "MSL",
+  "threshold_mode": "both",
+  "config": {
+    "input_dim": 55,
+    "out_dim": 5,
+    "window_length": 70,
+    "latent_size": 256,
+    "batch_size": 60,
+    "n_layer": 8
+  },
+  "bf_search_oracle": {
+    "f1": 0.6491998118231156,
+    "precision": 0.7624365466752557,
+    "recall": 0.5652566602961664,
+    "threshold_pct": 97.25000000000217
+  },
+  "pot": {
+    "paramset": "fixed",
+    "q": 0.001,
+    "level": 0.98,
+    "scale": 1.0,
+    "modes": [
+      "pot_dtaad"
+    ],
+    "fit_ok": true,
+    "init_score": {
+      "source": "train_first_n",
+      "n": 58247,
+      "n_requested": -1
+    },
+    "init_threshold": 848.7127075195312,
+    "extreme_quantile_raw": 1007.8841621973698,
+    "level_used": 0.98,
+    "results": {
+      "pot_dtaad": {
+        "threshold": 1007.88416219737,
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "TP": 0,
+        "TN": 41211,
+        "FP": 0,
+        "FN": 6643
+      }
+    }
+  },
+  "ckpt": {
+    "path": "/home/sdb/yrlcd/anamolybench/SECOND/checkpoint/lstmae_robust_gauss/lstmae_MSL_gauss_noise0.15_seed42/best.pt"
+  },
+  "env": {
+    "gpu": "NVIDIA RTX 5880 Ada Generation",
+    "torch": "2.14.0+cu126",
+    "cuda": "12.6"
+  },
+  "timestamp": "2026-10-19 13:52:46"
+}

@@ -17,3 +17,29 @@ test set shape:  (73729, 55)
 test set label shape:  (73729,)
 test_data: (47924, 55)
 val_data: (25805, 55)
+params=0.3325M  中间块=0.0000M (0.00%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 11.2s (steps=971)
+ 10%|█         | 1/10 [00:11<01:41, 11.23s/it][timing] epoch 1: 10.8s (steps=971)
+ 20%|██        | 2/10 [00:22<01:27, 10.98s/it][timing] epoch 2: 11.8s (steps=971)
+ 30%|███       | 3/10 [00:33<01:19, 11.35s/it][timing] epoch 3: 11.3s (steps=971)
+ 40%|████      | 4/10 [00:45<01:08, 11.34s/it][timing] epoch 4: 11.9s (steps=971)
+ 50%|█████     | 5/10 [00:57<00:57, 11.55s/it][timing] epoch 5: 12.0s (steps=971)
+ 60%|██████    | 6/10 [01:09<00:46, 11.70s/it][timing] epoch 6: 12.2s (steps=971)
+ 70%|███████   | 7/10 [01:21<00:35, 11.86s/it][timing] epoch 7: 11.7s (steps=971)
+ 80%|████████  | 8/10 [01:32<00:23, 11.81s/it][timing] epoch 8: 11.4s (steps=971)
+ 90%|█████████ | 9/10 [01:44<00:11, 11.68s/it][timing] epoch 9: 11.1s (steps=971)
+100%|██████████| 10/10 [01:55<00:00, 11.50s/it]100%|██████████| 10/10 [01:55<00:00, 11.54s/it]
+[timing] mean 11.5s/epoch  windows=58247
+*************
+dataset: MSL
+testname: lstmae_robust_gauss/MSL
+th: 94.12000000000057
+TP: 4761
+FP: 2548
+FN: 1882
+precision: 0.6513886979731992 recall: 0.7166942635605987 f_score 0.6824778086164667
+--- POT (paramset=fixed, q=0.001, level=0.98, scale=1.0) ---
+  init_score n=58247  fit_ok=True  init_threshold=449.8284606933594  真EVT=574.1728649759241
+  pot_dtaad    th=574.172865  F1=0.0000  P=0.0000  R=0.0000
+POT saved to: results/threshold_ms/SECOND_MSL_fixed_lstmae_MSL_noise0.05_seed7.json
+metrics saved to: results/lstmae_robust_gauss/lstmae_MSL_gauss_noise0.05_seed7.json

@@ -1,0 +1,10 @@
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+[ok] results/threshold_lstmae_potcal/lstmae_MSL_noise0.10_seed17.json  init_thr=632.369324  base_th=795.133894  val_n=25735 test_n=47854 free_n=22049
+     per-run val argmax: s=0.1578  valF1=0.7334  testF1=0.6479

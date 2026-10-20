@@ -56,6 +56,11 @@ class ExpConfig(argparse.ArgumentParser):
         self.add_argument('--name',default= 'test',help='testname')
         self.add_argument('--trainmode',type=str,help='train or test')
         self.add_argument('--dataset',default='SMAP',help='datset')
+        # PRD7 交叉泛化：test/label 从另一个数据集目录读取，train 仍来自 --dataset。
+        # 归一化必须用源域（--dataset）的 scale.json，见 utils.get_data(minmax_from=...)
+        self.add_argument('--test-dataset', type=str, default=None,
+                          help='交叉评测：test/label 取自该数据集（如 HAI23），'
+                               'train/scale 仍来自 --dataset（如 HAI22）')
         self.add_argument('--loadpath',default='None')
         # default=None：各数据集的默认值在下面按 dataset 补，**显式传入的命令行值优先**。
         # 旧写法是在 parse_args 之后无条件覆盖（WADI 恒为 24、SWaT 恒为 35），
@@ -65,6 +70,10 @@ class ExpConfig(argparse.ArgumentParser):
         self.add_argument('--batch_size', type=int,default=None)#60
         self.add_argument('--latent_size', type=int,default=256)
         self.add_argument('--max_train_size', type=float,default=None)
+        # PRD7: HAI 下解释为绝对行数；None=全量。仅用于冒烟，正式结果是全量。
+        # 注意 MSL/SMAP 等旧数据集上该参数仍是 ×58317 的缩放语义（见 utils.get_data）。
+        self.add_argument('--max-test-size', type=int, default=None,
+                          help='测试集截断为前 N 行（默认 None=全量；冒烟用）')
         self.add_argument('--noise', type=float,default=0)
         self.add_argument('--noise-kind', type=str, default='mixed',
                           choices=['mixed', 'gauss'],
@@ -222,9 +231,27 @@ def main():
     print('trian or test:',config.trainmode)
     print("noise:",config.noise)
 
+    # PRD7: test-only 交叉评测不需要源域 train（HAI22 训练集窗口化后 >20 GB）。
+    # 域内 test-only（无 --test-dataset）保持旧行为，以免影响需要 train 的 POT 复评。
+    load_src_train = ('train' in config.trainmode) or (config.test_dataset is None)
     (train_data, _), (test_data, test_label) = \
-        get_data(config.dataset, config.max_train_size, config.max_test_size, train_start=config.train_start,
-                 test_start=config.test_start)
+        get_data(config.dataset, config.max_train_size, config.max_test_size,
+                 train_start=config.train_start, test_start=config.test_start,
+                 load_train=load_src_train)
+
+    # PRD7 交叉泛化：只换 test/label，模型与归一化统计量仍来自源域。
+    if config.test_dataset:
+        if get_data_dim(config.test_dataset) != config.input_dim:
+            raise SystemExit(
+                f'[FAIL] test-dataset {config.test_dataset} 维度 '
+                f'{get_data_dim(config.test_dataset)} != 源域 {config.dataset} '
+                f'维度 {config.input_dim}')
+        _, (test_data, test_label) = get_data(
+            config.test_dataset, None, config.max_test_size,
+            train_start=config.train_start, test_start=config.test_start,
+            minmax_from=config.dataset, load_train=False)
+        print(f'[cross] test/label = {config.test_dataset}, '
+              f'normalized by {config.dataset}/scale.json')
 
     contam = None
     if config.contam_file:            # PRD4text：训练集由 bench/gen_contam.py 物化，覆盖上面载入的 clean
@@ -249,7 +276,8 @@ def main():
             print(f'[warn] 找不到 manifest {man_path}，contam 字段留空')
     else:
         # 在加载数据后添加噪声（旧路径，保留不动）
-        train_data = add_noise(train_data, config.noise, config.noise_kind)
+        if train_data is not None:
+            train_data = add_noise(train_data, config.noise, config.noise_kind)
 
     # ── 路 B：测试侧扰动（干净训练 → 含异常检测）─────────────────────────
     # 训练侧不动，把物化的污染数组替换 test_data；test_label 保持不变（标签仍是真的）。
@@ -292,7 +320,8 @@ def main():
     print("test_data:", test_data.shape)
     print("val_data:", val_data.shape)
     #*窗口化了
-    train_data = train_data[np.arange(config.window_length)[None, :] + np.arange(train_data.shape[0] - config.window_length)[:, None]]#里面用来生成行标和列标。
+    if train_data is not None:
+        train_data = train_data[np.arange(config.window_length)[None, :] + np.arange(train_data.shape[0] - config.window_length)[:, None]]#里面用来生成行标和列标。
     val_data = val_data[np.arange(config.window_length)[None, :] + np.arange(val_data.shape[0] - config.window_length)[:, None]]
     test_data = test_data[np.arange(config.window_length)[None, :] + np.arange(test_data.shape[0] - config.window_length)[:, None]]
 
@@ -306,7 +335,8 @@ def main():
     # print(w_size)
 
     train_loader = get_loader(train_data, batch_size=config.batch_size,
-                              window_length=config.window_length, input_size=config.input_dim, shuffle=True)
+                              window_length=config.window_length, input_size=config.input_dim,
+                              shuffle=True) if train_data is not None else None
     val_loader = get_loader(val_data, batch_size=config.batch_size,
                               window_length=config.window_length, input_size=config.input_dim, shuffle=True)
     test_loader = get_loader(test_data, batch_size=config.batch_size,
@@ -413,6 +443,11 @@ def main():
 
         #* ---- POT 阈值（标签无关）。threshold-mode='bf' 时这一段完全不执行 ----
         if POT_MODE_MAP[config.threshold_mode]:
+            if train_data is None:
+                raise SystemExit(
+                    '[FAIL] POT 需要训练集窗口的 init_score，但本次 test-only 交叉评测'
+                    '未加载源域 train。请改用 --threshold-mode bf，'
+                    '或在非交叉场景下运行 POT。')
             if config.pot_fixed:
                 paramset, q = 'fixed', 1e-3
                 level, scale = 0.98, 1.0
@@ -479,6 +514,7 @@ def main():
             'model': 'SECOND',
             'backbone': config.backbone,
             'dataset': config.dataset,
+            'test_dataset': config.test_dataset or config.dataset,
             'seed': config.seed,
             'config': {'input_dim': config.input_dim, 'out_dim': config.out_dim,
                        'window_length': config.window_length, 'latent_size': config.latent_size,

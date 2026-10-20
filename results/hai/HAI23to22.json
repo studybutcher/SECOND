@@ -1,0 +1,50 @@
+{
+  "model": "SECOND",
+  "backbone": "mamba",
+  "dataset": "HAI23",
+  "test_dataset": "HAI22",
+  "seed": 42,
+  "config": {
+    "input_dim": 78,
+    "out_dim": 5,
+    "window_length": 70,
+    "latent_size": 256,
+    "batch_size": 60,
+    "n_layer": 8,
+    "epochs": 10,
+    "lr": 0.01,
+    "N": 256,
+    "val": 0.35,
+    "noise": 0,
+    "noise_kind": "mixed"
+  },
+  "params": {
+    "n_params": 207822994,
+    "n_params_M": 207.822994,
+    "n_midstack": 147992576,
+    "n_midstack_M": 147.992576,
+    "midstack_share": 0.7121087669442391
+  },
+  "timing": null,
+  "contam": null,
+  "contam_test": null,
+  "metrics": {
+    "f1": 0.809774848029258,
+    "precision": 0.725530812298777,
+    "recall": 0.9161653139992607,
+    "threshold": 98.83000000000298,
+    "TP": 7005,
+    "TN": 224415,
+    "FP": 2650,
+    "FN": 641
+  },
+  "ckpt": {
+    "path": "/home/sdb/yrlcd/anamolybench/SECOND/checkpoint/hai/HAI23/best.pt"
+  },
+  "env": {
+    "gpu": "NVIDIA RTX 5880 Ada Generation",
+    "cuda": "12.6",
+    "torch": "2.14.0+cu126"
+  },
+  "timestamp": "2026-10-19 18:47:35"
+}

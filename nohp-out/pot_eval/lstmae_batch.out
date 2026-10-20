@@ -8,3 +8,51 @@ PRD6.1 LSTM-AE gauss retrain: 18 runs  GPUs=1
   [GPU1] lstmae_MSL_gauss_noise0.05_seed42  2026-10-19 13:34:32
   [done rc=0] lstmae_MSL_gauss_noise0.05_seed42  2026-10-19 13:36:52
   [GPU1] lstmae_MSL_gauss_noise0.05_seed7  2026-10-19 13:36:52
+  [done rc=0] lstmae_MSL_gauss_noise0.05_seed7  2026-10-19 13:40:04
+  [GPU1] lstmae_MSL_gauss_noise0.05_seed17  2026-10-19 13:40:04
+  [done rc=0] lstmae_MSL_gauss_noise0.05_seed17  2026-10-19 13:42:32
+  [GPU1] lstmae_MSL_gauss_noise0.10_seed42  2026-10-19 13:42:32
+  [done rc=0] lstmae_MSL_gauss_noise0.10_seed42  2026-10-19 13:44:57
+  [GPU1] lstmae_MSL_gauss_noise0.10_seed7  2026-10-19 13:44:57
+  [done rc=0] lstmae_MSL_gauss_noise0.10_seed7  2026-10-19 13:47:26
+  [GPU1] lstmae_MSL_gauss_noise0.10_seed17  2026-10-19 13:47:26
+  [done rc=0] lstmae_MSL_gauss_noise0.10_seed17  2026-10-19 13:50:15
+  [GPU1] lstmae_MSL_gauss_noise0.15_seed42  2026-10-19 13:50:15
+  [done rc=0] lstmae_MSL_gauss_noise0.15_seed42  2026-10-19 13:52:47
+  [GPU1] lstmae_MSL_gauss_noise0.15_seed7  2026-10-19 13:52:47
+  [done rc=0] lstmae_MSL_gauss_noise0.15_seed7  2026-10-19 13:55:08
+  [GPU1] lstmae_MSL_gauss_noise0.15_seed17  2026-10-19 13:55:08
+  [done rc=0] lstmae_MSL_gauss_noise0.15_seed17  2026-10-19 13:57:25
+  [GPU1] lstmae_MSL_gauss_noise0.2_seed42  2026-10-19 13:57:25
+  [done rc=0] lstmae_MSL_gauss_noise0.2_seed42  2026-10-19 13:59:46
+  [GPU1] lstmae_MSL_gauss_noise0.2_seed7  2026-10-19 13:59:46
+  [done rc=0] lstmae_MSL_gauss_noise0.2_seed7  2026-10-19 14:02:18
+  [GPU1] lstmae_MSL_gauss_noise0.2_seed17  2026-10-19 14:02:19
+  [done rc=0] lstmae_MSL_gauss_noise0.2_seed17  2026-10-19 14:04:53
+  [GPU1] lstmae_MSL_gauss_noise0.5_seed42  2026-10-19 14:04:54
+  [done rc=0] lstmae_MSL_gauss_noise0.5_seed42  2026-10-19 14:07:59
+  [GPU1] lstmae_MSL_gauss_noise0.5_seed7  2026-10-19 14:08:00
+  [done rc=0] lstmae_MSL_gauss_noise0.5_seed7  2026-10-19 14:10:28
+  [GPU1] lstmae_MSL_gauss_noise0.5_seed17  2026-10-19 14:10:29
+  [done rc=0] lstmae_MSL_gauss_noise0.5_seed17  2026-10-19 14:13:23
+=================== summary ===================
+bf json: 18 / 18   pot json: 18 / 18
+lstmae_MSL_gauss_noise0.05_seed17.json bf=0.6717 pot=0.0000
+lstmae_MSL_gauss_noise0.05_seed42.json bf=0.6405 pot=0.0000
+lstmae_MSL_gauss_noise0.05_seed7.json bf=0.6825 pot=0.0000
+lstmae_MSL_gauss_noise0.10_seed17.json bf=0.6764 pot=0.0000
+lstmae_MSL_gauss_noise0.10_seed42.json bf=0.6581 pot=0.0000
+lstmae_MSL_gauss_noise0.10_seed7.json bf=0.6478 pot=0.0000
+lstmae_MSL_gauss_noise0.15_seed17.json bf=0.6549 pot=0.0000
+lstmae_MSL_gauss_noise0.15_seed42.json bf=0.6492 pot=0.0000
+lstmae_MSL_gauss_noise0.15_seed7.json bf=0.6519 pot=0.0000
+lstmae_MSL_gauss_noise0.2_seed17.json bf=0.6464 pot=0.0000
+lstmae_MSL_gauss_noise0.2_seed42.json bf=0.6353 pot=0.0000
+lstmae_MSL_gauss_noise0.2_seed7.json bf=0.6324 pot=0.0000
+lstmae_MSL_gauss_noise0.5_seed17.json bf=0.6625 pot=0.0000
+lstmae_MSL_gauss_noise0.5_seed42.json bf=0.6299 pot=0.0000
+lstmae_MSL_gauss_noise0.5_seed7.json bf=0.2960 pot=0.0000
+lstmae_MSL_gauss_noise0_seed17.json bf=0.7032 pot=0.0503
+lstmae_MSL_gauss_noise0_seed42.json bf=0.6397 pot=0.0513
+lstmae_MSL_gauss_noise0_seed7.json bf=0.6865 pot=0.0521
+=================== DONE ===================

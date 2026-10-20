@@ -1,0 +1,38 @@
+[lstmae] shard 0/1: 18 runs
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model lstmae --noise 0.0 --seed 42 --out-dir results/threshold_lstmae_potcal
+[ok] lstmae eta=0.0 seed=42
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model lstmae --noise 0.0 --seed 7 --out-dir results/threshold_lstmae_potcal
+[ok] lstmae eta=0.0 seed=7
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model lstmae --noise 0.0 --seed 17 --out-dir results/threshold_lstmae_potcal
+[ok] lstmae eta=0.0 seed=17
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model lstmae --noise 0.05 --seed 42 --out-dir results/threshold_lstmae_potcal
+[ok] lstmae eta=0.05 seed=42
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model lstmae --noise 0.05 --seed 7 --out-dir results/threshold_lstmae_potcal
+[ok] lstmae eta=0.05 seed=7
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model lstmae --noise 0.05 --seed 17 --out-dir results/threshold_lstmae_potcal
+[ok] lstmae eta=0.05 seed=17
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model lstmae --noise 0.1 --seed 42 --out-dir results/threshold_lstmae_potcal
+[ok] lstmae eta=0.1 seed=42
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model lstmae --noise 0.1 --seed 7 --out-dir results/threshold_lstmae_potcal
+[ok] lstmae eta=0.1 seed=7
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model lstmae --noise 0.1 --seed 17 --out-dir results/threshold_lstmae_potcal
+[ok] lstmae eta=0.1 seed=17
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model lstmae --noise 0.15 --seed 42 --out-dir results/threshold_lstmae_potcal
+[ok] lstmae eta=0.15 seed=42
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model lstmae --noise 0.15 --seed 7 --out-dir results/threshold_lstmae_potcal
+[ok] lstmae eta=0.15 seed=7
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model lstmae --noise 0.15 --seed 17 --out-dir results/threshold_lstmae_potcal
+[ok] lstmae eta=0.15 seed=17
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model lstmae --noise 0.2 --seed 42 --out-dir results/threshold_lstmae_potcal
+[ok] lstmae eta=0.2 seed=42
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model lstmae --noise 0.2 --seed 7 --out-dir results/threshold_lstmae_potcal
+[ok] lstmae eta=0.2 seed=7
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model lstmae --noise 0.2 --seed 17 --out-dir results/threshold_lstmae_potcal
+[ok] lstmae eta=0.2 seed=17
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model lstmae --noise 0.5 --seed 42 --out-dir results/threshold_lstmae_potcal
+[ok] lstmae eta=0.5 seed=42
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model lstmae --noise 0.5 --seed 7 --out-dir results/threshold_lstmae_potcal
+[ok] lstmae eta=0.5 seed=7
+[run] /home/sdb/yiruolei/miniconda3/envs/anomaly/bin/python /home/sdb/yrlcd/anamolybench/SECOND/bench/pot_scale_calibrate.py --model lstmae --noise 0.5 --seed 17 --out-dir results/threshold_lstmae_potcal
+[ok] lstmae eta=0.5 seed=17
+[lstmae] shard 0 done: fail=0

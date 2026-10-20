@@ -88,7 +88,8 @@ def main():
         ax.set_ylabel(ylab)
         ax.set_title(title, fontsize=10)
         ax.set_xlim(-3, 53)
-        ax.set_ylim(0.2, 1.0)
+        # POT 可能把某些模型压到 0.05 以下，统一放到 0–1，避免截断
+        ax.set_ylim(0.0, 1.0)
         ax.grid(alpha=0.25, ls=':')
         ax.legend(frameon=False, fontsize=8, loc='lower left')
 

@@ -9,3 +9,50 @@ PRD6.1 PESR POT re-eval: 18 runs  GPUs=4 7
   [GPU7] pesr_MSL_noise0.05_seed17  2026-10-19 13:33:52
   [done rc=0] pesr_MSL_noise0_seed17  2026-10-19 13:36:48
   [GPU4] pesr_MSL_noise0.05_seed7  2026-10-19 13:36:48
+  [done rc=0] pesr_MSL_noise0.05_seed17  2026-10-19 13:38:12
+  [GPU7] pesr_MSL_noise0.10_seed7  2026-10-19 13:38:12
+  [done rc=0] pesr_MSL_noise0.05_seed7  2026-10-19 13:41:49
+  [GPU4] pesr_MSL_noise0.10_seed42  2026-10-19 13:41:49
+  [done rc=0] pesr_MSL_noise0.10_seed7  2026-10-19 13:42:27
+  [GPU7] pesr_MSL_noise0.15_seed42  2026-10-19 13:42:28
+  [done rc=0] pesr_MSL_noise0.15_seed42  2026-10-19 13:46:28
+  [GPU7] pesr_MSL_noise0.15_seed17  2026-10-19 13:46:28
+  [done rc=0] pesr_MSL_noise0.10_seed42  2026-10-19 13:47:03
+  [GPU4] pesr_MSL_noise0.10_seed17  2026-10-19 13:47:03
+  [done rc=0] pesr_MSL_noise0.15_seed17  2026-10-19 13:51:13
+  [GPU7] pesr_MSL_noise0.2_seed7  2026-10-19 13:51:13
+  [done rc=0] pesr_MSL_noise0.10_seed17  2026-10-19 13:52:42
+  [GPU4] pesr_MSL_noise0.15_seed7  2026-10-19 13:52:42
+  [done rc=0] pesr_MSL_noise0.2_seed7  2026-10-19 13:55:35
+  [GPU7] pesr_MSL_noise0.5_seed42  2026-10-19 13:55:35
+  [done rc=0] pesr_MSL_noise0.15_seed7  2026-10-19 13:57:31
+  [GPU4] pesr_MSL_noise0.2_seed42  2026-10-19 13:57:31
+  [done rc=0] pesr_MSL_noise0.5_seed42  2026-10-19 13:59:21
+  [GPU7] pesr_MSL_noise0.5_seed17  2026-10-19 13:59:21
+  [done rc=0] pesr_MSL_noise0.2_seed42  2026-10-19 14:02:24
+  [GPU4] pesr_MSL_noise0.2_seed17  2026-10-19 14:02:24
+  [done rc=0] pesr_MSL_noise0.5_seed17  2026-10-19 14:03:14
+  [done rc=0] pesr_MSL_noise0.2_seed17  2026-10-19 14:08:28
+  [GPU4] pesr_MSL_noise0.5_seed7  2026-10-19 14:08:28
+  [done rc=0] pesr_MSL_noise0.5_seed7  2026-10-19 14:14:54
+=================== summary ===================
+POT json: 18 / 18
+SECOND_MSL_fixed_pesr_MSL_noise0.05_seed17.json bf=0.9439 pot=0.9293
+SECOND_MSL_fixed_pesr_MSL_noise0.05_seed42.json bf=0.9419 pot=0.9212
+SECOND_MSL_fixed_pesr_MSL_noise0.05_seed7.json bf=0.9200 pot=0.9129
+SECOND_MSL_fixed_pesr_MSL_noise0.10_seed17.json bf=0.9354 pot=0.9158
+SECOND_MSL_fixed_pesr_MSL_noise0.10_seed42.json bf=0.9445 pot=0.9250
+SECOND_MSL_fixed_pesr_MSL_noise0.10_seed7.json bf=0.9438 pot=0.9388
+SECOND_MSL_fixed_pesr_MSL_noise0.15_seed17.json bf=0.9396 pot=0.9250
+SECOND_MSL_fixed_pesr_MSL_noise0.15_seed42.json bf=0.9417 pot=0.9335
+SECOND_MSL_fixed_pesr_MSL_noise0.15_seed7.json bf=0.9413 pot=0.9369
+SECOND_MSL_fixed_pesr_MSL_noise0.2_seed17.json bf=0.9556 pot=0.9368
+SECOND_MSL_fixed_pesr_MSL_noise0.2_seed42.json bf=0.9463 pot=0.9404
+SECOND_MSL_fixed_pesr_MSL_noise0.2_seed7.json bf=0.9484 pot=0.9332
+SECOND_MSL_fixed_pesr_MSL_noise0.5_seed17.json bf=0.9528 pot=0.9430
+SECOND_MSL_fixed_pesr_MSL_noise0.5_seed42.json bf=0.9522 pot=0.9366
+SECOND_MSL_fixed_pesr_MSL_noise0.5_seed7.json bf=0.9551 pot=0.9132
+SECOND_MSL_fixed_pesr_MSL_noise0_seed17.json bf=0.9578 pot=0.9290
+SECOND_MSL_fixed_pesr_MSL_noise0_seed42.json bf=0.9446 pot=0.9269
+SECOND_MSL_fixed_pesr_MSL_noise0_seed7.json bf=0.9334 pot=0.9256
+=================== DONE ===================

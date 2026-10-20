@@ -1,0 +1,21 @@
+==============================================================================================
+name: hai/HAI22
+backbone: mamba
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0
+load data of: HAI22
+train:  0 None
+test:  0 None
+Hai MinMax from: HAI22/scale.json  degenerate=18
+train set shape:  (1004402, 78)
+test set shape:  (361200, 78)
+test set label shape:  (361200,)
+test_data: (234781, 78)
+val_data: (126419, 78)
+params=207.8230M  中间块=147.9926M (71.21%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 12522.9s (steps=16739)
+ 10%|█         | 1/10 [3:28:42<31:18:26, 12522.93s/it]

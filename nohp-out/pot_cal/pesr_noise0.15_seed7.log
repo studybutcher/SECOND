@@ -1,0 +1,10 @@
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+[ok] results/threshold_pesr_potcal/pesr_MSL_noise0.15_seed7.json  init_thr=32.309525  base_th=32.319232  val_n=25735 test_n=47854 free_n=22049
+     per-run val argmax: s=1  valF1=0.9359  testF1=0.9303
