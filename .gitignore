@@ -2,6 +2,9 @@
 *.npy
 *.pt
 *.npz
+# GitHub 100MB 限制：以下数据文件只保留在本地，不入库
+dataprocess/processed/SWat_train.csv
+casestudy/SWaT.csv
 
 
 # 表格与文档
