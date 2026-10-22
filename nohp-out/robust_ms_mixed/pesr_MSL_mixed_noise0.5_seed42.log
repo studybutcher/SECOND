@@ -1,0 +1,45 @@
+==============================================================================================
+name: robust_ms_mixed/MSL
+backbone: mamba
+seed: 42
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.5
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=201.6167M  中间块=147.9926M (73.40%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 378.3s (steps=971)
+ 10%|█         | 1/10 [06:18<56:44, 378.32s/it][timing] epoch 1: 375.9s (steps=971)
+ 20%|██        | 2/10 [12:34<50:15, 376.89s/it][timing] epoch 2: 375.4s (steps=971)
+ 30%|███       | 3/10 [18:49<43:53, 376.20s/it][timing] epoch 3: 376.1s (steps=971)
+ 40%|████      | 4/10 [25:05<37:36, 376.16s/it][timing] epoch 4: 376.3s (steps=971)
+ 50%|█████     | 5/10 [31:22<31:21, 376.22s/it][timing] epoch 5: 376.6s (steps=971)
+ 60%|██████    | 6/10 [37:38<25:05, 376.36s/it][timing] epoch 6: 377.2s (steps=971)
+ 70%|███████   | 7/10 [43:55<18:49, 376.63s/it][timing] epoch 7: 377.0s (steps=971)
+ 80%|████████  | 8/10 [50:12<12:33, 376.75s/it][timing] epoch 8: 375.7s (steps=971)
+ 90%|█████████ | 9/10 [56:28<06:16, 376.41s/it][timing] epoch 9: 378.9s (steps=971)
+100%|██████████| 10/10 [1:02:47<00:00, 377.17s/it]100%|██████████| 10/10 [1:02:47<00:00, 376.74s/it]
+[timing] mean 376.7s/epoch  windows=58247
+*************
+dataset: MSL
+testname: robust_ms_mixed/MSL
+th: 98.22000000000267
+TP: 6522
+FP: 728
+FN: 121
+precision: 0.8995862056557432 recall: 0.9817853364717969 f_score 0.9388850967532647
+--- POT (paramset=fixed, q=0.001, level=0.98, scale=1.0) ---
+  init_score n=58247  fit_ok=True  init_threshold=90.5555191040039  真EVT=95.50246278376963
+  pot_dtaad    th=90.559551  F1=0.9330  P=0.8889  R=0.9818
+POT saved to: results/threshold_ms_mixed/SECOND_MSL_fixed_pesr_MSL_mixed_noise0.5_seed42.json
+metrics saved to: results/robust_ms_mixed/pesr_MSL_mixed_noise0.5_seed42.json

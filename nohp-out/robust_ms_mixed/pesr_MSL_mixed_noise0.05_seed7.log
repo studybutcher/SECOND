@@ -1,0 +1,45 @@
+==============================================================================================
+name: robust_ms_mixed/MSL
+backbone: mamba
+seed: 7
+batch: 60
+window_length 70
+latent_size 256
+trian or test: train-test
+noise: 0.05
+load data of: MSL
+train:  0 None
+test:  0 None
+Data normalized
+Data normalized
+train set shape:  (58317, 55)
+test set shape:  (73729, 55)
+test set label shape:  (73729,)
+test_data: (47924, 55)
+val_data: (25805, 55)
+params=201.6167M  中间块=147.9926M (73.40%)
+  0%|          | 0/10 [00:00<?, ?it/s][timing] epoch 0: 1112.7s (steps=971)
+ 10%|█         | 1/10 [18:32<2:46:53, 1112.66s/it][timing] epoch 1: 1101.4s (steps=971)
+ 20%|██        | 2/10 [36:54<2:27:28, 1106.05s/it][timing] epoch 2: 1111.1s (steps=971)
+ 30%|███       | 3/10 [55:25<2:09:18, 1108.38s/it][timing] epoch 3: 1111.9s (steps=971)
+ 40%|████      | 4/10 [1:13:57<1:50:58, 1109.76s/it][timing] epoch 4: 1114.0s (steps=971)
+ 50%|█████     | 5/10 [1:32:31<1:32:36, 1111.30s/it][timing] epoch 5: 1112.7s (steps=971)
+ 60%|██████    | 6/10 [1:51:03<1:14:07, 1111.78s/it][timing] epoch 6: 1110.6s (steps=971)
+ 70%|███████   | 7/10 [2:09:34<55:34, 1111.39s/it]  [timing] epoch 7: 1112.0s (steps=971)
+ 80%|████████  | 8/10 [2:28:06<37:03, 1111.59s/it][timing] epoch 8: 1110.2s (steps=971)
+ 90%|█████████ | 9/10 [2:46:36<18:31, 1111.15s/it][timing] epoch 9: 1109.3s (steps=971)
+100%|██████████| 10/10 [3:05:05<00:00, 1110.58s/it]100%|██████████| 10/10 [3:05:05<00:00, 1110.59s/it]
+[timing] mean 1110.6s/epoch  windows=58247
+*************
+dataset: MSL
+testname: robust_ms_mixed/MSL
+th: 99.0500000000031
+TP: 6515
+FP: 390
+FN: 128
+precision: 0.9435191876270541 recall: 0.980731595693615 f_score 0.9617605747306036
+--- POT (paramset=fixed, q=0.001, level=0.98, scale=1.0) ---
+  init_score n=58247  fit_ok=True  init_threshold=53.80327606201172  真EVT=58.47289008596247
+  pot_dtaad    th=53.818401  F1=0.9335  P=0.8906  R=0.9807
+POT saved to: results/threshold_ms_mixed/SECOND_MSL_fixed_pesr_MSL_mixed_noise0.05_seed7.json
+metrics saved to: results/robust_ms_mixed/pesr_MSL_mixed_noise0.05_seed7.json
